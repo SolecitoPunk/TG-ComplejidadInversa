@@ -1,0 +1,244 @@
+\documentclass[11pt,a4paper]{article}
+
+% ----- Paquetes -----
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xcolor}
+
+% ----- Notación -----
+\newcommand{\rv}{\mathbf{r}}
+\newcommand{\uv}{\mathbf{u}}
+\newcommand{\vv}{\mathbf{v}}
+\newcommand{\fv}{\mathbf{f}}
+\newcommand{\Av}{\mathbf{A}}
+\newcommand{\grad}{\nabla}
+\newcommand{\Ps}{P_{\mathrm{s}}}
+\newcommand{\Vfp}{V_{\mathrm{FP}}}
+\newcommand{\Vs}{V_{\mathrm{s}}}
+\newcommand{\Hop}{\hat{H}}
+
+\title{\textbf{Problema inverso de Schr\"odinger generalizado:\\
+estado del trabajo y decisiones pendientes}}
+\author{[Estudiante] \\ \small Director: [Nombre]}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent
+Este informe resume el estado del trabajo de grado para su revisi\'on y para decidir c\'omo
+proceder. El resultado principal (L\'inea 1) es una generalizaci\'on del m\'etodo inverso de la
+ecuaci\'on de Schr\"odinger de Bhalgamiya y Novotny a funciones de onda complejas, validada en
+estados de Fock--Darwin. La l\'inea exploratoria (L\'inea 2) aplica la misma ecuaci\'on como analog\'ia
+formal a sistemas con din\'amica peri\'odica. El hallazgo central del per\'iodo reciente es doble:
+(i)~sobre la red del ciclo celular de levadura (Phasik) la extensi\'on con flujo \emph{no} aporta
+informaci\'on medible frente a una l\'inea base est\'andar (resultado negativo); y (ii)~existe una
+reformulaci\'on en el marco de Fokker--Planck que fija el \'unico par\'ametro libre ($\lambda=2D$),
+corrige el signo del t\'ermino de flujo y convierte la analog\'ia en una predicci\'on falsable. Se
+pide al director su opini\'on sobre el alcance y sobre c\'omo seguir, en particular respecto a los
+datos neuronales.
+\end{abstract}
+
+\section{Las dos l\'ineas y c\'omo se relacionan}
+
+\paragraph{L\'inea 1 (resultado principal, establecido).}
+Con el ansatz $\psi=\sqrt{P}\,e^{iS/\hbar}$ y el flujo cin\'etico $\uv=\grad S-q\Av$, la parte real
+de la ecuaci\'on de Schr\"odinger independiente del tiempo da la \emph{ecuaci\'on maestra extendida}
+\begin{equation}
+  V(\rv)=E-\tfrac{1}{2m}(\grad S-q\Av)^2
+        +\frac{\hbar^2}{4m}\!\left[\frac{\grad^2 P}{P}-\tfrac12\frac{|\grad P|^2}{P^2}\right],
+  \label{eq:maestra}
+\end{equation}
+que recupera el potencial confinante $V$ a partir de $P$ y $S$. Se valid\'o num\'ericamente en estados
+de Fock--Darwin ($\omega_0=1$, $\omega_c=2$, $n=0$, $\ell=1$): la ecuaci\'on~\eqref{eq:maestra} recupera
+$V=\tfrac12 m\omega_0^2 r^2$ con convergencia de segundo orden en la malla. Lo interpretable y
+\emph{invariante de gauge} es $\grad\times\uv=-q\mathbf{B}$.
+
+\paragraph{L\'inea 2 (exploratoria).}
+La idea es usar la ecuaci\'on~\eqref{eq:maestra} como analog\'ia formal (sin afirmar que el sistema sea
+cu\'antico) para extraer un ``paisaje'' de redes o se\~nales con din\'amica peri\'odica. El estado por
+nodo o por unidad se representa en un plano~2D; se promedia sobre un ciclo para obtener la densidad
+$\bar P$ y la corriente $\bar{\mathbf{J}}$, y se calcula $\uv=\bar{\mathbf{J}}/\bar P$ y su vorticidad.
+
+\paragraph{La pregunta que atraviesa todo el trabajo.}
+Conviene separar tres afirmaciones de distinto peso, porque determinan qu\'e se puede concluir de cada
+experimento:
+\begin{enumerate}[label=(\alph*),leftmargin=2.2em]
+  \item \textbf{Identidad geom\'etrica.} Dada una curva cerrada en un plano, $\uv$ y $\grad\times\uv$
+        son funciones deterministas de ella. Calcularlas no valida nada f\'isico; solo comprueba que
+        las cuentas son correctas.
+  \item \textbf{Analog\'ia cu\'antica (L\'inea 1).} Afirmar que $V$ es el \emph{potencial} de una
+        ecuaci\'on de Schr\"odinger presupone que el sistema obedece esa din\'amica. Es cierto en
+        Fock--Darwin (el sistema \emph{es} cu\'antico); no lo es en una red o en datos neuronales, donde
+        $V$ es solo el resultado de una f\'ormula.
+  \item \textbf{Modelo generativo estoc\'astico (L\'inea 2 reformulada).} Afirmar que las trayectorias
+        las genera un proceso de difusi\'on. Esta es la \'unica de las tres que es \emph{falsable} con
+        datos, y es la aportaci\'on conceptual de este per\'iodo.
+\end{enumerate}
+
+\section{Resultado negativo sobre la red de levadura (Phasik)}
+
+Se aplic\'o el procedimiento a la red parcialmente temporal del ciclo celular de levadura (Phasik;
+Lucas \emph{et al.}, 2023). El trabajo incluy\'o validaci\'on del \emph{pipeline} con soluciones
+conocidas (rotaci\'on r\'igida, proceso de Ornstein--Uhlenbeck, Fock--Darwin), diagn\'ostico de los
+datos, una l\'inea base est\'andar ($U=-\ln\bar P$ y flujo), separaci\'on de din\'amica y estructura
+est\'atica, y modelos nulos. Hallazgos principales:
+\begin{itemize}[leftmargin=1.6em]
+  \item Varios ``problemas'' atribuidos antes a los datos (divergencia de $\bar{\mathbf{J}}$ alta,
+        flujo ``despreciable'', ciclo que ``no cierra'') eran artefactos del esquema de c\'alculo de la
+        corriente. Con el esquema de punto medio y el \emph{clustering} de Barrat, la divergencia
+        relativa baja de $0.60$ a $0.004$.
+  \item El t\'ermino de Bohm de~\eqref{eq:maestra} es una transformaci\'on de segundas derivadas del
+        mismo paisaje $U=-\ln P$: \emph{no contiene informaci\'on que no est\'e ya en $P$}. Se verific\'o
+        la identidad
+        $V_{\text{Bohm}}=\tfrac{\lambda}{4}\!\left[\tfrac12|\grad U|^2-\grad^2U\right]$.
+  \item Frente a modelos nulos (400 r\'eplicas), lo \'unico que distingue los datos es la velocidad
+        $\uv$ (parte de la l\'inea base), y \emph{no} el t\'ermino de Bohm. Adem\'as, la se\~nal no
+        sobrevive a un modelo nulo que respeta la correlaci\'on entre aristas que comparten un nodo
+        (las series de arista se explican casi por completo como productos de actividades de nodo,
+        $R^2=0.95$).
+\end{itemize}
+\textbf{Conclusi\'on (negativa y v\'alida):} con estos datos, la representaci\'on de Madelung--Bohm con
+flujo no aporta informaci\'on detectable m\'as all\'a de la l\'inea base. El valor de esta parte es
+metodol\'ogico: delimita cu\'ando la analog\'ia tiene contenido.
+
+\section{Reformulaci\'on de Fokker--Planck (aportaci\'on conceptual)}
+
+El resultado negativo tiene una causa de ra\'iz: en la L\'inea 2 el par\'ametro $\lambda=\hbar^2/m$ y el
+signo del t\'ermino de flujo se eligieron a mano. La teor\'ia de ``paisaje y flujo'' (Wang \emph{et
+al.}, 2008) y la correspondencia Fokker--Planck/Schr\"odinger fijan ambos.
+
+Para una din\'amica de difusi\'on $d\rv=\fv(\rv)\,dt+\sqrt{2D}\,d\mathbf{W}$ con $D$ constante, en el
+estado estacionario $\Ps=e^{-U}$ se descompone la deriva como $\fv=-D\grad U+\vv$, con
+$\vv=\bar{\mathbf{J}}/\Ps$ la velocidad de corriente. La transformaci\'on $P=\sqrt{\Ps}\,\psi$ lleva el
+operador de Fokker--Planck a un hamiltoniano \textbf{no herm\'itico}
+\begin{equation}
+  \Hop=-D\grad^2+\Vs+\mathcal{A},\qquad
+  \Vs=D\!\left(\tfrac14|\grad U|^2-\tfrac12\grad^2U\right),\qquad
+  \mathcal{A}=\tfrac12\big(\vv\cdot\grad+\grad\cdot(\vv\,\cdot)\big),
+  \label{eq:H}
+\end{equation}
+cuyo estado fundamental es $\sqrt{\Ps}$ con autovalor $0$. En forma de potencial vector,
+\begin{equation}
+  \Hop=D(-i\grad-q\Av)^2+\Vfp,\qquad q\Av=-\tfrac{i}{2D}\vv,\qquad
+  \Vfp=\Vs+\frac{|\vv|^2}{4D}.
+  \label{eq:gauge}
+\end{equation}
+Comparando~\eqref{eq:gauge} con~\eqref{eq:maestra} se obtienen tres consecuencias, todas verificadas
+num\'ericamente (\texttt{verificar\_derivacion.py}, sin simetr\'ias, error $\sim 10^{-6}$):
+\begin{enumerate}[leftmargin=1.8em]
+  \item \textbf{$\lambda=2D$:} el par\'ametro deja de ser libre; lo fija el ruido, estimable de los
+        datos.
+  \item \textbf{El t\'ermino de flujo cambia de signo:} $-\tfrac12 m|\uv|^2$ (cu\'antico) frente a
+        $+\tfrac12 m|\vv|^2$ (estoc\'astico), porque el potencial vector es \emph{imaginario}. Los
+        resultados de Phasik que usaban el signo cu\'antico no se aplican a $\Vfp$.
+  \item \textbf{La vorticidad $\grad\times\vv=\grad\times\fv$ es el invariante de gauge,} an\'alogo exacto
+        de $\grad\times\uv$ en la L\'inea 1. Esto une las dos l\'ineas en un marco com\'un.
+\end{enumerate}
+
+\paragraph{Posicionamiento frente a la literatura.}
+La correspondencia Fokker--Planck/Schr\"odinger no herm\'itica con potencial vector imaginario ya
+est\'a publicada (Mazzolo y Monthus, \emph{Phys. Rev. E} \textbf{107}, 014101, 2023). \textbf{No pudimos
+acceder al texto completo}, por lo que queda pendiente confirmar si su ``gauge de la fuerza
+irreversible'' coincide con el de~\eqref{eq:gauge}. La descomposici\'on $\fv=-D\grad U+\vv$ es la de
+Wang. En consecuencia, la aportaci\'on de este trabajo \emph{no} ser\'ia la teor\'ia directa, sino:
+(i)~su uso en la direcci\'on \emph{inversa} a partir de trayectorias emp\'iricas; (ii)~el marco com\'un
+para las dos l\'ineas; y (iii)~la validaci\'on emp\'irica con sus l\'imites. \textbf{Esto debe
+confirmarse leyendo la referencia antes de afirmar novedad.}
+
+\section{Predicci\'on falsable y validaci\'on en sint\'etico}
+
+La ecuaci\'on~\eqref{eq:H} ofrece una prueba de consistencia: a partir de las trayectorias se estiman
+$\hat P_{\mathrm s}$, $\hat\vv$ y $\hat D$; se construye $\hat H$ y se calcula su primer autovalor no
+nulo $\lambda_1=a+ib$. La predicci\'on es que la autocorrelaci\'on de un observable de fase decae con
+tasa $a$ y oscila con frecuencia $b$, medidas de forma \emph{independiente}. Si coincide, el modelo de
+difusi\'on es plausible; si no, se rechaza.
+
+Se prob\'o con dos sistemas sint\'eticos (Ornstein--Uhlenbeck con rotaci\'on, de espectro exacto
+$\gamma\pm i\Omega$; y oscilador de Stuart--Landau con ciclo l\'imite). Resultados, con criterios
+declarados \emph{antes} de ejecutar:
+\begin{itemize}[leftmargin=1.6em]
+  \item La frecuencia se recupera con error $<1\%$; la tasa de relajaci\'on tiene un sesgo que escala
+        como $h^2$ (ancho del \emph{kernel}) y se corrige por extrapolaci\'on a $h\to0$.
+  \item Se necesitan del orden de $250$ ciclos por condici\'on para una estimaci\'on fiable.
+  \item El chequeo de consistencia, con intervalo de confianza por remuestreo, da $1$ falso positivo en
+        $20$ r\'eplicas y detecta deriva lenta y memoria por proyecci\'on en $10$ de $10$.
+  \item El ruido de medici\'on es manejable con un estimador robusto de $D$ hasta
+        $\sigma\approx 0.02$ (unas $0.13$ veces el ancho del ciclo); por encima, la reconstrucci\'on
+        falla.
+\end{itemize}
+\textbf{Importante:} estas pruebas cumplen \emph{por construcci\'on} todos los supuestos ($D$ constante
+e is\'otropa, Markov en~2D, estacionariedad, muchos ciclos). Pasarlas es necesario, no suficiente,
+para datos reales.
+
+\section{Datos neuronales: estado y obst\'aculo}
+
+La aplicaci\'on natural ser\'ia corteza motora en una tarea r\'itmica (pedaleo; Russo \emph{et al.},
+2018). Al revisar el conjunto de datos p\'ublico disponible
+(\url{https://github.com/aarusso/trajectory-tangling}) encontramos dos obst\'aculos que lo
+\textbf{descartan para la prueba falsable} (confirmado en el README del repositorio):
+\begin{enumerate}[leftmargin=1.8em]
+  \item Las neuronas se grabaron \textbf{secuencialmente}, no en simult\'aneo. Sin registro simult\'aneo
+        no hay trayectorias poblacionales de ensayo \'unico, y \textbf{no se puede estimar $D$}.
+  \item Las tasas est\'an \textbf{promediadas entre ensayos} (y suavizadas con un \emph{kernel}
+        gaussiano de $25$~ms), lo que elimina el ruido de ensayo que $D$ mide.
+\end{enumerate}
+Con estos datos solo es posible el caso~(a): calcular $\grad\times\uv$ de la trayectoria media. Es una
+\emph{ilustraci\'on} de que la f\'ormula se aplica a datos neuronales reales (con el control de que
+pedalear hacia adelante y hacia atr\'as debe invertir el sentido de giro), pero \textbf{no valida la
+analog\'ia}. La prueba falsable~(c) requiere datos con registro simult\'aneo (matrices Utah) y ensayos
+individuales; un candidato por verificar es Schroeder \emph{et al.} (\emph{J. Neurosci.}, 2022).
+
+\section{Qu\'e se puede afirmar con cada tipo de dato}
+
+\begin{center}
+\begin{tabular}{@{}p{3.6cm} p{3.2cm} p{6.6cm}@{}}
+\toprule
+\textbf{Dato} & \textbf{Caso (a/b/c)} & \textbf{Afirmaci\'on sostenible} \\
+\midrule
+Fock--Darwin & (b), cu\'antico real & La generalizaci\'on recupera $V$ exacto. Validaci\'on f\'isica de la L\'inea 1. \\
+Red de levadura & (a) con $\lambda$ libre & La extensi\'on con flujo no aporta frente a la l\'inea base (negativo). \\
+Sint\'etico (OU, Stuart--Landau) & (c) controlado & El m\'etodo recupera el espectro verdadero cuando se cumplen los supuestos. \\
+Pedaleo (media, secuencial) & solo (a) & Ilustraci\'on visual; \emph{no} validaci\'on. \\
+Datos simult\'aneos con ensayos & (c) & \'Unica v\'ia para validar o refutar el modelo generativo. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Preguntas y opciones para decidir con el director}
+
+\begin{enumerate}[leftmargin=1.8em]
+  \item \textbf{Alcance del trabajo.} ¿Se presenta la L\'inea 1 como resultado principal (validada en
+        Fock--Darwin) y la L\'inea 2/Fokker--Planck como marco te\'orico con validaci\'on en sint\'etico,
+        dejando los datos reales como trabajo futuro? ¿O se considera imprescindible una aplicaci\'on a
+        datos neuronales dentro del trabajo?
+  \item \textbf{Literatura.} ¿Tiene acceso al art\'iculo de Mazzolo y Monthus (2023) para confirmar el
+        solapamiento con~\eqref{eq:gauge} y delimitar con precisi\'on la aportaci\'on original?
+  \item \textbf{Datos.} ¿Conoce un conjunto de datos de una tarea r\'itmica con registro
+        \emph{simult\'aneo} y \emph{ensayos individuales} disponibles? Es el requisito que no cumple el
+        conjunto de pedaleo p\'ublico.
+  \item \textbf{Prueba de concepto neuronal.} ¿Es aceptable incluir la ilustraci\'on~(a) sobre la
+        trayectoria media de pedaleo, presentada expl\'icitamente como ilustraci\'on y no como
+        validaci\'on, con el control de inversi\'on de direcci\'on?
+  \item \textbf{Cronograma.} Quedan aproximadamente cuatro meses. ¿Prioriza cerrar la teor\'ia y el
+        sint\'etico, o invertir tiempo en conseguir y analizar un conjunto de datos simult\'aneo con
+        riesgo de resultado negativo?
+\end{enumerate}
+
+\paragraph{Nota de reproducibilidad.}
+Todo el c\'odigo, las predicciones declaradas antes de ejecutar y los resultados est\'an versionados en
+el repositorio (rama \texttt{analisis/bloque1-validacion}). La derivaci\'on de la
+secci\'on~4 se comprueba num\'ericamente en \texttt{NucleoTG/teoria/verificar\_derivacion.py}. Las
+referencias citadas (Bhalgamiya--Novotny 2024; Wang \emph{et al.} 2008; Mazzolo--Monthus 2023; Russo
+\emph{et al.} 2018; Lucas \emph{et al.} 2023) deben a\~nadirse a la bibliograf\'ia del documento final.
+
+\end{document}
