@@ -6,12 +6,17 @@ Cada paso se comprueba numéricamente con `verificar_derivacion.py` (solo biblio
 
 - **El caso sin corriente (balance detallado) es clásico:** el operador de Fokker–Planck es similar a un hamiltoniano de Schrödinger hermítico. Creo que está en Risken, *The Fokker–Planck Equation* (1989), cap. 5; hay que verificar la sección.
 - **El caso con corriente también está publicado.** Mazzolo y Monthus, *Phys. Rev. E* 107, 014101 (2023), [arXiv:2210.05353](https://arxiv.org/abs/2210.05353), relacionan la dinámica de Fokker–Planck fuera del equilibrio con mecánica cuántica no hermítica: un potencial escalar real y un potencial vector puramente imaginario. Según el resumen, eligen el gauge según el propósito. **No pude leer el texto completo**, así que no sé si ya escriben la forma en el «gauge estacionario» de la sección 5. Hay que leerlo antes de afirmar cualquier novedad.
-- **Lo que este documento añade, salvo que el artículo ya lo contenga:**
-  1. Escribir la correspondencia en la forma del problema inverso: dados P_s, u y D, se recupera V.
-  2. La comparación término a término con tu ecuación maestra, incluido el cambio de signo del término de flujo.
-  3. La consecuencia operativa λ = 2D.
-
-  Lo más probable es que el aporte del trabajo esté en la aplicación inversa a datos, no en la teoría.
+- **Gauges del artículo** (según el resumen del autor de este trabajo, sin texto completo):
+  - el gauge de la fuerza irreversible, A^irr = f^irr, que separa la fuerza en partes reversible e irreversible;
+  - el gauge de Coulomb para OU, donde las áreas estocásticas barridas por las trayectorias son conjugadas de la matriz magnética B_nm;
+  - gauges k-deformados para observables aditivos y grandes desviaciones.
+- **Probable coincidencia:** si f^irr = J_s/P_s = f − D∇ln P_s (la descomposición habitual con variables pares bajo inversión temporal), el gauge de la fuerza irreversible es el «gauge estacionario» de la sección 6. En ese caso V_s + |v|²/(4D) ya está publicado. **Pendiente:** confirmar la definición de f^irr y la normalización de A (A = f/(2D), o A = f con otra convención para D).
+- **A favor del análisis empírico:** el área con signo A_i de los bloques 3 y 5 es el área estocástica del gauge de Coulomb. Tiene una base teórica publicada y está ligada a la producción de entropía.
+- **Lo que queda como aporte, si se confirma la coincidencia:**
+  1. La **dirección inversa con datos**: de trayectorias empíricas a (P̂, v̂, D̂), de ahí a V_FP y ∇×v, y una prueba falsable (el espectro reconstruido debe predecir las autocorrelaciones). El artículo va en sentido directo, de f a espectros y grandes desviaciones.
+  2. **Un marco común para las dos líneas** del trabajo: el problema inverso de Schrödinger generalizado con A real (cuántico, término de flujo −½m\|u\|², línea 1) y con A imaginario (estocástico, +½m\|v\|², λ = 2D, línea 2).
+  3. La validación empírica, con sus límites (estacionariedad, D constante, markovianidad en 2D).
+  La descomposición f = −D∇U + v en sí es la de paisaje y flujo de Wang.
 
 ## 1. Planteamiento y supuestos
 
