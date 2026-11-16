@@ -57,8 +57,9 @@ La diferencia entre U y V_B (±0.05) es menor que un mínimo de 5. Refine 5 a 40
 | 8 | ¿V añade algo a V_B? | 3, 6 | con λ ≥ 0.1, mismos mínimos; con λ pequeño, un pozo donde \|u\| es máximo y menor estabilidad | establecido |
 | 9 | ¿Los mínimos son estructura estática? | 3, 4 | en parte: alrededor de la mitad viene de estáticos, una cuarta parte de móviles y el resto de la combinación | establecido |
 | 10 | ¿Hay rotación colectiva? | 3, 5 | no frente a ninguno de los dos nulos; el sentido de rotación de SWI5 cambia entre Barrat y Onnela | establecido (negativo) |
-| 11 | ¿Algo distingue los datos de los nulos? | 5 | sí, pero solo en u: u_max y rango_flujo superan a las 400 réplicas; rango_bohm1 no | **sugerido** (post hoc) |
-| 12 | ¿Por qué u_max es alta? | — | hipótesis: SWI4, SWI6 y MBP1 son adyacentes y saltan juntos en t = 70 | no concluyente |
+| 11 | ¿Algo distingue los datos de los nulos? | 5 | frente a nulos por arista, sí, pero solo en u: u_max y rango_flujo superan a las 400 réplicas; rango_bohm1 no | superado por la fila 11b |
+| 11b | ¿Sobrevive frente al nulo por nodos? | 7 (50 réplicas) | **no se confirma**: p = 0.39, 0.078 y 0.24 para h = 0.25, 0.35 y 0.5; p_holm ≥ 0.47 | no confirmado (vista previa) |
+| 12 | ¿Por qué u_max es alta? | — | en parte por el residuo que el modelo producto no explica (real 1.42 frente a modelo 0.97 con h = 0.25) | no concluyente |
 | 13 | ¿Los mínimos aislados de los estáticos desaparecen por la máscara? | 4 | hipótesis no verificada | no concluyente |
 
 ## Conclusiones
@@ -70,13 +71,14 @@ La diferencia entre U y V_B (±0.05) es menor que un mínimo de 5. Refine 5 a 40
 4. V_B no localiza mínimos más estables que U, y V no mejora a V_B. V es invariante bajo inversión temporal, así que no distingue el sentido del flujo.
 5. No hay rotación colectiva distinguible de los nulos. El sentido de rotación en el plano (s, C) depende de la definición de C.
 
-**Sugerido**
+**No confirmado (antes «sugerido»)**
 
-6. La velocidad media máxima en la región densa (u_max, rango_flujo) es mayor que en todas las réplicas de ambos nulos (Barrat, h = 0.35; p_holm = 0.03, post hoc). El término de Bohm de los datos es típico de los nulos. **Si la señal se confirma, pertenece a la línea base, no a la representación de Bohm.**
-   - Es post hoc: se eligió tras ver el resultado de 50 réplicas.
-   - Solo se probó con Barrat y h = 0.35.
-   - Los estadísticos de máximo dependen un 10–30 % de la malla.
-   - Si Phasik construye las series de arista a partir de concentraciones de nodo, las aristas que comparten un nodo están correlacionadas por construcción. En ese caso, los nulos por arista son demasiado permisivos y el nulo adecuado es por nodo. No pude comprobarlo: el notebook `1_b` no está en el repositorio.
+6. Frente a los nulos por arista (bloque 5), la velocidad media máxima en la región densa superaba a las 400 réplicas (h = 0.35, post hoc), y el término de Bohm era típico de los nulos. El bloque 7 mostró que las series de arista son casi productos de actividades de nodo (R² = 0.948 frente a 0.63 con series asignadas al azar). Con un nulo por nodos que conserva esa estructura, el contraste confirmatorio declarado de antemano **no se cumple**:
+   - u_max: p = 0.39, 0.078 y 0.24 (h = 0.25, 0.35, 0.5); rango_flujo: igual. p_holm ≥ 0.47.
+   - El control (rango_bohm1) y la familia secundaria tampoco son significativos.
+   - Es una vista previa con 50 réplicas. Con h = 0.25 y 0.5, el observado queda dentro del intervalo nulo del 95 % (z ≈ 1.1–1.4). Más réplicas no pueden llevar los tres valores de h por debajo del umbral, así que el criterio declarado (los tres h) falla de todos modos. Para el informe conviene correr las 400 réplicas del diseño.
+   - Salvedad: el modelo producto no reproduce todo (error máximo \|Δw\| = 0.605), y el residuo aporta parte del u_max real (1.42 frente a 0.97 del modelo con h = 0.25). Los datos reales superan el percentil 97.5 nulo con h = 0.25 y 0.35, pero esa comparación no es justa: los nulos no tienen residuo.
+   - Conclusión: la señal del bloque 5 se explica en buena parte por la correlación entre aristas que ya traen las series. En cualquier caso era una propiedad de u (línea base), no de la representación de Bohm.
 
 **No concluyente**
 
@@ -91,6 +93,6 @@ La diferencia entre U y V_B (±0.05) es menor que un mínimo de 5. Refine 5 a 40
 - Las 125 aristas sin serie reciben peso 1 (convención de Phasik). Cada serie está normalizada por su máximo, así que los pesos no son comparables entre aristas.
 
 ## Siguientes pasos posibles (solo si se quiere seguir con la línea 2)
-1. Confirmar la observación 6 con un contraste declarado de antemano: u_max frente a nulos con h = 0.25 y 0.5, sin tocar nada más.
-2. Un nulo por nodo (desfase de las concentraciones de nodo y reconstrucción de las aristas). Requiere el notebook `1_b`.
-3. Replicar con datos independientes (RNA-seq, notebook `2_a`; ratón, `4_a`). Es la única confirmación que no reutiliza los mismos datos.
+1. Correr `b7_nulo_nodos.py` con 400 réplicas para reportar el diseño declarado completo.
+2. Replicar con datos independientes (RNA-seq, notebook `2_a`; ratón, `4_a`). Es la única confirmación que no reutiliza los mismos datos.
+3. Para el informe: el notebook `1_b` confirma la convención de carga (peso 1 en las 125 aristas sin serie), pero no muestra cómo se derivaron las series de arista del modelo de Chen. Conviene citar ese paso desde el artículo de Phasik.
