@@ -77,9 +77,11 @@ def parte_B(n_top=12):
     r_ba, _ = trayectorias(W, "barrat")
     st_on, st_ba = pasos(r_on), pasos(r_ba)
     mov = st_on.sum(0) > 1e-9
+    mov_ba = st_ba.sum(0) > 1e-9
     med_g_on = np.median(st_on[:, mov])
-    med_g_ba = np.median(st_ba[:, mov])
+    med_g_ba = np.median(st_ba[:, mov_ba])            # cada clustering con sus propios nodos móviles
     med_prop = np.median(st_on, axis=0)
+    med_prop = np.where(med_prop > 0, med_prop, np.nan)   # paso mediano 0 -> NaN (antes daba inf)
     print(f"Nodos que se mueven: {mov.sum()} de {len(nodos)}; paso mediano global (Onnela) = {med_g_on:.4g}")
 
     # aristas temporales relevantes para el nodo i: incidentes (afectan s y C)
@@ -127,7 +129,7 @@ def parte_B(n_top=12):
     _imprimir(pd.DataFrame(filas), "b2_saltos.csv")
 
     print("\nMétrica del pipeline original frente a la global (top 6 por paso propio):")
-    big_p = st_on.max(0) / np.where(med_prop > 0, med_prop, np.nan)
+    big_p = st_on.max(0) / med_prop
     orden = [i for i in np.argsort(-np.nan_to_num(big_p, nan=-1)) if mov[i]][:6]
     comp = pd.DataFrame([dict(nodo=nodos[i], max_paso_propio=big_p[i], max_paso_global=st_on[:, i].max() / med_g_on,
                               paso_mediano_propio_sobre_global=med_prop[i] / med_g_on,
