@@ -46,7 +46,12 @@ CON_KDE = {"barrat": True, "onnela": False}
 # primarios (3 x 2 nulos), p_holm mínimo = 0.03.
 PRIMARIOS = ["A_total", "coherencia", "omega_media_P"]
 SECUNDARIOS = ["A_abs", "A_max_abs", "omega_abs_P", "flujo_sobre_bohm_l1", "masa_J_en_mascara"]
-CONTRASTADOS = PRIMARIOS + SECUNDARIOS
+# POST HOC: añadidos tras ver (con 50 réplicas) que flujo_sobre_bohm_l1 superaba a todas las réplicas.
+# Sirven para separar numerador (solo u: línea base) y denominador (solo P: Bohm). Familia propia.
+SEGUIMIENTO = ["u_max_mascara", "rango_flujo", "rango_bohm1"]
+CONTRASTADOS = PRIMARIOS + SECUNDARIOS + SEGUIMIENTO
+FAMILIA = {**{k: "primaria" for k in PRIMARIOS}, **{k: "secundaria" for k in SECUNDARIOS},
+           **{k: "seguimiento_post_hoc" for k in SEGUIMIENTO}}
 
 
 def grupos_identicos(X):
@@ -132,12 +137,12 @@ def main(n_rep=200):
                     continue
                 v = d[k].to_numpy()
                 filas.append(dict(clustering=clus, nulo=nombre_nulo, estadistico=k,
-                                  familia="primaria" if k in PRIMARIOS else "secundaria", observado=obs[k],
+                                  familia=FAMILIA[k], observado=obs[k],
                                   nulo_mediana=np.nanmedian(v), nulo_p2_5=np.nanpercentile(v, 2.5),
                                   nulo_p97_5=np.nanpercentile(v, 97.5),
                                   z=(obs[k] - np.nanmean(v)) / np.nanstd(v) if np.nanstd(v) > 0 else np.nan,
                                   p=valor_p(obs[k], v)))
-        for fam in ("primaria", "secundaria"):
+        for fam in ("primaria", "secundaria", "seguimiento_post_hoc"):
             sub = [f for f in filas if f["familia"] == fam]
             for f, q in zip(sub, holm([f["p"] for f in sub])):
                 f["p_holm"] = q

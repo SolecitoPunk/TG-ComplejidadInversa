@@ -67,6 +67,9 @@ def estadisticos_globales(r, G, h, con_kde=True):
         Pm = F["P"][m]
         Jn = np.linalg.norm(F["J"], axis=1)
         out.update(
+            u_max_mascara=float(np.sqrt(-2 * F["flujo"][m].min())),
+            rango_flujo=float(np.ptp(F["flujo"][m])),
+            rango_bohm1=float(np.ptp(F["bohm1"][m])),
             omega_media_P=float((Pm * F["omega"][m]).sum() / Pm.sum()),
             omega_abs_P=float((Pm * np.abs(F["omega"][m])).sum() / Pm.sum()),
             flujo_sobre_bohm_l1=float(np.ptp(F["flujo"][m]) / np.ptp(F["bohm1"][m])),
