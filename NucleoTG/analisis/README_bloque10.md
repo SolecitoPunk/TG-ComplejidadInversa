@@ -11,12 +11,15 @@ Prueba si el estado 2D de un sistema tipo bicis (salidas, llegadas) por hora tie
 ## Modelo
 El "día" es el ciclo; se repite ND = 300 veces con ruido de día a día (σ = 0.20) y ruido de observación (0.05). Cada día es una curva cerrada de 24 h en el plano (salidas, llegadas) estandarizado. El conjunto de días es el ensemble para estimar densidad, corriente y difusión.
 
-Tres escenarios:
-- **rota**: picos desfasados (salidas 8 h, llegadas 18 h). El estado gira.
-- **debil**: desfase de 2 h. Caso intermedio.
-- **no_rota**: ambos picos a las 8 h. El estado sube y baja por la misma recta.
+Cuatro escenarios, parametrizados por el desfase entre los dos picos como fracción del ciclo. **El giro es máximo en cuadratura (1/4 de ciclo), no en oposición de fase.** Con perfiles simétricos, en fase (0) y en oposición (1/2) la curva va y vuelve por la misma recta y no gira:
+- **rota**: 1/4 de ciclo (picos a 5 h y 11 h). Cuadratura, giro máximo.
+- **debil**: 1/16 de ciclo. Casi en fase.
+- **no_rota**: 0. En fase.
+- **anti_fase**: 1/2 de ciclo. Oposición de fase; control de que el máximo no está ahí.
 
-Verificado en Python puro antes de programar el bloque: el área con signo del lazo medio es +1.37 (rota) frente a −0.02 (no_rota).
+Verificado en Python puro (área normalizada por el radio, 1 = círculo): rota 0.89, debil 0.64, no_rota −0.01, anti_fase 0.00.
+
+> **Corrección de diseño (primera versión).** La primera versión fijaba `rota` en medio ciclo (12 h) y daba área casi nula, y usaba un estimador de D sin unidades de difusión (media varianza del área), que producía un cociente flujo/Bohm absurdo (124). Ambos están corregidos: desfases por la física de la cuadratura, y D estimada por segundas diferencias en el plano de estados (bloques 8-9).
 
 ## Criterios declarados ANTES de ejecutar
 | id | condición | si falla |
@@ -24,8 +27,9 @@ Verificado en Python puro antes de programar el bloque: el área con signo del l
 | C1 | 'rota' tiene rotación significativa frente al nulo (p < 0.05) | el detector de rotación no sirve |
 | C2 | 'no_rota' NO es significativo (p ≥ 0.05) | **falso positivo**: el método inventa rotación donde no la hay; descalifica el pipeline para datos reales |
 | C3 | \|vorticidad(rota)\| > 3·\|vorticidad(no_rota)\| | la vorticidad con kernel no separa los casos |
-| C4 | el flujo aporta en 'rota' (rango flujo / rango Bohm con λ = 2D > 0.1) | incluso con rotación clara, el término de flujo es marginal; la ecuación no aportaría |
-| C5 | 'debil' queda entre 'no_rota' y 'rota' en \|área\| | el detector no es monótono en la intensidad de rotación |
+| C4 | el flujo aporta en 'rota' y en rango sensato (0.1 ≤ flujo/Bohm ≤ 10) | marginal (ecuación no aporta) o absurdo (error de escala en D) |
+| C5 | 'rota' (cuadratura) es el que más gira en \|área normalizada\| | el detector no respeta la física del desfase |
+| C6 | 'anti_fase' (oposición) NO es significativo | el máximo de rotación estaría mal ubicado |
 
 El modelo nulo desfasa en el tiempo el eje de llegadas de cada día, lo que destruye la relación temporal entre los dos ejes conservando cada perfil. 400 réplicas, p bilateral.
 
