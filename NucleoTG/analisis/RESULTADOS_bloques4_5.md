@@ -1,5 +1,7 @@
 # Resultados de los bloques 4 y 5 (bloque 5 preliminar, 50 réplicas)
 
+> La versión con 400 réplicas del bloque 5 está en `RESULTADOS_final.md`, y sustituye a la sección de abajo.
+
 ## Bloque 4
 - Cálculo rápido frente a directo: diferencia de 3·10⁻¹³ (Barrat) y 6·10⁻¹³ (Onnela). ✓
 - Estáticos: Barrat 61 nodos en 22 posiciones distintas (13 aisladas a más de h); Onnela 51 en 16 (14 aisladas). Hasta 13 nodos comparten una misma posición.
