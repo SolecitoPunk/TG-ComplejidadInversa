@@ -94,7 +94,7 @@ def estado_nodos(W, clustering="onnela"):
         C = np.where(kA > 1, tri / (np.maximum(s, 1e-12) * np.maximum(kA - 1, 1)), 0.0)
     elif clustering == "onnela":
         R = np.cbrt(W / W.max())
-        tri = np.einsum("tij,tjk,tki->ti", R, R, R)
+        tri = np.einsum("tij,tji->ti", R @ R, R)       # (R^3)_ii, igual que einsum('tij,tjk,tki->ti') pero con BLAS
         den = k * (k - 1)
         C = np.where(den > 0, tri / np.maximum(den, 1), 0.0)
     else:

@@ -65,29 +65,34 @@ def _bloques(n, m, max_elem):
         yield slice(a, min(n, a + c))
 
 
-def densidad_kde(G, A, h, max_elem=4e6):
-    """P, grad P, lap P en los puntos G a partir de las muestras A."""
+def densidad_kde(G, A, h, max_elem=4e6, pesos=None):
+    """P, grad P, lap P en los puntos G a partir de las muestras A.
+    pesos (opcional): peso de cada muestra; P = sum w K / sum w. Con pesos enteros equivale a
+    repetir muestras (útil para nodos estáticos: un punto con peso T en vez de T puntos iguales)."""
     n, Np = len(G), len(A)
+    w = np.ones(Np) if pesos is None else np.asarray(pesos, dtype=float)
     P = np.zeros(n)
     gP = np.zeros((n, 2))
     lP = np.zeros(n)
-    norm = 1.0 / (2 * np.pi * h ** 2 * Np)
+    norm = 1.0 / (2 * np.pi * h ** 2 * w.sum())
     for sl in _bloques(n, Np, max_elem):
         d = G[sl, None, :] - A[None, :, :]               # (c, Np, 2)
         q = np.einsum("cnk,cnk->cn", d, d) / h ** 2
-        K = np.exp(-0.5 * q)
+        K = np.exp(-0.5 * q) * w[None, :]
         P[sl] = K.sum(1) * norm
         gP[sl] = -np.einsum("cn,cnk->ck", K, d) * norm / h ** 2
         lP[sl] = np.einsum("cn,cn->c", K, q - 2.0) * norm / h ** 2
     return P, gP, lP
 
 
-def corriente_kde(G, B, Vel, h, max_elem=4e6):
-    """J y su gradiente gJ[:, a, b] = d_b J_a en los puntos G."""
+def corriente_kde(G, B, Vel, h, max_elem=4e6, n_total=None):
+    """J y su gradiente gJ[:, a, b] = d_b J_a en los puntos G.
+    n_total (opcional): número total de muestras para la normalización 1/n_total. Permite omitir
+    muestras con velocidad cero (nodos estáticos) sin cambiar J."""
     n, Nj = len(G), len(B)
     J = np.zeros((n, 2))
     gJ = np.zeros((n, 2, 2))
-    norm = 1.0 / (2 * np.pi * h ** 2 * Nj)
+    norm = 1.0 / (2 * np.pi * h ** 2 * (Nj if n_total is None else n_total))
     for sl in _bloques(n, Nj, max_elem):
         d = G[sl, None, :] - B[None, :, :]               # (c, Nj, 2)
         K = np.exp(-0.5 * np.einsum("cnk,cnk->cn", d, d) / h ** 2)
