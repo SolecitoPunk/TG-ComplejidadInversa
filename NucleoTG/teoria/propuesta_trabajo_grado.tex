@@ -6,7 +6,7 @@
 \usepackage[spanish]{babel}
 \usepackage{amsmath,amssymb}
 \usepackage{geometry}
-\geometry{margin=3cm}
+\geometry{margin=2.8cm}
 \usepackage{setspace}
 \onehalfspacing
 \usepackage{enumitem}
@@ -15,295 +15,340 @@
 \usepackage{array}
 
 % ----- Notación -----
-\newcommand{\uv}{\mathbf{u}}
-\newcommand{\vv}{\mathbf{v}}
-\newcommand{\fv}{\mathbf{f}}
 \newcommand{\rv}{\mathbf{r}}
+\newcommand{\uv}{\mathbf{u}}
 \newcommand{\Av}{\mathbf{A}}
+\newcommand{\Bv}{\mathbf{B}}
 \newcommand{\grad}{\nabla}
-\newcommand{\Ps}{P_{\mathrm{s}}}
-\newcommand{\Vfp}{V_{\mathrm{FP}}}
+\newcommand{\gradp}{\nabla^{\perp}}
 
-\title{\textbf{Problema inverso de Schr\"odinger con potencial vector\\
-y su correspondencia con la ecuaci\'on de Fokker--Planck:\\
-desarrollo anal\'itico, verificaci\'on num\'erica\\ y lectura desde el realismo agencial}}
+\title{\textbf{Generalización del método inverso de Schrödinger\\
+para potenciales vectoriales y estados de momento angular:\\
+fijación de gauge, validación en estados de Fock--Darwin\\
+y lectura desde el realismo agencial y la teoría del actor-red}}
 \author{[Nombre del estudiante]\\
-\small Director: [Nombre]\\
-\small Proyecto Curricular de [programa] --- Universidad Distrital Francisco Jos\'e de Caldas}
-\date{\small Propuesta de Trabajo de Grado --- Modalidad Monograf\'ia (investigaci\'on te\'orica)\\ \today}
+\small Director: [Nombre] \\
+\small Proyecto Curricular de Física --- Universidad Distrital Francisco José de Caldas}
+\date{\small Anteproyecto de Trabajo de Grado --- Modalidad Monografía de investigación teórica\\
+(Acuerdo 004 de 2026, Art.~2 lit.~b; estructura del Art.~24)\\ \today}
 
 \begin{document}
 \maketitle
 
-% Estructura según el Artículo 24 del Acuerdo 004 de 2026 (anteproyecto de monografía).
+\begin{center}
+\begin{tabular}{@{}p{4.2cm} p{10.5cm}@{}}
+\toprule
+\textbf{Modalidad} & Monografía --- investigación teórica (Art.~2, lit.~b). \\
+\textbf{Autores} & Un estudiante (máximo dos, Art.~3 par.~2), con al menos el 70\,\% de los créditos aprobados (Art.~3). \\
+\textbf{Dirección} & Docente de carrera o de vinculación especial (TCO/MTO), Art.~10. El director no figura como autor del trabajo ni de productos derivados (Art.~10 par.~2). \\
+\textbf{Avales} & Comité de Bioética e Investigación y Consejo Curricular (Art.~24, Art.~10 lit.~b--c). \\
+\textbf{Duración} & Un o dos periodos según el plan de estudios (Art.~9), con prórroga de un periodo por el Consejo Curricular y otra excepcional por el Consejo de Facultad (Art.~9 par.~1). \\
+\textbf{Evaluación} & Jurado designado: documento escrito 60\,\% y sustentación pública 40\,\% (Art.~26). \\
+\textbf{Propiedad intelectual} & Acuerdo 04 de 2012 del CSU (Arts.~14 y 62). \\
+\bottomrule
+\end{tabular}
+\end{center}
 
-\section*{a) Tema o t\'itulo}
+% =====================================================================
+\section*{a) Tema o título}
 \addcontentsline{toc}{section}{a) Tema o título}
-El tema es el \emph{problema inverso} de la ecuaci\'on de Schr\"odinger independiente del tiempo con potencial
-vector, y su correspondencia formal con la ecuaci\'on de Fokker--Planck de procesos de difusi\'on con corriente
-estacionaria. El contenido se delimita a: (i)~la generalizaci\'on del m\'etodo inverso a funciones de onda
-complejas, validada en estados de Fock--Darwin; (ii)~el desarrollo anal\'itico de la correspondencia con
-Fokker--Planck, que lleva a un operador de Schr\"odinger no herm\'itico con potencial vector imaginario;
-(iii)~una bater\'ia de pruebas num\'ericas con soluci\'on conocida; y (iv)~una lectura epistemol\'ogica de los
-resultados desde el realismo agencial (Barad) y la teor\'ia del actor-red (Latour). Quedan fuera del alcance
-las aplicaciones a datos de sistemas no f\'isicos (redes biol\'ogicas o sociales). El trabajo es te\'orico y
-computacional, con una duraci\'on de un per\'iodo acad\'emico, y no requiere trabajo de campo.
+El tema es el \emph{problema inverso} de la ecuación de Schrödinger independiente del tiempo para funciones de onda
+complejas acopladas a un potencial vector. Se delimita en contenido a: (i)~la descomposición de Madelung con
+acoplamiento mínimo y las dos ecuaciones que produce; (ii)~el análisis de qué determina y qué deja libre ese sistema
+cuando se toman la densidad y la fase como datos (fijación de gauge, conteo de grados de libertad y condiciones de
+unicidad); (iii)~la validación numérica sobre la familia de estados de Fock--Darwin; y (iv)~una lectura
+epistemológica del proceso de modelado desde Karen Barad y Bruno Latour. Se delimita en espacio a sistemas
+bidimensionales con campo magnético perpendicular, y en tiempo al plazo del Art.~9. Quedan fuera las aplicaciones de
+la ecuación a sistemas no cuánticos.
 
-\section*{b) Introducci\'on}
+% =====================================================================
+\section*{b) Introducción}
 \addcontentsline{toc}{section}{b) Introducción}
-La mec\'anica cu\'antica se ense\~na casi siempre en sentido directo: dado un potencial $V(\rv)$, se calcula
-la funci\'on de onda. Bhalgamiya y Novotny (2024) formalizaron el problema \emph{inverso} para funciones de onda
-reales: dada una densidad de probabilidad objetivo, recuperar el potencial que la produce. \textbf{Qu\'e:} este
-trabajo extiende ese m\'etodo a funciones de onda complejas con potencial vector, y muestra que la misma
-estructura matem\'atica aparece en la ecuaci\'on de Fokker--Planck de procesos de difusi\'on fuera del
-equilibrio, con un potencial vector imaginario. \textbf{C\'omo:} mediante derivaci\'on anal\'itica y
-verificaci\'on num\'erica de cada paso. \textbf{Por qu\'e:} la correspondencia fija par\'ametros que en una
-analog\'ia ingenua quedar\'ian libres, y relaciona dos sistemas de soluci\'on exacta conocida, el oscilador de
-Fock--Darwin y el proceso de Ornstein--Uhlenbeck con rotaci\'on. \textbf{Cu\'ando y d\'onde:} durante un
-per\'iodo acad\'emico, con herramientas computacionales de libre acceso. \textbf{Para qu\'e:} para entregar un
-desarrollo verificado, reproducible y con sus l\'imites declarados, y para examinar qu\'e significa que dos
-pr\'acticas f\'isicas distintas compartan una misma estructura formal.
+El problema directo de la mecánica cuántica no relativista parte de un potencial $V(\rv)$ y busca los autovalores y las
+autofunciones de la ecuación de Schrödinger. El método inverso de Bhalgamiya y Novotny (2024) invierte la pregunta:
+dada una densidad $P(\rv)=e^{-f(\rv)}$, obtiene analíticamente el potencial $V(\rv)-E$ del que $\sqrt{P}$ es estado
+fundamental. Su construcción supone una función de onda real, de modo que no cubre partículas cargadas en campos
+magnéticos ni estados con corriente de probabilidad o momento angular orbital.\footnote{El alcance exacto que los
+autores declaran debe verificarse en el texto completo antes de la entrega.}
 
-\section*{c) Situaci\'on probl\'emica y pregunta de investigaci\'on}
+\textbf{Qué:} este trabajo extiende el método a funciones de onda complejas mediante la descomposición polar de Madelung
+y estudia con precisión qué recupera la extensión. \textbf{Cómo:} derivación analítica, verificación numérica de cada
+identidad y validación sobre los estados de Fock--Darwin, de solución exacta conocida. \textbf{Por qué:} la extensión
+introduce el potencial vector como incógnita y, con él, una libertad de gauge y un problema de unicidad que el caso real
+no tiene. \textbf{Cuándo y dónde:} en el plazo reglamentario, con herramientas computacionales de libre acceso.
+\textbf{Para qué:} para entregar una formulación con sus condiciones de unicidad explícitas, un código validado y una
+reflexión sobre cómo las decisiones de modelado (gauge, fronteras, regularización) participan en la producción del
+resultado.
+
+% =====================================================================
+\section*{c) Situación problémica y pregunta de investigación}
 \addcontentsline{toc}{section}{c) Situación problémica y pregunta}
-Con el ansatz $\psi=\sqrt{P}\,e^{iS/\hbar}$, la parte real de la ecuaci\'on de Schr\"odinger con potencial
-vector da la \emph{ecuaci\'on maestra extendida}
-\begin{equation}
-  V(\rv)=E-\tfrac{1}{2m}(\grad S-q\Av)^2
-        +\frac{\hbar^2}{4m}\!\left[\frac{\grad^2 P}{P}-\tfrac12\frac{|\grad P|^2}{P^2}\right],
+Con $\psi=\sqrt{P}\,e^{iS/\hbar}$ y $\uv=\grad S-q\Av$, la parte imaginaria de la ecuación de Schrödinger da la
+continuidad estacionaria (Ec.~(9) del manuscrito base) y la parte real, la ecuación maestra extendida (Ec.~(11)):
+\begin{align}
+  \grad\cdot\big[P(\grad S-q\Av)\big]&=0, \label{eq:cont}\\
+  V(\rv)&=E-\frac{1}{2m}(\grad S-q\Av)^2+\frac{\hbar^2}{4m}\!\left[\frac{\grad^2P}{P}-\frac12\frac{|\grad P|^2}{P^2}\right].
   \label{eq:maestra}
-\end{equation}
-que recupera $V$ a partir de $P$ y $S$. Para un proceso de difusi\'on $d\rv=\fv\,dt+\sqrt{2D}\,d\mathbf W$ con
-estado estacionario $\Ps$ y velocidad de corriente $\vv$, la transformaci\'on $P=\sqrt{\Ps}\,\psi$ lleva el
-operador de Fokker--Planck a una ecuaci\'on de la misma forma, con tres diferencias: la constante queda fijada
-por la difusi\'on ($\hbar^2/m=2D$), el potencial vector es imaginario ($q\Av=-i\vv/2D$) y el t\'ermino de flujo
-cambia de signo,
-\begin{equation}
-  \Vfp=\frac{D}{2}\!\left[\frac{\grad^2\Ps}{\Ps}-\tfrac12\frac{|\grad\Ps|^2}{\Ps^2}\right]+\frac{|\vv|^2}{4D}.
-  \label{eq:fp}
-\end{equation}
-El problema es triple. \emph{Formal}: establecer con precisi\'on qu\'e se conserva y qu\'e cambia al pasar de un
-potencial vector real a uno imaginario. \emph{Num\'erico}: saber bajo qu\'e condiciones las versiones inversas
-de~\eqref{eq:maestra} y~\eqref{eq:fp} recuperan lo que deben a partir de datos discretos, ruidosos o suavizados.
-\emph{Epistemol\'ogico}: interpretar el hecho de que dos sistemas f\'isicamente distintos se describan con el
-mismo formalismo.
+\end{align}
+Si $\grad S=\mathbf 0$ y $\Av=\mathbf 0$, \eqref{eq:cont} se cumple idénticamente y \eqref{eq:maestra} se reduce al
+resultado de Bhalgamiya y Novotny. El manuscrito base toma $P$ y $S$ como datos; en ese planteamiento aparecen tres
+problemas:
+\begin{enumerate}[leftmargin=1.8em]
+  \item \textbf{Grados de libertad.} En 2D las incógnitas son $V$, $A_x$ y $A_y$ (tres funciones) frente a dos
+        ecuaciones escalares.
+  \item \textbf{Degeneración de la continuidad.} Incluso con el gauge de Coulomb, que reduce $\Av$ a una función de
+        corriente $\Phi$, la Ec.~\eqref{eq:cont} no determina $\Phi$: deja libre una función arbitraria de $P$
+        (sección d). En consecuencia, el campo magnético no queda fijado por $(P,S)$.
+  \item \textbf{Singularidades.} En los núcleos de vórtice ($r=0$ si $\ell\ne0$) y en los nodos radiales ($n>0$) el
+        término $\grad^2P/P$ y la fase son singulares; en una malla discreta esto produce cancelaciones numéricas
+        y errores que no convergen.
+\end{enumerate}
+Reducir estos problemas a ajustes técnicos ocultaría que la elección de qué se prescribe, del gauge y de la
+regularización decide qué objeto se ``reconstruye''.
 
 \medskip
-\noindent\textbf{Pregunta de investigaci\'on.} ¿Qu\'e propiedades del problema inverso de Schr\"odinger con
-potencial vector se conservan en su correspondencia con la ecuaci\'on de Fokker--Planck con corriente, bajo
-qu\'e condiciones num\'ericas se recuperan de forma fiable, y c\'omo puede leerse esa correspondencia desde el
-realismo agencial y la teor\'ia del actor-red?
+\noindent\textbf{Pregunta de investigación.} ¿Qué datos deben prescribirse para que el problema inverso estacionario de
+Schrödinger con potencial vector tenga solución única, cómo se comporta su resolución numérica en la familia de estados
+de Fock--Darwin, y qué revela ese proceso, leído desde el realismo agencial y la teoría del actor-red, sobre la
+relación entre el objeto reconstruido y el aparato teórico-computacional que lo produce?
 
-\section*{d) Marco te\'orico}
+% =====================================================================
+\section*{d) Marco teórico}
 \addcontentsline{toc}{section}{d) Marco teórico}
 
-\paragraph{Problema inverso cu\'antico.}
-La ecuaci\'on~\eqref{eq:maestra} generaliza el m\'etodo de Bhalgamiya y Novotny al caso complejo. La parte
-imaginaria de la ecuaci\'on de Schr\"odinger da la continuidad estacionaria $\grad\cdot(P\uv)=0$, con
-$\uv=\grad S-q\Av$. La magnitud interpretable, invariante de gauge, es $\grad\times\uv=-q\mathbf B$. Los
-estados de Fock--Darwin (oscilador arm\'onico bidimensional en campo magn\'etico uniforme) proporcionan un caso
-de validaci\'on con soluci\'on exacta.
-
-\paragraph{Correspondencia con Fokker--Planck.}
-La deriva se descompone como $\fv=-D\grad U+\vv$, con $U=-\ln\Ps$ (descomposici\'on de ``paisaje y flujo'',
-Wang \emph{et al.}, 2008). El operador transformado es
-$\hat H=D(-i\grad-q\Av)^2+\Vfp$, cuyo estado fundamental es $\sqrt{\Ps}$ con autovalor nulo y cuyos autovalores
-son las tasas de relajaci\'on (parte real) y las frecuencias de oscilaci\'on (parte imaginaria) del proceso. El
-rotacional $\grad\times\vv=\grad\times\fv$ es invariante de gauge, an\'alogo exacto de $\grad\times\uv$. La
-relaci\'on general entre Fokker--Planck fuera del equilibrio y mec\'anica cu\'antica no herm\'itica con
-potencial vector imaginario ha sido estudiada por Mazzolo y Monthus (2023), quienes analizan varios gauges. Este
-trabajo se sit\'ua respecto a ese antecedente (ver secci\'on e).
-
-\paragraph{Puente entre ambos casos: Fock--Darwin con campo imaginario.}
-Un resultado del desarrollo preliminar es que el proceso de Ornstein--Uhlenbeck con rotaci\'on, deriva
-$\fv=-(\gamma I+\Omega\mathcal J)\rv$, es un oscilador de Fock--Darwin con
+\subsection*{d.1 Descomposición de Madelung con potencial vector}
+Para una partícula de masa $m$ y carga $q$,
 \begin{equation}
-  \omega_0^2=\gamma^2+\Omega^2,\qquad \omega_c=2i\Omega,\qquad m=\tfrac{1}{2D}.
+  \frac{1}{2m}\big(-i\hbar\grad-q\Av\big)^2\psi+(V-E)\psi=0 .
 \end{equation}
-La frecuencia h\'ibrida $\Omega_h^2=\omega_0^2+\omega_c^2/4$ queda exactamente en $\gamma^2$, y el espectro de
-Fock--Darwin continuado, $(2n+|\ell|+1)\Omega_h-\ell\omega_c/2-\gamma=\gamma(2n+|\ell|)-i\Omega\ell$, coincide con
-el espectro conocido del proceso. El campo imaginario cancela la rigidez adicional que el flujo a\~nade al
-confinamiento. Este resultado conecta directamente las dos partes del trabajo.
+Con $\psi=Re^{iS/\hbar}$, $R=\sqrt P\ge0$ y $S$ real (multivaluada módulo $2\pi\hbar$ alrededor de los nodos), la parte
+real y la imaginaria dan
+\begin{equation}
+  V-E=\frac{\hbar^2}{2m}\frac{\grad^2R}{R}-\frac{1}{2m}|\grad S-q\Av|^2,\qquad
+  \grad\cdot\big[P(\grad S-q\Av)\big]=0,
+\end{equation}
+y con la identidad $\grad^2\sqrt P/\sqrt P=\tfrac12\grad^2P/P-\tfrac14|\grad P|^2/P^2$ se obtiene~\eqref{eq:maestra}.
+Las magnitudes invariantes de gauge son $P$, $\uv$, $V-E$ y $\Bv=\grad\times\Av$; en regiones donde $S$ es regular,
+$\grad\times\uv=-q\Bv$.
 
-\paragraph{Marco filos\'ofico.}
-Se emplean dos autores en dos niveles distintos, sin tratarlos como intercambiables:
+\subsection*{d.2 Fijación de gauge y unicidad}
+En 2D, toda $\Av$ admite la descomposición de Helmholtz $\Av=\grad\phi+\gradp\Phi$ con
+$\gradp\Phi=(\partial_y\Phi,-\partial_x\Phi)$, de modo que $\grad\cdot\Av=\grad^2\phi$ y $B_z=-\grad^2\Phi$. El gauge de
+Coulomb $\grad\cdot\Av=0$, con fronteras regulares, da $\phi\equiv0$ y reduce $\Av$ a una función $\Phi$. Sustituyendo
+en~\eqref{eq:cont},
+\begin{equation}
+  q\,\{P,\Phi\}=\grad\cdot(P\grad S),\qquad \{P,\Phi\}=\partial_xP\,\partial_y\Phi-\partial_yP\,\partial_x\Phi .
+  \label{eq:phi}
+\end{equation}
+\paragraph{Resultado preliminar: la Ec.~\eqref{eq:phi} es degenerada.} Es una ecuación de primer orden cuyas
+características son las curvas de nivel de $P$. Si $\Phi$ la cumple, también la cumple $\Phi+F(P)$ para cualquier
+función $F$, porque $\grad\cdot\big(P\,\gradp F(P)\big)=F'(P)\{P,P\}=0$, mientras que el campo magnético cambia en
+$-\grad^2F(P)$. Físicamente: una corriente que fluye a lo largo de las curvas de nivel de $P$ se conserva siempre, de
+modo que la continuidad no puede detectarla. Esto tiene dos consecuencias:
 \begin{itemize}[leftmargin=1.6em]
-  \item \textbf{Karen Barad (realismo agencial).} Barad parte de la filosof\'ia-f\'isica de Bohr: los
-        fen\'omenos no preceden a su medici\'on, sino que emergen de la \emph{intra-acci\'on} entre lo observado
-        y el aparato, y el ``corte agencial'' es lo que separa, dentro del fen\'omeno, lo medido de lo que mide.
-        En este trabajo hay tres lugares donde esa idea tiene contenido preciso. (1)~\emph{El gauge como
-        especificaci\'on del aparato}: los gauges sim\'etrico o de Landau en el caso cu\'antico, y los gauges
-        estacionario, de deriva o de Coulomb en el caso estoc\'astico, describen el mismo fen\'omeno con
-        potenciales distintos; lo que se conserva entre ellos (rotacional, espectro) es lo que puede llamarse
-        objetivo en el sentido de Barad, como reproducible a trav\'es de cortes. (2)~\emph{El estimador como
-        parte del fen\'omeno}: la tasa de relajaci\'on reconstruida depende del ancho $h$ del n\'ucleo de
-        suavizado con una ley $h^2$, y la extrapolaci\'on $h\to0$ es una decisi\'on sobre d\'onde situar el
-        corte, no la remoci\'on de un instrumento transparente. (3)~\emph{Materia y significado}: un potencial
-        vector real o imaginario comparte la forma matem\'atica, pero corresponde a pr\'acticas materiales
-        distintas (un electr\'on en un campo magn\'etico, una part\'icula browniana con corriente); la
-        estructura com\'un no borra la diferencia de lo que cada pr\'actica materializa.
-  \item \textbf{Bruno Latour (teor\'ia del actor-red y referencia circulante).} Latour describe el conocimiento
-        cient\'ifico como una cadena de transformaciones que conserva algo a trav\'es de cada paso (referencia
-        circulante) y trata a los no-humanos como actores que median el resultado. En este trabajo, la cadena
-        va de la ecuaci\'on al c\'odigo, del c\'odigo a la tabla y de la tabla a la afirmaci\'on; cada eslab\'on
-        es un mediador: el esquema de c\'alculo de la corriente, el estimador de la difusi\'on, el script que
-        verifica cada paso de la derivaci\'on. Esto fundamenta tres pr\'acticas del trabajo: declarar los
-        criterios de \'exito antes de ejecutar, verificar num\'ericamente cada identidad, y registrar las
-        correcciones (por ejemplo, un error de signo en el potencial vector detectado por la verificaci\'on
-        num\'erica, o una predicci\'on refutada sobre la forma del t\'ermino de Bohm).
+  \item El conteo ``2 ecuaciones para 2 incógnitas ($V$, $\Phi$)'' no basta: $(P,S)$ no determinan $B_z$. Queda libre
+        una función de una variable, $F(P)$, y en cada curva de nivel cerrada aparece además una condición de
+        solubilidad para el lado derecho de~\eqref{eq:phi} (por establecer con precisión en el trabajo).
+  \item La degeneración en simetría axial, donde con $P=P(r)$ y $S=\hbar\ell\theta$ ambos lados de~\eqref{eq:phi} se
+        anulan para cualquier perfil $A_\theta(r)$, es el caso particular $F(P(r))$ de esta degeneración general.
 \end{itemize}
-Se mantiene la distinci\'on que Barad establece entre su noci\'on de aparato y la red de humanos y no-humanos de
-Latour: el primero opera en el nivel ontol\'ogico-epistemol\'ogico (qu\'e es el fen\'omeno), la segunda en el
-nivel de la pr\'actica (c\'omo se ensambla y se sostiene una afirmaci\'on).
+Para la unicidad hay que prescribir información adicional: el campo $B_z$ (con lo cual~\eqref{eq:maestra} da $V$), o
+bien $V$ (con lo cual~\eqref{eq:maestra} restringe $|\uv|$ y se busca $F$). Establecer qué combinación de datos da
+unicidad, y con qué ambigüedades residuales, es el primer resultado que persigue el trabajo. La degeneración se
+verificó numéricamente con una densidad elíptica sin simetría (anexo de código).
 
+\subsection*{d.3 Estados de Fock--Darwin}
+Para $V=\tfrac12m\omega_0^2r^2$ y $\Bv=B\hat z$ en el gauge simétrico $\Av=\tfrac{Br}{2}\hat\theta$ (que es de Coulomb),
+con $\omega_c=qB/m$, $\Omega=\sqrt{\omega_0^2+\omega_c^2/4}$ y $l_\Omega=\sqrt{\hbar/(m\Omega)}$,
+\begin{equation}
+  \psi_{n,\ell}\propto\Big(\frac{r}{l_\Omega}\Big)^{|\ell|}L_n^{|\ell|}\!\Big(\frac{r^2}{l_\Omega^2}\Big)
+  e^{-r^2/2l_\Omega^2}e^{i\ell\theta},\qquad
+  E_{n,\ell}=\hbar\Omega(2n+|\ell|+1)-\tfrac12\hbar\omega_c\ell .
+\end{equation}
+Con $P=|\psi_{n,\ell}|^2$ y $S=\hbar\ell\theta$, el término centrífugo $\hbar^2\ell^2/(2mr^2)$ de $|\grad S|^2$ se
+cancela con la parte singular del término de Bohm, y~\eqref{eq:maestra} recupera $V=\tfrac12m\omega_0^2r^2$. Para
+$n>0$, $\psi$ cambia de signo en los nodos radiales: con $R=|\psi|$, la fase salta en $\pi\hbar$ y la recuperación vale
+fuera del conjunto nodal; el tratamiento sobre los nodos (distribucional o por regularización) es parte del trabajo.
+
+\subsection*{d.4 Marco epistemológico}
+\paragraph{Karen Barad: realismo agencial.} A partir de la filosofía-física de Bohr, Barad (2007) sostiene que las
+propiedades no preexisten a los fenómenos, sino que se constituyen por \emph{intra-acción} entre el objeto y las
+agencias de observación, y llama \emph{corte agencial} a la separación, interna al fenómeno, entre lo que se mide y lo
+que mide. En este problema, el resultado de d.2 da a esa idea un contenido preciso: como $(P,S)$ no determinan $B_z$, la
+frontera entre ``confinamiento escalar'' y ``circulación magnética'' no está dada por los datos; la traza la decisión de
+qué se prescribe ($B_z$ o $V$), junto con el gauge y la regularización. Esa decisión es el corte que separa y une a la
+vez lo dado y lo reconstruido. Se usará además la \emph{difracción} como método de lectura: leer el método real de
+Bhalgamiya y Novotny a través de la hidrodinámica compleja y del código, y registrar dónde aparecen diferencias
+(núcleos de vórtice, anillos nodales, degeneración $F(P)$) en lugar de reducir un marco al otro.
+
+\paragraph{Bruno Latour: teoría del actor-red.} Latour (1987, 2005) describe la estabilización de un resultado como un
+ensamblaje de actores humanos y no humanos, y las herramientas consolidadas como \emph{cajas negras} cuyo
+funcionamiento oculta los supuestos que las sostienen. El método inverso real es una caja negra que oculta su
+dependencia de la invariancia bajo inversión temporal; generalizarlo exige abrirla. El paso del espectro en el espacio
+de Hilbert a los campos $(P,S)$, de ahí a operadores discretos en Python y finalmente a tablas de error es una cadena de
+\emph{traducciones}, y el código funciona como \emph{dispositivo de inscripción} (Latour y Woolgar, 1979): convierte
+relaciones diferenciales en figuras y normas de error discutibles por pares. La práctica del trabajo de declarar criterios
+de éxito antes de ejecutar y verificar numéricamente cada identidad se justifica en este marco: la afirmación previa de
+que el gauge de Coulomb ``cierra'' el sistema en 2D se mostró incorrecta precisamente al verificarla.
+
+\paragraph{Distinción entre ambos marcos.} Barad distingue su noción de aparato de la red de humanos y no humanos de la
+teoría del actor-red. Aquí se usan en dos niveles: Barad para el nivel ontológico-epistemológico (qué es el objeto
+reconstruido), Latour para el nivel de la práctica (cómo se ensambla y se sostiene la afirmación).
+
+% =====================================================================
 \section*{e) Antecedentes}
 \addcontentsline{toc}{section}{e) Antecedentes}
-\paragraph{Antecedentes bibliogr\'aficos.}
+\paragraph{Bibliográficos.}
 \begin{itemize}[leftmargin=1.6em]
-  \item \textbf{Bhalgamiya y Novotny (2024).} M\'etodo inverso de la ecuaci\'on de Schr\"odinger para funciones
-        de onda reales; punto de partida que se generaliza.
-  \item \textbf{Madelung (1927) y Bohm (1952).} Formulaci\'on hidrodin\'amica y potencial cu\'antico.
-  \item \textbf{Fock (1928) y Darwin (1931).} Soluci\'on del oscilador arm\'onico en campo magn\'etico.
-  \item \textbf{Risken (1989).} Relaci\'on cl\'asica entre Fokker--Planck con balance detallado y un operador
-        de Schr\"odinger herm\'itico.
-  \item \textbf{Wang, Xu y Wang (2008).} Descomposici\'on en paisaje y flujo de sistemas fuera del equilibrio.
-  \item \textbf{Mazzolo y Monthus (2023).} Correspondencia entre Fokker--Planck fuera del equilibrio y
-        mec\'anica cu\'antica no herm\'itica con potencial vector imaginario, con an\'alisis de gauges (fuerza
-        irreversible, Coulomb, gauges adaptados a grandes desviaciones). Probablemente incluye la forma
-        de~\eqref{eq:fp}; la coincidencia exacta con el gauge estacionario usado aqu\'i debe confirmarse antes de
-        afirmar cualquier novedad.
+  \item \textbf{Bhalgamiya y Novotny (2024).} Con $\psi=e^{-f/2}$ obtienen
+        $V-E=-\frac{\hbar^2}{4m}\grad^2f+\frac{\hbar^2}{8m}|\grad f|^2$, y lo aplican a distribuciones en 1D, 2D y 3D
+        (oscilador armónico, estado fundamental del hidrógeno), para estados fundamentales reales y normalizables.
+  \item \textbf{Madelung (1927) y Bohm (1952).} Formulación hidrodinámica: la fase define el momento cinético
+        $\grad S-q\Av$ y la amplitud, el potencial cuántico $Q=-\frac{\hbar^2}{2m}\grad^2R/R$.
+  \item \textbf{Fock (1928) y Darwin (1931).} Oscilador armónico bidimensional en campo magnético uniforme, modelo
+        estándar de puntos cuánticos con espectro que interpola hacia los niveles de Landau.
+  \item \textbf{Barad (2007); Latour y Woolgar (1979); Latour (1987, 1999, 2005).} Marco epistemológico.
+\end{itemize}
+\paragraph{Propios (código versionado en el repositorio del proyecto).}
+\begin{itemize}[leftmargin=1.6em]
+  \item Estado $(n,\ell)=(0,1)$ con $\omega_0=1$, $\omega_c=2$ ($\hbar=m=q=1$): \eqref{eq:maestra} recupera el
+        confinamiento con convergencia de segundo orden en la malla. Con ruido relativo $\varepsilon$ en $P$, el error
+        sigue $\approx1.1\,\varepsilon/\Delta x^2$ y crece al refinar: el problema inverso está mal condicionado. La
+        forma escrita con $\sqrt P$ del término de Bohm es más precisa que la forma con $P$. Cerca del núcleo del vórtice
+        el error puntual no converge.
+  \item Recuperación puntual para $(n,\ell)\in\{(0,0),(0,\pm1),(1,0),(1,1),(2,-2)\}$, fuera de los nodos: error
+        máximo $3\times10^{-6}$ (diferencias centrales).
+  \item Degeneración $\Phi\to\Phi+F(P)$ de la Ec.~\eqref{eq:phi}, verificada con una densidad sin simetría.
 \end{itemize}
 
-\paragraph{Antecedentes propios (desarrollo preliminar, c\'odigo versionado).}
-\begin{itemize}[leftmargin=1.6em]
-  \item Fock--Darwin ($n=0$, $\ell=1$, $\omega_0=1$, $\omega_c=2$): la ecuaci\'on~\eqref{eq:maestra} recupera
-        $V=\tfrac12 m\omega_0^2r^2$ con convergencia de segundo orden en la malla. Con ruido en $P$ el error crece
-        como $\varepsilon/\Delta x^2$, es decir, el problema inverso est\'a mal condicionado y requiere
-        regularizaci\'on. La forma escrita con $\sqrt P$ del t\'ermino de Bohm es m\'as precisa que la forma con
-        $P$ (predicci\'on previa refutada). Cerca del nodo $r=0$ el error puntual no converge.
-  \item Cada paso de la correspondencia con Fokker--Planck se verific\'o num\'ericamente en un caso sin
-        simetr\'ias (error relativo $\sim10^{-6}$), incluida la equivalencia entre gauges.
-  \item La continuaci\'on anal\'itica Fock--Darwin $\to$ Ornstein--Uhlenbeck se verific\'o en el nivel de los
-        autovalores (error $\sim10^{-15}$).
-  \item A partir de trayectorias simuladas, el espectro del operador reconstruido recupera la frecuencia de
-        oscilaci\'on con error $<1\%$ y la tasa de relajaci\'on con un sesgo que sigue una ley $h^2$
-        (residuo $0.8\%$), corregible por extrapolaci\'on. Un chequeo de consistencia con intervalo de confianza
-        tiene una tasa de falsos positivos de 1 en 20 y detecta deriva lenta y memoria por proyecci\'on.
-\end{itemize}
-
-\section*{f) Justificaci\'on}
+% =====================================================================
+\section*{f) Justificación}
 \addcontentsline{toc}{section}{f) Justificación}
-\emph{Formal:} el trabajo hace expl\'icita, con verificaci\'on independiente, la correspondencia entre un
-problema inverso cu\'antico y uno estoc\'astico, incluido un caso puente de soluci\'on exacta en ambos lados.
-\emph{Metodol\'ogica:} entrega c\'odigo abierto y reproducible, pruebas con soluci\'on conocida y criterios
-declarados de antemano, que delimitan cu\'ando las versiones inversas son fiables (n\'umero de ciclos, ruido de
-medici\'on, ancho de suavizado). \emph{Pedag\'ogica:} el problema inverso y el par Fock--Darwin /
-Ornstein--Uhlenbeck ofrecen una v\'ia distinta a la habitual para ense\~nar potencial vector, invariancia de
-gauge y operadores no herm\'iticos. \emph{Epistemol\'ogica:} la correspondencia es un caso concreto y
-controlado para discutir, con Barad y Latour, qu\'e se conserva cuando una estructura formal circula entre
-pr\'acticas f\'isicas distintas.
+\emph{Físico-matemática:} la extensión del método inverso a potenciales vectoriales solo es útil si se sabe qué datos la
+determinan; el trabajo establece esas condiciones y corrige la idea de que la fijación de gauge basta. \emph{Computacional
+y pedagógica:} un código abierto y validado sobre la familia de Fock--Darwin sirve para enseñar potencial vector,
+invariancia de gauge, vórtices cuánticos y mal condicionamiento de problemas inversos, y para el diseño inverso de
+confinamientos en puntos cuánticos. \emph{Epistemológica y formativa} (Art.~1 del Acuerdo): el problema muestra, en un caso
+controlado, que la fijación de gauge, la elección de datos y la discretización no son pasos neutrales, y permite articular
+la formación en física con los estudios sociales de la ciencia.
 
+% =====================================================================
 \section*{g) Objetivos}
 \addcontentsline{toc}{section}{g) Objetivos}
-\paragraph{General.} Desarrollar anal\'iticamente y verificar num\'ericamente la correspondencia entre el
-problema inverso de Schr\"odinger con potencial vector y la ecuaci\'on de Fokker--Planck con corriente
-estacionaria, e interpretar su alcance desde el realismo agencial y la teor\'ia del actor-red.
+\paragraph{h) General.} Formular y validar la generalización del método inverso de Schrödinger independiente del tiempo
+para funciones de onda complejas con potencial vector, estableciendo sus condiciones de unicidad, verificándola
+numéricamente en estados de Fock--Darwin y analizando el proceso de modelado desde Karen Barad y Bruno Latour.
 
-\paragraph{Espec\'ificos.}
+\paragraph{i) Específicos.}
 \begin{enumerate}[label=\arabic*.,leftmargin=2em]
-  \item Exponer y validar la generalizaci\'on del m\'etodo inverso a funciones de onda complejas en estados de
-        Fock--Darwin, incluidos estados excitados y su sensibilidad al ruido y a la malla.
-  \item Derivar la correspondencia con Fokker--Planck en el gauge estacionario, establecer
-        $\hbar^2/m=2D$, el signo del t\'ermino de flujo y la invariancia de gauge, y situarla frente a la
-        literatura existente.
-  \item Establecer y verificar la continuaci\'on anal\'itica entre el oscilador de Fock--Darwin y el proceso de
-        Ornstein--Uhlenbeck con rotaci\'on, a nivel de espectro y de operador.
-  \item Ejecutar una bater\'ia de pruebas num\'ericas con soluci\'on conocida y criterios declarados de antemano
-        sobre la reconstrucci\'on inversa del operador a partir de trayectorias.
-  \item Interpretar los resultados, incluidos los negativos, desde el realismo agencial y la teor\'ia del
-        actor-red.
+  \item Derivar el sistema inverso de Madelung con acoplamiento mínimo y caracterizar su libertad de gauge y su conteo
+        de grados de libertad.
+  \item Demostrar la degeneración $\Phi\to\Phi+F(P)$ de la continuidad en el gauge de Coulomb, establecer las
+        condiciones de solubilidad sobre curvas de nivel cerradas y determinar qué datos adicionales ($B_z$ o $V$) dan
+        unicidad.
+  \item Implementar y documentar un resolvedor numérico que reconstruya $V$ (dado $B_z$) y $B_z$ (dado $V$) a partir de
+        $(P,S)$, con regularización controlada en nodos y núcleos de vórtice.
+  \item Validar el resolvedor sobre la familia de Fock--Darwin, cuantificando convergencia de malla, sensibilidad al ruido
+        y comportamiento cerca de las singularidades.
+  \item Elaborar una lectura difractiva y actor-red del proceso de modelado, mostrando cómo la elección de datos, el gauge,
+        la regularización y el software participan en el resultado.
 \end{enumerate}
 
-\section*{h) Metodolog\'ia}
-\addcontentsline{toc}{section}{h) Metodología}
-Investigaci\'on te\'orica con apoyo computacional. Cada prueba se registra con su criterio de \'exito y de
-refutaci\'on \emph{antes} de ejecutarla.
+% =====================================================================
+\section*{j) Metodología}
+\addcontentsline{toc}{section}{j) Metodología}
+Investigación teórica con apoyo computacional. Cada prueba se registra con su criterio de éxito y de refutación
+\emph{antes} de ejecutarla, y los resultados negativos se reportan como tales.
 
-\paragraph{Bater\'ia de pruebas.}
+\paragraph{Fases.}
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{Cierre analítico.} Derivación completa en coordenadas cartesianas y polares; demostración de la
+        degeneración $F(P)$ y de la condición de solubilidad; formulación de los problemas bien planteados.
+  \item \textbf{Resolvedor.} Módulo en Python que acepta $(P,S)$ más $B_z$ o $V$; integración de~\eqref{eq:phi} a lo
+        largo de curvas de nivel en geometría general y reducción radial en simetría axial; regularización
+        ($R=\sqrt{P+\epsilon}$, tratamiento de derivadas logarítmicas cerca de nodos).
+  \item \textbf{Validación.} Matriz de estados $n\in\{0,1,2\}$, $\ell\in\{-2,\dots,2\}$, con barrido de
+        $\omega_c/\omega_0$ desde confinamiento débil hasta el régimen de Landau; error puntual y en norma $L^2$ frente al
+        potencial exacto; sensibilidad a la malla, al ruido y a $\epsilon$.
+  \item \textbf{Análisis epistemológico y redacción.} Registro de las decisiones de modelado (datos prescritos, gauge
+        simétrico frente a Landau, malla, regularización) y de los fallos como material para la lectura desde Barad y
+        Latour; redacción con RAE y anexos de código (Art.~25).
+\end{enumerate}
+
+\paragraph{Batería de pruebas.}
 \begin{center}
-\begin{tabular}{@{}p{0.6cm} p{6.6cm} p{4.2cm} p{1.6cm}@{}}
+\begin{tabular}{@{}p{0.7cm} p{8.2cm} p{2.3cm}@{}}
 \toprule
-& Prueba & Qu\'e verifica & Estado \\
+& Prueba & Estado \\
 \midrule
-P1 & Fock--Darwin $n=0$, $\ell=1$: malla y ruido & convergencia, condicionamiento, forma $\sqrt P$ & hecha \\
-P2 & Fock--Darwin excitado ($n\ge1$, $|\ell|\ge2$) & m\'etodo inverso donde $P$ tiene nodos & pendiente \\
-P3 & Verificaci\'on paso a paso de la correspondencia FP & cada identidad de la derivaci\'on & hecha \\
-P4 & Fock--Darwin con $\omega_c=2i\Omega$ frente al OU con rotaci\'on & espectro (hecha) y operador en malla & parcial \\
-P5 & Invariancia de gauge num\'erica & mismo espectro en gauge estacionario y de deriva & pendiente \\
-P6 & OU con rotaci\'on desde trayectorias & recuperaci\'on de $\gamma\pm i\Omega$ & hecha \\
-P7 & Oscilador de Stuart--Landau con ruido & difusi\'on de fase, ley $h^2$, n\'umero de ciclos & hecha \\
-P8 & Robustez: ruido de medici\'on, anisotrop\'ia, proyecci\'on, deriva & l\'imites del m\'etodo y del chequeo de consistencia & hecha \\
+Q1 & Fock--Darwin $(0,1)$: convergencia de malla, ruido, forma $\sqrt P$ frente a $P$ & hecha \\
+Q2 & Fock--Darwin excitados: recuperación puntual fuera de nodos & hecha \\
+Q3 & Fock--Darwin excitados en malla, con nodos y regularización & pendiente \\
+Q4 & Degeneración $F(P)$ con densidad sin simetría & verificada; demostración pendiente \\
+Q5 & Condición de solubilidad sobre curvas de nivel cerradas & pendiente \\
+Q6 & Reconstrucción de $B_z$ dado $V$ (problema inverso dual) & pendiente \\
+Q7 & Invariancia de gauge: simétrico frente a Landau & pendiente \\
+Q8 & Barrido $\omega_c/\omega_0$ hacia el régimen de Landau & pendiente \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-\paragraph{Fases y cronograma.}
+\paragraph{Cronograma (dos periodos académicos).}
 \begin{center}
-\begin{tabular}{@{}lcccc@{}}
+\begin{tabular}{@{}p{3.2cm} p{6.4cm} p{4.6cm}@{}}
 \toprule
-Actividad & Sem. 1--4 & Sem. 4--8 & Sem. 8--12 & Sem. 12--16 \\
+Periodo & Actividades & Entregable \\
 \midrule
-Fuentes y posicionamiento (Mazzolo--Monthus, Bhalgamiya--Novotny) & $\bullet$ & & & \\
-Desarrollo anal\'itico y continuaci\'on FD--OU                    & $\bullet$ & $\bullet$ & & \\
-Pruebas pendientes (P2, P4 operador, P5)                          & & $\bullet$ & $\bullet$ & \\
-Lectura filos\'ofica                                              & & & $\bullet$ & $\bullet$ \\
-Redacci\'on y socializaci\'on                                     & & & & $\bullet$ \\
+P1, sem.~1--4 & Radicación; revisión crítica de fuentes & Anteproyecto aprobado; director designado \\
+P1, sem.~5--12 & Cierre analítico (objetivos 1--2) & Capítulo matemático verificado \\
+P1, sem.~13--16 & Resolvedor y pruebas Q1--Q4 & Código documentado \\
+P2, sem.~1--6 & Pruebas Q5--Q8 & Tablas de error y mapas \\
+P2, sem.~7--12 & Lectura desde Barad y Latour & Capítulo epistemológico \\
+P2, sem.~13--16 & Integración, RAE, sustentación & Documento (60\,\%) y sustentación (40\,\%) \\
 \bottomrule
 \end{tabular}
 \end{center}
+Si el plan de estudios contempla un solo espacio de Trabajo de Grado (Art.~9 lit.~a), el cronograma se comprime a un
+periodo dejando Q6--Q8 como trabajo futuro.
 
-\noindent\textbf{Herramientas:} Python (numpy, scipy, pandas, matplotlib); repositorio con control de
-versiones; semillas fijas. \textbf{M\'etodos de an\'alisis:} diferencias finitas y estimaci\'on por n\'ucleo con
-derivadas anal\'iticas; diagonalizaci\'on de operadores dispersos no herm\'iticos; extrapolaci\'on en el ancho
-de suavizado; remuestreo para intervalos de confianza.
+% =====================================================================
+\section*{k) Impacto esperado}
+\addcontentsline{toc}{section}{k) Impacto esperado}
+Una formulación del método inverso con potencial vector en la que queda explícito qué datos determinan el campo magnético
+y el potencial; un resolvedor abierto y validado sobre la familia de Fock--Darwin, útil para docencia y para diseño inverso
+de confinamientos; y un caso de estudio concreto para la discusión epistemológica sobre la participación del aparato
+teórico-computacional en el resultado. Como producto derivado posible, el núcleo físico-computacional puede someterse
+como artículo a una revista de física docente o computacional. La correspondencia formal con la ecuación de
+Fokker--Planck (potencial vector imaginario), desarrollada de forma preliminar, queda como perspectiva.
 
-\section*{i) Impacto esperado}
-\addcontentsline{toc}{section}{i) Impacto esperado}
-Un desarrollo anal\'itico verificado y reproducible de la correspondencia entre el problema inverso cu\'antico y
-el estoc\'astico, con un caso puente exacto y sus l\'imites num\'ericos declarados; material con valor
-pedag\'ogico para cursos de mec\'anica cu\'antica y f\'isica estad\'istica; y un caso de estudio concreto para
-la discusi\'on epistemol\'ogica sobre la circulaci\'on de estructuras formales entre pr\'acticas f\'isicas. Como
-producto derivado posible, un art\'iculo de investigaci\'on o de reflexi\'on.
-
-\section*{j) Bibliograf\'ia preliminar}
-\addcontentsline{toc}{section}{j) Bibliografía}
+% =====================================================================
+\section*{l) Bibliografía}
+\addcontentsline{toc}{section}{l) Bibliografía}
 \begin{enumerate}[leftmargin=2em,label={[\arabic*]}]
-  \item B. Bhalgamiya y M. A. Novotny, ``Exact solutions for the inverse problem of the time-independent
-        Schr\"odinger equation'', \emph{Am. J. Phys.} \textbf{92}(12), 975--979 (2024).
+  \item B. Bhalgamiya y M. A. Novotny, ``Exact solutions for the inverse problem of the time-independent Schrödinger
+        equation'', \emph{Am. J. Phys.} \textbf{92}(12), 975--979 (2024).
   \item E. Madelung, ``Quantentheorie in hydrodynamischer Form'', \emph{Z. Phys.} \textbf{40}, 322 (1927).
-  \item D. Bohm, ``A suggested interpretation of the quantum theory in terms of hidden variables'',
-        \emph{Phys. Rev.} \textbf{85}, 166 (1952).
-  \item V. Fock, ``Bemerkung zur Quantelung des harmonischen Oszillators im Magnetfeld'', \emph{Z. Phys.}
-        \textbf{47}, 446 (1928).
-  \item C. G. Darwin, ``The diamagnetism of the free electron'', \emph{Proc. Camb. Phil. Soc.} \textbf{27}, 86
-        (1931).
-  \item H. Risken, \emph{The Fokker--Planck Equation}, 2.\textsuperscript{a} ed., Springer (1989).
-  \item J. Wang, L. Xu y E. Wang, ``Potential landscape and flux framework of nonequilibrium networks'',
-        \emph{PNAS} \textbf{105}, 12271 (2008).
-  \item A. Mazzolo y C. Monthus, \emph{Phys. Rev. E} \textbf{107}, 014101 (2023); arXiv:2210.05353.
-  \item K. Barad, \emph{Meeting the Universe Halfway: Quantum Physics and the Entanglement of Matter and
-        Meaning}, Duke University Press (2007).
+  \item D. Bohm, ``A suggested interpretation of the quantum theory in terms of hidden variables'', \emph{Phys. Rev.}
+        \textbf{85}, 166 (1952).
+  \item V. Fock, ``Bemerkung zur Quantelung des harmonischen Oszillators im Magnetfeld'', \emph{Z. Phys.} \textbf{47},
+        446 (1928).
+  \item C. G. Darwin, ``The diamagnetism of the free electron'', \emph{Proc. Camb. Phil. Soc.} \textbf{27}, 86 (1931).
+  \item K. Barad, \emph{Meeting the Universe Halfway: Quantum Physics and the Entanglement of Matter and Meaning}, Duke
+        University Press (2007).
+  \item B. Latour y S. Woolgar, \emph{Laboratory Life: The Social Construction of Scientific Facts}, Sage (1979).
   \item B. Latour, \emph{Science in Action}, Harvard University Press (1987).
-  \item B. Latour, \emph{Pandora's Hope: Essays on the Reality of Science Studies}, Harvard University Press
-        (1999).
-  \item B. Latour, \emph{Reassembling the Social: An Introduction to Actor-Network-Theory}, Oxford University
-        Press (2005).
+  \item B. Latour, \emph{Pandora's Hope: Essays on the Reality of Science Studies}, Harvard University Press (1999).
+  \item B. Latour, \emph{Reassembling the Social: An Introduction to Actor-Network-Theory}, Oxford University Press (2005).
+  \item A. Mazzolo y C. Monthus, \emph{Phys. Rev. E} \textbf{107}, 014101 (2023) (perspectiva Fokker--Planck).
+  \item Universidad Distrital Francisco José de Caldas, Consejo Académico, Acuerdo N.\textsuperscript{o} 004 (18 de agosto
+        de 2026).
+  \item Universidad Distrital Francisco José de Caldas, Consejo Superior Universitario, Acuerdo N.\textsuperscript{o} 04
+        de 2012 (Estatuto de Propiedad Intelectual).
 \end{enumerate}
 
 \vfill
 \noindent\rule{\linewidth}{0.4pt}\\
-\small Nota de reproducibilidad: el c\'odigo, las derivaciones verificadas y los resultados est\'an versionados
-en el repositorio del proyecto. La estructura sigue el Art\'iculo 24 del Acuerdo 004 de 2026 (modalidad
-Monograf\'ia). Los datos bibliogr\'aficos deben verificarse contra las fuentes antes de la entrega.
+\small Las comprobaciones numéricas citadas están en \texttt{NucleoTG/teoria/verificar\_gauge\_fock\_darwin.py} y
+\texttt{NucleoTG/analisis/b1\_validacion.py}. Los datos bibliográficos deben verificarse contra las fuentes.
 
 \end{document}
