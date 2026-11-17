@@ -12,16 +12,21 @@
 \usepackage{enumitem}
 \usepackage[hidelinks]{hyperref}
 \usepackage{booktabs}
+\usepackage{array}
 
 % ----- Notación -----
 \newcommand{\uv}{\mathbf{u}}
 \newcommand{\vv}{\mathbf{v}}
+\newcommand{\fv}{\mathbf{f}}
 \newcommand{\rv}{\mathbf{r}}
 \newcommand{\Av}{\mathbf{A}}
 \newcommand{\grad}{\nabla}
+\newcommand{\Ps}{P_{\mathrm{s}}}
+\newcommand{\Vfp}{V_{\mathrm{FP}}}
 
-\title{\textbf{El problema inverso de Schr\"odinger generalizado como aparato:\\
-alcance y l\'imites de la representaci\'on de Madelung--Bohm\\ dentro y fuera de la mec\'anica cu\'antica}}
+\title{\textbf{Problema inverso de Schr\"odinger con potencial vector\\
+y su correspondencia con la ecuaci\'on de Fokker--Planck:\\
+desarrollo anal\'itico, verificaci\'on num\'erica\\ y lectura desde el realismo agencial}}
 \author{[Nombre del estudiante]\\
 \small Director: [Nombre]\\
 \small Proyecto Curricular de [programa] --- Universidad Distrital Francisco Jos\'e de Caldas}
@@ -30,209 +35,275 @@ alcance y l\'imites de la representaci\'on de Madelung--Bohm\\ dentro y fuera de
 \begin{document}
 \maketitle
 
-% La estructura sigue el Artículo 24 del Acuerdo 004 de 2026 (anteproyecto de monografía).
+% Estructura según el Artículo 24 del Acuerdo 004 de 2026 (anteproyecto de monografía).
 
 \section*{a) Tema o t\'itulo}
 \addcontentsline{toc}{section}{a) Tema o título}
-El tema es el \emph{problema inverso} de la ecuaci\'on de Schr\"odinger independiente del tiempo y su
-posible uso, como analog\'ia formal, fuera de la mec\'anica cu\'antica. El contenido se delimita a: (i)~la
-generalizaci\'on del m\'etodo inverso a funciones de onda complejas, validada anal\'itica y num\'ericamente en
-estados de Fock--Darwin; y (ii)~la determinaci\'on rigurosa de las condiciones bajo las cuales la
-representaci\'on de Madelung--Bohm conserva o pierde su contenido al trasladarse a sistemas cl\'asicos con
-din\'amica peri\'odica (redes complejas, se\~nales con ciclos). En el tiempo: un trabajo de un per\'iodo
-acad\'emico. En el espacio: an\'alisis te\'orico y computacional con datos p\'ublicos ya identificados, sin
-trabajo de campo.
+El tema es el \emph{problema inverso} de la ecuaci\'on de Schr\"odinger independiente del tiempo con potencial
+vector, y su correspondencia formal con la ecuaci\'on de Fokker--Planck de procesos de difusi\'on con corriente
+estacionaria. El contenido se delimita a: (i)~la generalizaci\'on del m\'etodo inverso a funciones de onda
+complejas, validada en estados de Fock--Darwin; (ii)~el desarrollo anal\'itico de la correspondencia con
+Fokker--Planck, que lleva a un operador de Schr\"odinger no herm\'itico con potencial vector imaginario;
+(iii)~una bater\'ia de pruebas num\'ericas con soluci\'on conocida; y (iv)~una lectura epistemol\'ogica de los
+resultados desde el realismo agencial (Barad) y la teor\'ia del actor-red (Latour). Quedan fuera del alcance
+las aplicaciones a datos de sistemas no f\'isicos (redes biol\'ogicas o sociales). El trabajo es te\'orico y
+computacional, con una duraci\'on de un per\'iodo acad\'emico, y no requiere trabajo de campo.
 
 \section*{b) Introducci\'on}
 \addcontentsline{toc}{section}{b) Introducción}
 La mec\'anica cu\'antica se ense\~na casi siempre en sentido directo: dado un potencial $V(\rv)$, se calcula
-la funci\'on de onda. Bhalgamiya y Novotny (2024) formalizaron el problema \emph{inverso}: a partir de una
-densidad de probabilidad objetivo recuperar el potencial que la produce, para funciones de onda reales. Este
-trabajo parte de una generalizaci\'on de ese m\'etodo a funciones de onda complejas, que permite recuperar un
-potencial escalar y uno vectorial a partir de una densidad $P(\rv)$ y una fase $S(\rv)$, y se valida
-reproduciendo los estados de Fock--Darwin (oscilador arm\'onico bajo campo magn\'etico).
-
-La pregunta que organiza la monograf\'ia es \textbf{c\'omo}, \textbf{por qu\'e} y \textbf{con qu\'e l\'imites}
-una ecuaci\'on nacida en la f\'isica cu\'antica puede leerse como un ``paisaje'' de sistemas que no son
-cu\'anticos. \textbf{Cu\'ando} y \textbf{d\'onde}: el estudio se realiza durante un per\'iodo acad\'emico, sobre
-casos de prueba sint\'eticos y dos conjuntos de datos p\'ublicos (una red de interacci\'on de prote\'inas y un
-sistema de bicicletas compartidas). \textbf{Para qu\'e}: no para afirmar que esos sistemas sean cu\'anticos,
-sino para delimitar con precisi\'on d\'onde la analog\'ia aporta informaci\'on medible y d\'onde es solo una
-reescritura. Un resultado parcialmente negativo es, en este marco, un resultado leg\'itimo: delimita el alcance
-de un m\'etodo.
+la funci\'on de onda. Bhalgamiya y Novotny (2024) formalizaron el problema \emph{inverso} para funciones de onda
+reales: dada una densidad de probabilidad objetivo, recuperar el potencial que la produce. \textbf{Qu\'e:} este
+trabajo extiende ese m\'etodo a funciones de onda complejas con potencial vector, y muestra que la misma
+estructura matem\'atica aparece en la ecuaci\'on de Fokker--Planck de procesos de difusi\'on fuera del
+equilibrio, con un potencial vector imaginario. \textbf{C\'omo:} mediante derivaci\'on anal\'itica y
+verificaci\'on num\'erica de cada paso. \textbf{Por qu\'e:} la correspondencia fija par\'ametros que en una
+analog\'ia ingenua quedar\'ian libres, y relaciona dos sistemas de soluci\'on exacta conocida, el oscilador de
+Fock--Darwin y el proceso de Ornstein--Uhlenbeck con rotaci\'on. \textbf{Cu\'ando y d\'onde:} durante un
+per\'iodo acad\'emico, con herramientas computacionales de libre acceso. \textbf{Para qu\'e:} para entregar un
+desarrollo verificado, reproducible y con sus l\'imites declarados, y para examinar qu\'e significa que dos
+pr\'acticas f\'isicas distintas compartan una misma estructura formal.
 
 \section*{c) Situaci\'on probl\'emica y pregunta de investigaci\'on}
 \addcontentsline{toc}{section}{c) Situación problémica y pregunta}
-La tentaci\'on de aplicar formalismos cu\'anticos a sistemas cl\'asicos (redes sociales, biol\'ogicas,
-econ\'omicas) es creciente, pero suele faltar un criterio que distinga cu\'ando la traslaci\'on es leg\'itima.
-En el caso de la ecuaci\'on maestra extendida,
+Con el ansatz $\psi=\sqrt{P}\,e^{iS/\hbar}$, la parte real de la ecuaci\'on de Schr\"odinger con potencial
+vector da la \emph{ecuaci\'on maestra extendida}
 \begin{equation}
   V(\rv)=E-\tfrac{1}{2m}(\grad S-q\Av)^2
         +\frac{\hbar^2}{4m}\!\left[\frac{\grad^2 P}{P}-\tfrac12\frac{|\grad P|^2}{P^2}\right],
   \label{eq:maestra}
 \end{equation}
-dos par\'ametros (la constante $\lambda=\hbar^2/m$ y el signo del t\'ermino de flujo) carecen, a priori, de
-anclaje en un sistema no cu\'antico. Sin ese anclaje, $V$ es un n\'umero que se calcula, no una magnitud con
-significado. El problema es, entonces, doble: formal (¿qu\'e fija esos par\'ametros?) y epistemol\'ogico
-(¿qu\'e estatuto tiene el objeto que se recupera?).
+que recupera $V$ a partir de $P$ y $S$. Para un proceso de difusi\'on $d\rv=\fv\,dt+\sqrt{2D}\,d\mathbf W$ con
+estado estacionario $\Ps$ y velocidad de corriente $\vv$, la transformaci\'on $P=\sqrt{\Ps}\,\psi$ lleva el
+operador de Fokker--Planck a una ecuaci\'on de la misma forma, con tres diferencias: la constante queda fijada
+por la difusi\'on ($\hbar^2/m=2D$), el potencial vector es imaginario ($q\Av=-i\vv/2D$) y el t\'ermino de flujo
+cambia de signo,
+\begin{equation}
+  \Vfp=\frac{D}{2}\!\left[\frac{\grad^2\Ps}{\Ps}-\tfrac12\frac{|\grad\Ps|^2}{\Ps^2}\right]+\frac{|\vv|^2}{4D}.
+  \label{eq:fp}
+\end{equation}
+El problema es triple. \emph{Formal}: establecer con precisi\'on qu\'e se conserva y qu\'e cambia al pasar de un
+potencial vector real a uno imaginario. \emph{Num\'erico}: saber bajo qu\'e condiciones las versiones inversas
+de~\eqref{eq:maestra} y~\eqref{eq:fp} recuperan lo que deben a partir de datos discretos, ruidosos o suavizados.
+\emph{Epistemol\'ogico}: interpretar el hecho de que dos sistemas f\'isicamente distintos se describan con el
+mismo formalismo.
 
 \medskip
-\noindent\textbf{Pregunta de investigaci\'on.} ¿Bajo qu\'e condiciones la representaci\'on de Madelung--Bohm,
-derivada de la ecuaci\'on~\eqref{eq:maestra}, constituye una descripci\'on con contenido verificable de un
-sistema no cu\'antico con din\'amica peri\'odica, y bajo qu\'e condiciones se reduce a una reescritura de
-informaci\'on ya disponible en la densidad y el flujo?
+\noindent\textbf{Pregunta de investigaci\'on.} ¿Qu\'e propiedades del problema inverso de Schr\"odinger con
+potencial vector se conservan en su correspondencia con la ecuaci\'on de Fokker--Planck con corriente, bajo
+qu\'e condiciones num\'ericas se recuperan de forma fiable, y c\'omo puede leerse esa correspondencia desde el
+realismo agencial y la teor\'ia del actor-red?
 
 \section*{d) Marco te\'orico}
 \addcontentsline{toc}{section}{d) Marco teórico}
 
-\paragraph{Fundamento f\'isico-matem\'atico.}
-La ecuaci\'on~\eqref{eq:maestra} proviene del ansatz de Madelung $\psi=\sqrt{P}\,e^{iS/\hbar}$. El t\'ermino
-entre corchetes (``potencial cu\'antico'' de Bohm) es una transformaci\'on de segundas derivadas del paisaje
-$U=-\ln P$. Un resultado central del trabajo es que, para procesos de difusi\'on con deriva, la ecuaci\'on de
-Fokker--Planck es equivalente a un operador de Schr\"odinger \emph{no herm\'itico} con un potencial vector
-imaginario; esta correspondencia (relacionada con Mazzolo y Monthus, 2023) fija $\lambda=2D$, con $D$ la
-difusi\'on, y determina el signo del t\'ermino de flujo. As\'i, los dos par\'ametros libres dejan de serlo:
-quedan anclados al ruido del sistema, que es medible. La derivaci\'on se verifica num\'ericamente en el
-repositorio del proyecto.
+\paragraph{Problema inverso cu\'antico.}
+La ecuaci\'on~\eqref{eq:maestra} generaliza el m\'etodo de Bhalgamiya y Novotny al caso complejo. La parte
+imaginaria de la ecuaci\'on de Schr\"odinger da la continuidad estacionaria $\grad\cdot(P\uv)=0$, con
+$\uv=\grad S-q\Av$. La magnitud interpretable, invariante de gauge, es $\grad\times\uv=-q\mathbf B$. Los
+estados de Fock--Darwin (oscilador arm\'onico bidimensional en campo magn\'etico uniforme) proporcionan un caso
+de validaci\'on con soluci\'on exacta.
 
-\paragraph{Fundamento conceptual: paisaje y flujo.}
-La descomposici\'on de la deriva en una parte de gradiente (paisaje) y una parte rotacional (flujo) es la
-teor\'ia de ``paisaje y flujo'' de Wang y colaboradores (2008). El trabajo se sit\'ua como la versi\'on
-\emph{inversa} de ese marco: de trayectorias emp\'iricas al paisaje y a la vorticidad del flujo.
+\paragraph{Correspondencia con Fokker--Planck.}
+La deriva se descompone como $\fv=-D\grad U+\vv$, con $U=-\ln\Ps$ (descomposici\'on de ``paisaje y flujo'',
+Wang \emph{et al.}, 2008). El operador transformado es
+$\hat H=D(-i\grad-q\Av)^2+\Vfp$, cuyo estado fundamental es $\sqrt{\Ps}$ con autovalor nulo y cuyos autovalores
+son las tasas de relajaci\'on (parte real) y las frecuencias de oscilaci\'on (parte imaginaria) del proceso. El
+rotacional $\grad\times\vv=\grad\times\fv$ es invariante de gauge, an\'alogo exacto de $\grad\times\uv$. La
+relaci\'on general entre Fokker--Planck fuera del equilibrio y mec\'anica cu\'antica no herm\'itica con
+potencial vector imaginario ha sido estudiada por Mazzolo y Monthus (2023), quienes analizan varios gauges. Este
+trabajo se sit\'ua respecto a ese antecedente (ver secci\'on e).
 
-\paragraph{Fundamento filos\'ofico.}
-El trabajo adopta una postura de realismo agencial y de teor\'ia del actor-red, en dos niveles que no se
-confunden:
+\paragraph{Puente entre ambos casos: Fock--Darwin con campo imaginario.}
+Un resultado del desarrollo preliminar es que el proceso de Ornstein--Uhlenbeck con rotaci\'on, deriva
+$\fv=-(\gamma I+\Omega\mathcal J)\rv$, es un oscilador de Fock--Darwin con
+\begin{equation}
+  \omega_0^2=\gamma^2+\Omega^2,\qquad \omega_c=2i\Omega,\qquad m=\tfrac{1}{2D}.
+\end{equation}
+La frecuencia h\'ibrida $\Omega_h^2=\omega_0^2+\omega_c^2/4$ queda exactamente en $\gamma^2$, y el espectro de
+Fock--Darwin continuado, $(2n+|\ell|+1)\Omega_h-\ell\omega_c/2-\gamma=\gamma(2n+|\ell|)-i\Omega\ell$, coincide con
+el espectro conocido del proceso. El campo imaginario cancela la rigidez adicional que el flujo a\~nade al
+confinamiento. Este resultado conecta directamente las dos partes del trabajo.
+
+\paragraph{Marco filos\'ofico.}
+Se emplean dos autores en dos niveles distintos, sin tratarlos como intercambiables:
 \begin{itemize}[leftmargin=1.6em]
-  \item \textbf{Karen Barad (realismo agencial).} Los fen\'omenos no preceden a su medici\'on: emergen de la
-        \emph{intra-acci\'on} entre lo observado y el aparato. El ``corte agencial'' es la separaci\'on, dentro
-        de un fen\'omeno, entre lo medido y lo que mide. En este trabajo, la elecci\'on del plano de estados
-        (por ejemplo, grado y agrupamiento de una red, o salidas y llegadas de un sistema de bicicletas) y del
-        n\'ucleo de suavizado \emph{constituyen} el fen\'omeno ``paisaje''. La vorticidad no es una propiedad
-        del sistema en s\'i, sino del fen\'omeno que el aparato produce. Barad aporta el lenguaje para tratar
-        esto como un rasgo ontol\'ogico, no como un defecto t\'ecnico.
-  \item \textbf{Bruno Latour (teor\'ia del actor-red).} Los no-humanos ---la ecuaci\'on, el estimador de la
-        difusi\'on, el modelo nulo--- son actores que median el resultado, no instrumentos transparentes.
-        Documentar esas mediaciones (por ejemplo, c\'omo el esquema de c\'alculo de la corriente o el valor de
-        $\lambda$ cambian las conclusiones) es parte del conocimiento producido. Esto fundamenta la pr\'actica,
-        adoptada en el trabajo, de declarar los criterios de \'exito \emph{antes} de ejecutar y de registrar
-        cada decisi\'on y su efecto.
+  \item \textbf{Karen Barad (realismo agencial).} Barad parte de la filosof\'ia-f\'isica de Bohr: los
+        fen\'omenos no preceden a su medici\'on, sino que emergen de la \emph{intra-acci\'on} entre lo observado
+        y el aparato, y el ``corte agencial'' es lo que separa, dentro del fen\'omeno, lo medido de lo que mide.
+        En este trabajo hay tres lugares donde esa idea tiene contenido preciso. (1)~\emph{El gauge como
+        especificaci\'on del aparato}: los gauges sim\'etrico o de Landau en el caso cu\'antico, y los gauges
+        estacionario, de deriva o de Coulomb en el caso estoc\'astico, describen el mismo fen\'omeno con
+        potenciales distintos; lo que se conserva entre ellos (rotacional, espectro) es lo que puede llamarse
+        objetivo en el sentido de Barad, como reproducible a trav\'es de cortes. (2)~\emph{El estimador como
+        parte del fen\'omeno}: la tasa de relajaci\'on reconstruida depende del ancho $h$ del n\'ucleo de
+        suavizado con una ley $h^2$, y la extrapolaci\'on $h\to0$ es una decisi\'on sobre d\'onde situar el
+        corte, no la remoci\'on de un instrumento transparente. (3)~\emph{Materia y significado}: un potencial
+        vector real o imaginario comparte la forma matem\'atica, pero corresponde a pr\'acticas materiales
+        distintas (un electr\'on en un campo magn\'etico, una part\'icula browniana con corriente); la
+        estructura com\'un no borra la diferencia de lo que cada pr\'actica materializa.
+  \item \textbf{Bruno Latour (teor\'ia del actor-red y referencia circulante).} Latour describe el conocimiento
+        cient\'ifico como una cadena de transformaciones que conserva algo a trav\'es de cada paso (referencia
+        circulante) y trata a los no-humanos como actores que median el resultado. En este trabajo, la cadena
+        va de la ecuaci\'on al c\'odigo, del c\'odigo a la tabla y de la tabla a la afirmaci\'on; cada eslab\'on
+        es un mediador: el esquema de c\'alculo de la corriente, el estimador de la difusi\'on, el script que
+        verifica cada paso de la derivaci\'on. Esto fundamenta tres pr\'acticas del trabajo: declarar los
+        criterios de \'exito antes de ejecutar, verificar num\'ericamente cada identidad, y registrar las
+        correcciones (por ejemplo, un error de signo en el potencial vector detectado por la verificaci\'on
+        num\'erica, o una predicci\'on refutada sobre la forma del t\'ermino de Bohm).
 \end{itemize}
-Se mantiene la distinci\'on que la propia Barad establece entre su ``aparato'' y la red de humanos y
-no-humanos de Latour: el primero opera en el nivel ontol\'ogico-epistemol\'ogico (qu\'e es el fen\'omeno
-medido); la segunda, en el nivel sociot\'ecnico (c\'omo se ensambla la pr\'actica de investigaci\'on).
+Se mantiene la distinci\'on que Barad establece entre su noci\'on de aparato y la red de humanos y no-humanos de
+Latour: el primero opera en el nivel ontol\'ogico-epistemol\'ogico (qu\'e es el fen\'omeno), la segunda en el
+nivel de la pr\'actica (c\'omo se ensambla y se sostiene una afirmaci\'on).
 
 \section*{e) Antecedentes}
 \addcontentsline{toc}{section}{e) Antecedentes}
+\paragraph{Antecedentes bibliogr\'aficos.}
 \begin{itemize}[leftmargin=1.6em]
-  \item \textbf{Bhalgamiya y Novotny (2024).} M\'etodo inverso de la TISE para funciones de onda reales. Punto
-        de partida que este trabajo generaliza.
-  \item \textbf{Madelung (1927) y Bohm (1952).} Formulaci\'on hidrodin\'amica de la mec\'anica cu\'antica, de
-        la que proviene el t\'ermino de potencial cu\'antico.
-  \item \textbf{Wang, Xu y Wang (2008).} Teor\'ia de paisaje y flujo para sistemas fuera del equilibrio;
-        aplicada a la red del ciclo celular de levadura (2010).
+  \item \textbf{Bhalgamiya y Novotny (2024).} M\'etodo inverso de la ecuaci\'on de Schr\"odinger para funciones
+        de onda reales; punto de partida que se generaliza.
+  \item \textbf{Madelung (1927) y Bohm (1952).} Formulaci\'on hidrodin\'amica y potencial cu\'antico.
+  \item \textbf{Fock (1928) y Darwin (1931).} Soluci\'on del oscilador arm\'onico en campo magn\'etico.
+  \item \textbf{Risken (1989).} Relaci\'on cl\'asica entre Fokker--Planck con balance detallado y un operador
+        de Schr\"odinger herm\'itico.
+  \item \textbf{Wang, Xu y Wang (2008).} Descomposici\'on en paisaje y flujo de sistemas fuera del equilibrio.
   \item \textbf{Mazzolo y Monthus (2023).} Correspondencia entre Fokker--Planck fuera del equilibrio y
-        mec\'anica cu\'antica no herm\'itica con potencial vector imaginario (por verificar su alcance exacto).
-  \item \textbf{Lucas \emph{et al.} (2023), Phasik.} Datos de la red parcialmente temporal del ciclo celular
-        de levadura empleados como caso de prueba.
-  \item \textbf{Barad (2007) y Latour (2005).} Marco filos\'ofico de realismo agencial y teor\'ia del
-        actor-red.
+        mec\'anica cu\'antica no herm\'itica con potencial vector imaginario, con an\'alisis de gauges (fuerza
+        irreversible, Coulomb, gauges adaptados a grandes desviaciones). Probablemente incluye la forma
+        de~\eqref{eq:fp}; la coincidencia exacta con el gauge estacionario usado aqu\'i debe confirmarse antes de
+        afirmar cualquier novedad.
+\end{itemize}
+
+\paragraph{Antecedentes propios (desarrollo preliminar, c\'odigo versionado).}
+\begin{itemize}[leftmargin=1.6em]
+  \item Fock--Darwin ($n=0$, $\ell=1$, $\omega_0=1$, $\omega_c=2$): la ecuaci\'on~\eqref{eq:maestra} recupera
+        $V=\tfrac12 m\omega_0^2r^2$ con convergencia de segundo orden en la malla. Con ruido en $P$ el error crece
+        como $\varepsilon/\Delta x^2$, es decir, el problema inverso est\'a mal condicionado y requiere
+        regularizaci\'on. La forma escrita con $\sqrt P$ del t\'ermino de Bohm es m\'as precisa que la forma con
+        $P$ (predicci\'on previa refutada). Cerca del nodo $r=0$ el error puntual no converge.
+  \item Cada paso de la correspondencia con Fokker--Planck se verific\'o num\'ericamente en un caso sin
+        simetr\'ias (error relativo $\sim10^{-6}$), incluida la equivalencia entre gauges.
+  \item La continuaci\'on anal\'itica Fock--Darwin $\to$ Ornstein--Uhlenbeck se verific\'o en el nivel de los
+        autovalores (error $\sim10^{-15}$).
+  \item A partir de trayectorias simuladas, el espectro del operador reconstruido recupera la frecuencia de
+        oscilaci\'on con error $<1\%$ y la tasa de relajaci\'on con un sesgo que sigue una ley $h^2$
+        (residuo $0.8\%$), corregible por extrapolaci\'on. Un chequeo de consistencia con intervalo de confianza
+        tiene una tasa de falsos positivos de 1 en 20 y detecta deriva lenta y memoria por proyecci\'on.
 \end{itemize}
 
 \section*{f) Justificaci\'on}
 \addcontentsline{toc}{section}{f) Justificación}
-El trabajo aporta en tres planos. \emph{Formal:} fija los par\'ametros libres de~\eqref{eq:maestra} mediante la
-correspondencia de Fokker--Planck, convirtiendo una analog\'ia en una afirmaci\'on falsable. \emph{Metodol\'ogico:}
-entrega un conjunto de criterios ---con c\'odigo abierto y reproducible--- para decidir cu\'ando la
-representaci\'on de Madelung--Bohm tiene contenido en un sistema no cu\'antico. \emph{Epistemol\'ogico:}
-articula ese criterio con un marco filos\'ofico (Barad, Latour) que explica por qu\'e el plano de estados y el
-instrumental no son neutrales. Su relevancia social e interdisciplinar est\'a en ofrecer un puente
-cuidadoso ---no ingenuo--- entre la f\'isica matem\'atica, el an\'alisis de sistemas complejos y los estudios de
-la ciencia.
+\emph{Formal:} el trabajo hace expl\'icita, con verificaci\'on independiente, la correspondencia entre un
+problema inverso cu\'antico y uno estoc\'astico, incluido un caso puente de soluci\'on exacta en ambos lados.
+\emph{Metodol\'ogica:} entrega c\'odigo abierto y reproducible, pruebas con soluci\'on conocida y criterios
+declarados de antemano, que delimitan cu\'ando las versiones inversas son fiables (n\'umero de ciclos, ruido de
+medici\'on, ancho de suavizado). \emph{Pedag\'ogica:} el problema inverso y el par Fock--Darwin /
+Ornstein--Uhlenbeck ofrecen una v\'ia distinta a la habitual para ense\~nar potencial vector, invariancia de
+gauge y operadores no herm\'iticos. \emph{Epistemol\'ogica:} la correspondencia es un caso concreto y
+controlado para discutir, con Barad y Latour, qu\'e se conserva cuando una estructura formal circula entre
+pr\'acticas f\'isicas distintas.
 
 \section*{g) Objetivos}
 \addcontentsline{toc}{section}{g) Objetivos}
-\paragraph{General.} Determinar las condiciones formales y epistemol\'ogicas bajo las cuales la representaci\'on
-de Madelung--Bohm, derivada del problema inverso generalizado de la ecuaci\'on de Schr\"odinger, constituye una
-descripci\'on con contenido verificable de sistemas no cu\'anticos con din\'amica peri\'odica.
+\paragraph{General.} Desarrollar anal\'iticamente y verificar num\'ericamente la correspondencia entre el
+problema inverso de Schr\"odinger con potencial vector y la ecuaci\'on de Fokker--Planck con corriente
+estacionaria, e interpretar su alcance desde el realismo agencial y la teor\'ia del actor-red.
 
 \paragraph{Espec\'ificos.}
 \begin{enumerate}[label=\arabic*.,leftmargin=2em]
-  \item Exponer y verificar la generalizaci\'on del m\'etodo inverso a funciones de onda complejas, con los
-        estados de Fock--Darwin como caso de validaci\'on.
-  \item Derivar la correspondencia entre la ecuaci\'on de Fokker--Planck y el operador de Schr\"odinger no
-        herm\'itico, estableciendo $\lambda=2D$ y el signo del t\'ermino de flujo, con verificaci\'on num\'erica.
-  \item Construir y declarar un conjunto de criterios de viabilidad (estacionariedad, ruido, n\'umero de
-        ciclos, car\'acter rotacional) que distingan los sistemas donde la representaci\'on aporta de aquellos
-        donde no.
-  \item Aplicar los criterios a casos de prueba sint\'eticos y a dos sistemas reales (red de prote\'inas;
-        bicicletas compartidas), e interpretar los resultados, incluidos los negativos, a la luz del marco de
-        Barad y Latour.
+  \item Exponer y validar la generalizaci\'on del m\'etodo inverso a funciones de onda complejas en estados de
+        Fock--Darwin, incluidos estados excitados y su sensibilidad al ruido y a la malla.
+  \item Derivar la correspondencia con Fokker--Planck en el gauge estacionario, establecer
+        $\hbar^2/m=2D$, el signo del t\'ermino de flujo y la invariancia de gauge, y situarla frente a la
+        literatura existente.
+  \item Establecer y verificar la continuaci\'on anal\'itica entre el oscilador de Fock--Darwin y el proceso de
+        Ornstein--Uhlenbeck con rotaci\'on, a nivel de espectro y de operador.
+  \item Ejecutar una bater\'ia de pruebas num\'ericas con soluci\'on conocida y criterios declarados de antemano
+        sobre la reconstrucci\'on inversa del operador a partir de trayectorias.
+  \item Interpretar los resultados, incluidos los negativos, desde el realismo agencial y la teor\'ia del
+        actor-red.
 \end{enumerate}
 
 \section*{h) Metodolog\'ia}
 \addcontentsline{toc}{section}{h) Metodología}
-Investigaci\'on te\'orica con apoyo computacional, en cuatro fases:
-\begin{enumerate}[leftmargin=2em]
-  \item \textbf{Fundamentaci\'on (semanas 1--4).} Revisi\'on cr\'itica de las fuentes; verificaci\'on del
-        alcance exacto del m\'etodo de Bhalgamiya y Novotny y de la referencia de Mazzolo y Monthus.
-  \item \textbf{Derivaci\'on y validaci\'on (semanas 3--8).} Generalizaci\'on compleja; derivaci\'on de la
-        correspondencia de Fokker--Planck; validaci\'on en Fock--Darwin y en osciladores sint\'eticos con
-        soluci\'on conocida. Todos los criterios de \'exito se declaran antes de ejecutar.
-  \item \textbf{Aplicaci\'on y criterios (semanas 7--12).} Aplicaci\'on a los datos reales; construcci\'on del
-        mapa de ``d\'onde aporta y d\'onde no''; modelos nulos y an\'alisis de sensibilidad.
-  \item \textbf{Integraci\'on filos\'ofica y redacci\'on (semanas 11--16).} Lectura de los resultados con Barad
-        y Latour; escritura del informe final.
-\end{enumerate}
-\textbf{Herramientas:} Python (numpy, scipy, pandas, networkx, matplotlib); repositorio con control de
-versiones; semillas fijas y resultados reproducibles. \textbf{M\'etodos de an\'alisis:} estimaci\'on por
-n\'ucleo con derivadas anal\'iticas, diagonalizaci\'on de operadores dispersos, contraste frente a modelos
-nulos con valores~$p$ y correcci\'on por comparaciones m\'ultiples.
+Investigaci\'on te\'orica con apoyo computacional. Cada prueba se registra con su criterio de \'exito y de
+refutaci\'on \emph{antes} de ejecutarla.
 
-\section*{i) Impacto esperado}
-\addcontentsline{toc}{section}{i) Impacto esperado}
-Un criterio reproducible y filos\'oficamente fundamentado para el uso de la representaci\'on de Madelung--Bohm
-fuera de la cu\'antica, con c\'odigo abierto. Como producto derivado posible, un art\'iculo de reflexi\'on o de
-investigaci\'on. El trabajo deja planteada, como l\'inea futura, la aplicaci\'on a datos con registro
-simult\'aneo que permitan la prueba espectral completa.
-
-\section*{j) Cronograma}
-\addcontentsline{toc}{section}{j) Cronograma}
+\paragraph{Bater\'ia de pruebas.}
 \begin{center}
-\begin{tabular}{@{}lcccc@{}}
+\begin{tabular}{@{}p{0.6cm} p{6.6cm} p{4.2cm} p{1.6cm}@{}}
 \toprule
-Actividad & Sem. 1--4 & Sem. 3--8 & Sem. 7--12 & Sem. 11--16 \\
+& Prueba & Qu\'e verifica & Estado \\
 \midrule
-Fundamentaci\'on y fuentes            & $\bullet$ &           &           &           \\
-Derivaci\'on y validaci\'on           &           & $\bullet$ &           &           \\
-Aplicaci\'on y criterios              &           &           & $\bullet$ &           \\
-Integraci\'on filos\'ofica y escritura&           &           &           & $\bullet$ \\
+P1 & Fock--Darwin $n=0$, $\ell=1$: malla y ruido & convergencia, condicionamiento, forma $\sqrt P$ & hecha \\
+P2 & Fock--Darwin excitado ($n\ge1$, $|\ell|\ge2$) & m\'etodo inverso donde $P$ tiene nodos & pendiente \\
+P3 & Verificaci\'on paso a paso de la correspondencia FP & cada identidad de la derivaci\'on & hecha \\
+P4 & Fock--Darwin con $\omega_c=2i\Omega$ frente al OU con rotaci\'on & espectro (hecha) y operador en malla & parcial \\
+P5 & Invariancia de gauge num\'erica & mismo espectro en gauge estacionario y de deriva & pendiente \\
+P6 & OU con rotaci\'on desde trayectorias & recuperaci\'on de $\gamma\pm i\Omega$ & hecha \\
+P7 & Oscilador de Stuart--Landau con ruido & difusi\'on de fase, ley $h^2$, n\'umero de ciclos & hecha \\
+P8 & Robustez: ruido de medici\'on, anisotrop\'ia, proyecci\'on, deriva & l\'imites del m\'etodo y del chequeo de consistencia & hecha \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-\section*{k) Bibliograf\'ia preliminar}
-\addcontentsline{toc}{section}{k) Bibliografía}
+\paragraph{Fases y cronograma.}
+\begin{center}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Actividad & Sem. 1--4 & Sem. 4--8 & Sem. 8--12 & Sem. 12--16 \\
+\midrule
+Fuentes y posicionamiento (Mazzolo--Monthus, Bhalgamiya--Novotny) & $\bullet$ & & & \\
+Desarrollo anal\'itico y continuaci\'on FD--OU                    & $\bullet$ & $\bullet$ & & \\
+Pruebas pendientes (P2, P4 operador, P5)                          & & $\bullet$ & $\bullet$ & \\
+Lectura filos\'ofica                                              & & & $\bullet$ & $\bullet$ \\
+Redacci\'on y socializaci\'on                                     & & & & $\bullet$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent\textbf{Herramientas:} Python (numpy, scipy, pandas, matplotlib); repositorio con control de
+versiones; semillas fijas. \textbf{M\'etodos de an\'alisis:} diferencias finitas y estimaci\'on por n\'ucleo con
+derivadas anal\'iticas; diagonalizaci\'on de operadores dispersos no herm\'iticos; extrapolaci\'on en el ancho
+de suavizado; remuestreo para intervalos de confianza.
+
+\section*{i) Impacto esperado}
+\addcontentsline{toc}{section}{i) Impacto esperado}
+Un desarrollo anal\'itico verificado y reproducible de la correspondencia entre el problema inverso cu\'antico y
+el estoc\'astico, con un caso puente exacto y sus l\'imites num\'ericos declarados; material con valor
+pedag\'ogico para cursos de mec\'anica cu\'antica y f\'isica estad\'istica; y un caso de estudio concreto para
+la discusi\'on epistemol\'ogica sobre la circulaci\'on de estructuras formales entre pr\'acticas f\'isicas. Como
+producto derivado posible, un art\'iculo de investigaci\'on o de reflexi\'on.
+
+\section*{j) Bibliograf\'ia preliminar}
+\addcontentsline{toc}{section}{j) Bibliografía}
 \begin{enumerate}[leftmargin=2em,label={[\arabic*]}]
   \item B. Bhalgamiya y M. A. Novotny, ``Exact solutions for the inverse problem of the time-independent
         Schr\"odinger equation'', \emph{Am. J. Phys.} \textbf{92}(12), 975--979 (2024).
   \item E. Madelung, ``Quantentheorie in hydrodynamischer Form'', \emph{Z. Phys.} \textbf{40}, 322 (1927).
   \item D. Bohm, ``A suggested interpretation of the quantum theory in terms of hidden variables'',
         \emph{Phys. Rev.} \textbf{85}, 166 (1952).
+  \item V. Fock, ``Bemerkung zur Quantelung des harmonischen Oszillators im Magnetfeld'', \emph{Z. Phys.}
+        \textbf{47}, 446 (1928).
+  \item C. G. Darwin, ``The diamagnetism of the free electron'', \emph{Proc. Camb. Phil. Soc.} \textbf{27}, 86
+        (1931).
+  \item H. Risken, \emph{The Fokker--Planck Equation}, 2.\textsuperscript{a} ed., Springer (1989).
   \item J. Wang, L. Xu y E. Wang, ``Potential landscape and flux framework of nonequilibrium networks'',
         \emph{PNAS} \textbf{105}, 12271 (2008).
-  \item A. Mazzolo y C. Monthus, ``Nonequilibrium diffusion processes via non-Hermitian \dots'', \emph{Phys.
-        Rev. E} \textbf{107}, 014101 (2023). \emph{[referencia por verificar]}
-  \item M. Lucas \emph{et al.}, ``Inferring cell cycle phases from a partially temporal network of protein
-        interactions'', \emph{Cell Reports Methods} \textbf{3}(2), 100397 (2023).
-  \item K. Barad, \emph{Meeting the Universe Halfway}, Duke University Press (2007).
-  \item B. Latour, \emph{Reassembling the Social: An Introduction to Actor-Network-Theory}, Oxford (2005).
+  \item A. Mazzolo y C. Monthus, \emph{Phys. Rev. E} \textbf{107}, 014101 (2023); arXiv:2210.05353.
+  \item K. Barad, \emph{Meeting the Universe Halfway: Quantum Physics and the Entanglement of Matter and
+        Meaning}, Duke University Press (2007).
+  \item B. Latour, \emph{Science in Action}, Harvard University Press (1987).
+  \item B. Latour, \emph{Pandora's Hope: Essays on the Reality of Science Studies}, Harvard University Press
+        (1999).
+  \item B. Latour, \emph{Reassembling the Social: An Introduction to Actor-Network-Theory}, Oxford University
+        Press (2005).
 \end{enumerate}
 
 \vfill
 \noindent\rule{\linewidth}{0.4pt}\\
-\small Nota de reproducibilidad: el c\'odigo, las derivaciones verificadas y los resultados est\'an
-versionados en el repositorio del proyecto. La estructura de esta propuesta sigue el Art\'iculo 24 del Acuerdo
-004 de 2026 (modalidad Monograf\'ia).
+\small Nota de reproducibilidad: el c\'odigo, las derivaciones verificadas y los resultados est\'an versionados
+en el repositorio del proyecto. La estructura sigue el Art\'iculo 24 del Acuerdo 004 de 2026 (modalidad
+Monograf\'ia). Los datos bibliogr\'aficos deben verificarse contra las fuentes antes de la entrega.
 
 \end{document}

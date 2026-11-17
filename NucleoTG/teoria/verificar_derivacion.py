@@ -123,7 +123,18 @@ def main():
         vx, vy = Om * y, -Om * x                     # -Om Jm (x, y) = -Om(-y, x)
         print(f"  ({x:+.1f},{y:+.1f})  (A psi)/psi = {(vx * gx + vy * gy) / ps(x, y):.5f}   esperado -i Om m = {-1j * Om * m}")
     print("  V_FP(OU) = (gamma^2 + Om^2) r^2/(4D) - gamma; espectro gamma (n1+n2) - i Om (n1-n2) (ver documento)")
-    _ = g_
+
+    print("Paso 8. Fock-Darwin con wc = 2i Om reproduce el espectro del OU con rotación (sección 9b)")
+    w0 = math.sqrt(g_ ** 2 + Om ** 2)
+    wc = 2j * Om
+    Wh = cmath.sqrt(w0 ** 2 + wc ** 2 / 4)
+    err = 0.0
+    for n in range(3):
+        for l_ in range(-3, 4):
+            E_FD = (2 * n + abs(l_) + 1) * Wh - l_ * wc / 2 - g_
+            lam = g_ * (2 * n + abs(l_)) - 1j * Om * l_
+            err = max(err, abs(E_FD - lam))
+    print(f"  frecuencia híbrida = {Wh:.6f} (esperado gamma = {g_});  error máximo = {err:.1e}")
 
 
 if __name__ == "__main__":

@@ -115,6 +115,19 @@ Coincide con el espectro conocido del OU con rotación. **Las partes reales (rel
 
 En este ejemplo V_FP = (γ² + Ω²)r²/(4D) − γ es más rígido que V_s. El término A² del potencial vector imaginario compensa exactamente ese exceso, de modo que el espectro real no depende de Ω.
 
+## 9b. Fock–Darwin y OU con rotación: el mismo problema con campo imaginario
+
+Con la identificación de la sección 6 (ħ = 1, m = 1/(2D)), el OU con rotación es un oscilador de Fock–Darwin con un campo magnético **imaginario**:
+
+- Frecuencia de confinamiento: V_FP = ½mω₀²r² − γ con **ω₀² = γ² + Ω²**.
+- Potencial vector en gauge simétrico: qA = −iv/(2D) con v = Ω(y, −x), así que qB = iΩ/D y **ω_c = qB/m = 2iΩ**.
+- Frecuencia híbrida: Ω_h² = ω₀² + ω_c²/4 = γ² + Ω² − Ω² = **γ²**.
+- Espectro de Fock–Darwin continuado: E = (2n + |ℓ| + 1)Ω_h − ℓω_c/2 − γ = **γ(2n + |ℓ|) − iΩℓ**, que es el espectro del OU con rotación γ(n₁ + n₂) − iΩ(n₁ − n₂), con n₁ + n₂ = 2n + |ℓ| y n₁ − n₂ = ℓ (el signo de ℓ depende de la orientación elegida).
+
+Verificado (paso 8 de `verificar_derivacion.py`): error máximo 9·10⁻¹⁶ sobre n < 3 y |ℓ| ≤ 3. Es una comprobación de la fórmula de los autovalores, no del operador; la comprobación a nivel de operador en malla queda como prueba pendiente.
+
+Lectura: la frecuencia híbrida de Fock–Darwin, que en el caso cuántico crece con el campo, en el estocástico queda exactamente en γ. El campo imaginario cancela la rigidez extra Ω² del confinamiento, que es la misma cancelación de la sección 9 vista desde la línea 1.
+
 ## 10. Qué se puede poner a prueba con datos
 
 Todo lo anterior se calcula a partir de (P_s, v, D). **Sigue sin haber información nueva**: con (P_s, v, D) se puede reconstruir f = −D∇U + v y estudiar Fokker–Planck directamente. Lo que sí ofrece esta formulación es una **prueba de consistencia falsable** y una lectura en el lenguaje de la línea 1:
