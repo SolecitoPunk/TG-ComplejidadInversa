@@ -13,342 +13,387 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{booktabs}
 \usepackage{array}
+\usepackage{longtable}
 
 % ----- Notación -----
 \newcommand{\rv}{\mathbf{r}}
 \newcommand{\uv}{\mathbf{u}}
+\newcommand{\jv}{\mathbf{j}}
 \newcommand{\Av}{\mathbf{A}}
 \newcommand{\Bv}{\mathbf{B}}
 \newcommand{\grad}{\nabla}
 \newcommand{\gradp}{\nabla^{\perp}}
+\newcommand{\EST}{\textsc{[Establecido]}}
+\newcommand{\LIT}{\textsc{[Literatura]}}
+\newcommand{\PRO}{\textsc{[Propuesto]}}
 
-\title{\textbf{Generalización del método inverso de Schrödinger\\
-para potenciales vectoriales y estados de momento angular:\\
-fijación de gauge, validación en estados de Fock--Darwin\\
-y lectura desde el realismo agencial y la teoría del actor-red}}
-\author{[Nombre del estudiante]\\
-\small Director: [Nombre] \\
+\title{\textbf{Análisis del problema inverso de la ecuación de Schrödinger\\
+estacionaria con potencial vectorial:\\
+formulación hidrodinámica y estudio de estados de Fock--Darwin}}
+\author{Juan Sebastián [apellidos]\\
+\small Director: John Hernán Díaz Forero\\
 \small Proyecto Curricular de Física --- Universidad Distrital Francisco José de Caldas}
 \date{\small Anteproyecto de Trabajo de Grado --- Modalidad Monografía de investigación teórica\\
-(Acuerdo 004 de 2026, Art.~2 lit.~b; estructura del Art.~24)\\ \today}
+(Acuerdo 004 de 2026, Art.~2 lit.~b; estructura del Art.~24)\\ Versión 2 --- \today}
 
 \begin{document}
 \maketitle
 
-\begin{center}
-\begin{tabular}{@{}p{4.2cm} p{10.5cm}@{}}
-\toprule
-\textbf{Modalidad} & Monografía --- investigación teórica (Art.~2, lit.~b). \\
-\textbf{Autores} & Un estudiante (máximo dos, Art.~3 par.~2), con al menos el 70\,\% de los créditos aprobados (Art.~3). \\
-\textbf{Dirección} & Docente de carrera o de vinculación especial (TCO/MTO), Art.~10. El director no figura como autor del trabajo ni de productos derivados (Art.~10 par.~2). \\
-\textbf{Avales} & Comité de Bioética e Investigación y Consejo Curricular (Art.~24, Art.~10 lit.~b--c). \\
-\textbf{Duración} & Un o dos periodos según el plan de estudios (Art.~9), con prórroga de un periodo por el Consejo Curricular y otra excepcional por el Consejo de Facultad (Art.~9 par.~1). \\
-\textbf{Evaluación} & Jurado designado: documento escrito 60\,\% y sustentación pública 40\,\% (Art.~26). \\
-\textbf{Propiedad intelectual} & Acuerdo 04 de 2012 del CSU (Arts.~14 y 62). \\
-\bottomrule
-\end{tabular}
-\end{center}
-
 % =====================================================================
 \section*{a) Tema o título}
 \addcontentsline{toc}{section}{a) Tema o título}
-El tema es el \emph{problema inverso} de la ecuación de Schrödinger independiente del tiempo para funciones de onda
-complejas acopladas a un potencial vector. Se delimita en contenido a: (i)~la descomposición de Madelung con
-acoplamiento mínimo y las dos ecuaciones que produce; (ii)~el análisis de qué determina y qué deja libre ese sistema
-cuando se toman la densidad y la fase como datos (fijación de gauge, conteo de grados de libertad y condiciones de
-unicidad); (iii)~la validación numérica sobre la familia de estados de Fock--Darwin; y (iv)~una lectura
-epistemológica del proceso de modelado desde Karen Barad y Bruno Latour. Se delimita en espacio a sistemas
-bidimensionales con campo magnético perpendicular, y en tiempo al plazo del Art.~9. Quedan fuera las aplicaciones de
-la ecuación a sistemas no cuánticos.
+El tema es el problema inverso de la ecuación de Schrödinger estacionaria para una partícula cargada en presencia de un
+potencial vectorial: a partir de información sobre un estado estacionario, reconstruir los potenciales escalar y
+vectorial que lo sostienen. Se delimita en contenido a la formulación hidrodinámica de Madelung y a las condiciones de
+reconstrucción que de ella se derivan, incluida la libertad de gauge; en espacio, a sistemas bidimensionales con campo
+magnético perpendicular; y en tiempo, al plazo del Art.~9 del Acuerdo 004 de 2026. Los estados de Fock--Darwin sirven
+como caso de estudio de solución exacta conocida.
 
 % =====================================================================
 \section*{b) Introducción}
 \addcontentsline{toc}{section}{b) Introducción}
-El problema directo de la mecánica cuántica no relativista parte de un potencial $V(\rv)$ y busca los autovalores y las
-autofunciones de la ecuación de Schrödinger. El método inverso de Bhalgamiya y Novotny (2024) invierte la pregunta:
-dada una densidad $P(\rv)=e^{-f(\rv)}$, obtiene analíticamente el potencial $V(\rv)-E$ del que $\sqrt{P}$ es estado
-fundamental. Su construcción supone una función de onda real, de modo que no cubre partículas cargadas en campos
-magnéticos ni estados con corriente de probabilidad o momento angular orbital.\footnote{El alcance exacto que los
-autores declaran debe verificarse en el texto completo antes de la entrega.}
+La mecánica cuántica suele estudiarse en sentido directo: dado un potencial, se calculan los estados estacionarios. El
+problema inverso pregunta lo contrario: qué potencial produce un estado o un espectro dado. Esa pregunta tiene una
+tradición larga, que va de los problemas espectrales en una dimensión a los problemas de dispersión y de frontera con
+campos magnéticos. Recientemente, Bhalgamiya y Novotny (2024) propusieron una versión constructiva que obtiene el
+potencial directamente a partir de la densidad de probabilidad de un estado fundamental real.
 
-\textbf{Qué:} este trabajo extiende el método a funciones de onda complejas mediante la descomposición polar de Madelung
-y estudia con precisión qué recupera la extensión. \textbf{Cómo:} derivación analítica, verificación numérica de cada
-identidad y validación sobre los estados de Fock--Darwin, de solución exacta conocida. \textbf{Por qué:} la extensión
-introduce el potencial vector como incógnita y, con él, una libertad de gauge y un problema de unicidad que el caso real
-no tiene. \textbf{Cuándo y dónde:} en el plazo reglamentario, con herramientas computacionales de libre acceso.
-\textbf{Para qué:} para entregar una formulación con sus condiciones de unicidad explícitas, un código validado y una
-reflexión sobre cómo las decisiones de modelado (gauge, fronteras, regularización) participan en la producción del
-resultado.
+Este trabajo estudia qué ocurre con esa construcción cuando el estado es complejo y la partícula está sometida a un campo
+magnético. \textbf{Qué:} un análisis de las condiciones bajo las cuales se pueden reconstruir los potenciales escalar y
+vectorial. \textbf{Cómo:} mediante la formulación hidrodinámica de Madelung, una revisión documental sistemática y un
+estudio teórico-computacional de algunos estados de Fock--Darwin. \textbf{Por qué:} al introducir el potencial vectorial
+aparecen la libertad de gauge y un problema de unicidad que no existen en el caso real. \textbf{Cuándo y dónde:} en el
+plazo reglamentario, con herramientas de libre acceso y sin trabajo de campo. \textbf{Para qué:} para establecer qué
+información es necesaria para que la reconstrucción sea posible y cuáles son sus limitaciones.
 
 % =====================================================================
 \section*{c) Situación problémica y pregunta de investigación}
 \addcontentsline{toc}{section}{c) Situación problémica y pregunta}
-Con $\psi=\sqrt{P}\,e^{iS/\hbar}$ y $\uv=\grad S-q\Av$, la parte imaginaria de la ecuación de Schrödinger da la
-continuidad estacionaria (Ec.~(9) del manuscrito base) y la parte real, la ecuación maestra extendida (Ec.~(11)):
+
+\paragraph{Cómo surge el problema.} La revisión de antecedentes (sección e) muestra tres líneas de trabajo que
+apenas se tocan:
+\begin{enumerate}[leftmargin=1.8em]
+  \item Los problemas inversos espectrales, de dispersión y de frontera reconstruyen potenciales a partir de datos
+        \emph{externos}: espectros, matrices de dispersión o mediciones en la frontera. Con campo magnético, sus resultados
+        de unicidad recuperan el campo $\Bv$ y el potencial escalar, pero el potencial vectorial solo salvo un gauge,
+        porque los datos son invariantes de gauge.
+  \item Las construcciones a partir del estado fundamental (mecánica cuántica supersimétrica; Bhalgamiya y Novotny)
+        usan datos \emph{internos}, la función de onda o la densidad, pero suponen una función de onda real y sin campo
+        magnético.
+  \item La formulación hidrodinámica de Madelung y Bohm proporciona las ecuaciones para un estado complejo con potencial
+        vectorial, pero se ha usado sobre todo para el problema directo.
+\end{enumerate}
+En la literatura revisada hasta ahora no se encontró un estudio de la intersección: la reconstrucción a partir de datos
+internos de un estado complejo con potencial vectorial. En ese caso no está establecido qué datos internos determinan los
+potenciales ni cómo interviene la libertad de gauge. Ese es el vacío que aborda el trabajo.
+
+\paragraph{Delimitación física.}
+\begin{center}
+\begin{tabular}{@{}p{3.6cm} p{11cm}@{}}
+\toprule
+\textbf{Sistema físico} & Una partícula cargada (carga $q$, masa $m$), no relativista y sin espín, confinada en un plano
+y sometida a un campo magnético perpendicular $\Bv=B_z(x,y)\,\hat z$, en un estado estacionario ligado y normalizable. \\
+\textbf{Modelo} & Ecuación de Schrödinger estacionaria con acoplamiento mínimo,
+$\frac{1}{2m}(-i\hbar\grad-q\Av)^2\psi+V\psi=E\psi$, con $\psi$ de clase $C^2$ fuera de un conjunto nodal de medida nula
+y decaimiento en el infinito (o condiciones de Dirichlet en un dominio acotado). \\
+\textbf{Objeto de estudio} & La reconstrucción del potencial escalar $V$ y del potencial vectorial $\Av$ (o del campo
+$B_z$) y las condiciones bajo las cuales es posible y única. \\
+\textbf{Magnitudes} & Densidad $P=|\psi|^2$; fase $S$; corriente $\jv=P(\grad S-q\Av)/m$; campo $B_z$; energía $E$;
+condiciones de frontera. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{El problema inverso: datos, incógnitas e información adicional.} Con $\psi=\sqrt P\,e^{iS/\hbar}$ y
+$\uv=\grad S-q\Av$, la ecuación de Schrödinger se separa en la continuidad estacionaria y la ecuación maestra extendida:
 \begin{align}
-  \grad\cdot\big[P(\grad S-q\Av)\big]&=0, \label{eq:cont}\\
-  V(\rv)&=E-\frac{1}{2m}(\grad S-q\Av)^2+\frac{\hbar^2}{4m}\!\left[\frac{\grad^2P}{P}-\frac12\frac{|\grad P|^2}{P^2}\right].
+  \grad\cdot(P\uv)&=0, \label{eq:cont}\\
+  V-E&=-\frac{1}{2m}|\uv|^2+\frac{\hbar^2}{4m}\!\left[\frac{\grad^2P}{P}-\frac12\frac{|\grad P|^2}{P^2}\right].
   \label{eq:maestra}
 \end{align}
-Si $\grad S=\mathbf 0$ y $\Av=\mathbf 0$, \eqref{eq:cont} se cumple idénticamente y \eqref{eq:maestra} se reduce al
-resultado de Bhalgamiya y Novotny. El manuscrito base toma $P$ y $S$ como datos; en ese planteamiento aparecen tres
-problemas:
-\begin{enumerate}[leftmargin=1.8em]
-  \item \textbf{Grados de libertad.} En 2D las incógnitas son $V$, $A_x$ y $A_y$ (tres funciones) frente a dos
-        ecuaciones escalares.
-  \item \textbf{Degeneración de la continuidad.} Incluso con el gauge de Coulomb, que reduce $\Av$ a una función de
-        corriente $\Phi$, la Ec.~\eqref{eq:cont} no determina $\Phi$: deja libre una función arbitraria de $P$
-        (sección d). En consecuencia, el campo magnético no queda fijado por $(P,S)$.
-  \item \textbf{Singularidades.} En los núcleos de vórtice ($r=0$ si $\ell\ne0$) y en los nodos radiales ($n>0$) el
-        término $\grad^2P/P$ y la fase son singulares; en una malla discreta esto produce cancelaciones numéricas
-        y errores que no convergen.
-\end{enumerate}
-Reducir estos problemas a ajustes técnicos ocultaría que la elección de qué se prescribe, del gauge y de la
-regularización decide qué objeto se ``reconstruye''.
+Según qué se tome como dato, el problema cambia de naturaleza:
+\begin{center}
+\begin{tabular}{@{}p{2.6cm} p{3.2cm} p{8.6cm}@{}}
+\toprule
+\textbf{Datos} & \textbf{Incógnitas} & \textbf{Qué se determina} (resultados preliminares, por demostrar con rigor) \\
+\midrule
+$(P,\jv)$ & $V$, $\Av$ & $\uv=m\jv/P$; $B_z=-\frac{1}{q}(\grad\times\uv)_z$ donde $S$ es regular, y $V-E$ por~\eqref{eq:maestra}.
+$\Av$ solo salvo gauge, como en los problemas de frontera. La continuidad es una condición de compatibilidad sobre los datos. \\
+$(P,S)$ en un gauge & $V$, $\Av$ & La continuidad es una sola ecuación para $\Av$ y \emph{no} determina $B_z$: queda libre una
+función arbitraria de $P$ (sección d.3). \\
+$(P,S,B_z)$ & $V$, $\Av$ & $\Av$ queda fijado salvo $\grad\chi$, y $\chi$ resuelve una ecuación elíptica; luego $V$ por~\eqref{eq:maestra}. \\
+$(P,S,V)$ & $\Av$ & \eqref{eq:maestra} fija $|\uv|$ y la continuidad restringe su dirección; problema no lineal por estudiar. \\
+\bottomrule
+\end{tabular}
+\end{center}
+En todos los casos $E$ entra como una constante aditiva en $V$. En los nodos de $\psi$ (núcleos de vórtice si $\ell\neq0$,
+nodos radiales si $n>0$) el término de Bohm y la fase son singulares, y el rotacional de $\uv$ contiene contribuciones
+concentradas en los vórtices, proporcionales a la circulación cuantizada $2\pi\hbar\ell$.
 
 \medskip
-\noindent\textbf{Pregunta de investigación.} ¿Qué datos deben prescribirse para que el problema inverso estacionario de
-Schrödinger con potencial vector tenga solución única, cómo se comporta su resolución numérica en la familia de estados
-de Fock--Darwin, y qué revela ese proceso, leído desde el realismo agencial y la teoría del actor-red, sobre la
-relación entre el objeto reconstruido y el aparato teórico-computacional que lo produce?
+\noindent\textbf{Pregunta de investigación.} ¿Bajo qué condiciones es posible reconstruir los potenciales asociados a una
+partícula cargada descrita por la ecuación estacionaria de Schrödinger en dos dimensiones, a partir de la formulación
+hidrodinámica de Madelung, y cuáles son las limitaciones de dicha reconstrucción en estados de Fock--Darwin?
 
 % =====================================================================
 \section*{d) Marco teórico}
 \addcontentsline{toc}{section}{d) Marco teórico}
+Para distinguir el estatus de cada elemento se usan tres etiquetas: \EST{} (fundamento teórico aceptado), \LIT{}
+(resultado reportado en la literatura) y \PRO{} (desarrollo que el trabajo propone realizar o demostrar).
 
-\subsection*{d.1 Descomposición de Madelung con potencial vector}
-Para una partícula de masa $m$ y carga $q$,
+\subsection*{d.1 Acoplamiento mínimo e invariancia de gauge \EST}
+La ecuación de la sección c es invariante bajo $\Av\to\Av+\grad\chi$, $\psi\to e^{iq\chi/\hbar}\psi$, es decir,
+$S\to S+q\chi$. Son invariantes $P$, $\uv$, $\jv$, $V-E$ y $\Bv=\grad\times\Av$. En dominios no simplemente conexos (por
+ejemplo, el plano sin los nodos de $\psi$) los potenciales pueden tener efectos que no se reducen al campo local
+(Aharonov y Bohm, 1959).
+
+\subsection*{d.2 Formulación hidrodinámica \EST}
+Bajo las condiciones del modelo, la parte imaginaria de la ecuación da~\eqref{eq:cont} y la real da
+$V-E=\frac{\hbar^2}{2m}\frac{\grad^2\sqrt P}{\sqrt P}-\frac{1}{2m}|\uv|^2$; con la identidad
+$\grad^2\sqrt P/\sqrt P=\frac12\grad^2P/P-\frac14|\grad P|^2/P^2$ se obtiene~\eqref{eq:maestra} (Madelung, 1927; Bohm,
+1952; Takabayasi, 1952). La fase es multivaluada alrededor de los nodos: la circulación de $\grad S$ alrededor de un nodo
+simple es $2\pi\hbar\ell$ (Dirac, 1931).
+
+\subsection*{d.3 Reconstrucción a partir del estado fundamental real \LIT}
+Para $\psi$ real y positiva, $\Av=\mathbf 0$ y $S$ constante, \eqref{eq:cont} se cumple idénticamente y~\eqref{eq:maestra}
+con $P=e^{-f}$ da $V-E=-\frac{\hbar^2}{4m}\grad^2f+\frac{\hbar^2}{8m}|\grad f|^2$ (Bhalgamiya y Novotny, 2024). En una
+dimensión equivale a la construcción del superpotencial de la mecánica cuántica supersimétrica,
+$W\propto-\psi_0'/\psi_0$ (Cooper, Khare y Sukhatme, 1995).
+
+\subsection*{d.4 Unicidad salvo gauge en problemas inversos magnéticos \LIT}
+Con datos de frontera (mapa de Dirichlet a Neumann) o de dispersión a energía fija, el operador de Schrödinger magnético
+determina $\Bv$ y $V$, pero no $\Av$, por la invariancia de gauge de los datos (Sun, 1993; Nakamura, Sun y Uhlmann, 1995;
+Eskin y Ralston, 1995). Los resultados citados se formulan, en general, en dimensión mayor o igual a tres; el caso
+bidimensional requiere técnicas distintas (por precisar en la revisión).
+
+\subsection*{d.5 Estados de Fock--Darwin \LIT}
+Para $V=\frac12m\omega_0^2r^2$ y $\Bv=B\hat z$ en el gauge simétrico $\Av=\frac{Br}{2}\hat\theta$, con $\omega_c=qB/m$,
+$\Omega=\sqrt{\omega_0^2+\omega_c^2/4}$ y $l_\Omega=\sqrt{\hbar/(m\Omega)}$:
 \begin{equation}
-  \frac{1}{2m}\big(-i\hbar\grad-q\Av\big)^2\psi+(V-E)\psi=0 .
+  \psi_{n,\ell}\propto\Big(\tfrac{r}{l_\Omega}\Big)^{|\ell|}L_n^{|\ell|}\!\Big(\tfrac{r^2}{l_\Omega^2}\Big)e^{-r^2/2l_\Omega^2}e^{i\ell\theta},
+  \qquad E_{n,\ell}=\hbar\Omega(2n+|\ell|+1)-\tfrac12\hbar\omega_c\ell
 \end{equation}
-Con $\psi=Re^{iS/\hbar}$, $R=\sqrt P\ge0$ y $S$ real (multivaluada módulo $2\pi\hbar$ alrededor de los nodos), la parte
-real y la imaginaria dan
-\begin{equation}
-  V-E=\frac{\hbar^2}{2m}\frac{\grad^2R}{R}-\frac{1}{2m}|\grad S-q\Av|^2,\qquad
-  \grad\cdot\big[P(\grad S-q\Av)\big]=0,
-\end{equation}
-y con la identidad $\grad^2\sqrt P/\sqrt P=\tfrac12\grad^2P/P-\tfrac14|\grad P|^2/P^2$ se obtiene~\eqref{eq:maestra}.
-Las magnitudes invariantes de gauge son $P$, $\uv$, $V-E$ y $\Bv=\grad\times\Av$; en regiones donde $S$ es regular,
-$\grad\times\uv=-q\Bv$.
+(Fock, 1928; Darwin, 1931). Son el modelo estándar de un electrón en un punto cuántico parabólico y conectan, al crecer
+$\omega_c$, con los niveles de Landau (Reimann y Manninen, 2002).
 
-\subsection*{d.2 Fijación de gauge y unicidad}
-En 2D, toda $\Av$ admite la descomposición de Helmholtz $\Av=\grad\phi+\gradp\Phi$ con
-$\gradp\Phi=(\partial_y\Phi,-\partial_x\Phi)$, de modo que $\grad\cdot\Av=\grad^2\phi$ y $B_z=-\grad^2\Phi$. El gauge de
-Coulomb $\grad\cdot\Av=0$, con fronteras regulares, da $\phi\equiv0$ y reduce $\Av$ a una función $\Phi$. Sustituyendo
-en~\eqref{eq:cont},
-\begin{equation}
-  q\,\{P,\Phi\}=\grad\cdot(P\grad S),\qquad \{P,\Phi\}=\partial_xP\,\partial_y\Phi-\partial_yP\,\partial_x\Phi .
-  \label{eq:phi}
-\end{equation}
-\paragraph{Resultado preliminar: la Ec.~\eqref{eq:phi} es degenerada.} Es una ecuación de primer orden cuyas
-características son las curvas de nivel de $P$. Si $\Phi$ la cumple, también la cumple $\Phi+F(P)$ para cualquier
-función $F$, porque $\grad\cdot\big(P\,\gradp F(P)\big)=F'(P)\{P,P\}=0$, mientras que el campo magnético cambia en
-$-\grad^2F(P)$. Físicamente: una corriente que fluye a lo largo de las curvas de nivel de $P$ se conserva siempre, de
-modo que la continuidad no puede detectarla. Esto tiene dos consecuencias:
-\begin{itemize}[leftmargin=1.6em]
-  \item El conteo ``2 ecuaciones para 2 incógnitas ($V$, $\Phi$)'' no basta: $(P,S)$ no determinan $B_z$. Queda libre
-        una función de una variable, $F(P)$, y en cada curva de nivel cerrada aparece además una condición de
-        solubilidad para el lado derecho de~\eqref{eq:phi} (por establecer con precisión en el trabajo).
-  \item La degeneración en simetría axial, donde con $P=P(r)$ y $S=\hbar\ell\theta$ ambos lados de~\eqref{eq:phi} se
-        anulan para cualquier perfil $A_\theta(r)$, es el caso particular $F(P(r))$ de esta degeneración general.
-\end{itemize}
-Para la unicidad hay que prescribir información adicional: el campo $B_z$ (con lo cual~\eqref{eq:maestra} da $V$), o
-bien $V$ (con lo cual~\eqref{eq:maestra} restringe $|\uv|$ y se busca $F$). Establecer qué combinación de datos da
-unicidad, y con qué ambigüedades residuales, es el primer resultado que persigue el trabajo. La degeneración se
-verificó numéricamente con una densidad elíptica sin simetría (anexo de código).
-
-\subsection*{d.3 Estados de Fock--Darwin}
-Para $V=\tfrac12m\omega_0^2r^2$ y $\Bv=B\hat z$ en el gauge simétrico $\Av=\tfrac{Br}{2}\hat\theta$ (que es de Coulomb),
-con $\omega_c=qB/m$, $\Omega=\sqrt{\omega_0^2+\omega_c^2/4}$ y $l_\Omega=\sqrt{\hbar/(m\Omega)}$,
-\begin{equation}
-  \psi_{n,\ell}\propto\Big(\frac{r}{l_\Omega}\Big)^{|\ell|}L_n^{|\ell|}\!\Big(\frac{r^2}{l_\Omega^2}\Big)
-  e^{-r^2/2l_\Omega^2}e^{i\ell\theta},\qquad
-  E_{n,\ell}=\hbar\Omega(2n+|\ell|+1)-\tfrac12\hbar\omega_c\ell .
-\end{equation}
-Con $P=|\psi_{n,\ell}|^2$ y $S=\hbar\ell\theta$, el término centrífugo $\hbar^2\ell^2/(2mr^2)$ de $|\grad S|^2$ se
-cancela con la parte singular del término de Bohm, y~\eqref{eq:maestra} recupera $V=\tfrac12m\omega_0^2r^2$. Para
-$n>0$, $\psi$ cambia de signo en los nodos radiales: con $R=|\psi|$, la fase salta en $\pi\hbar$ y la recuperación vale
-fuera del conjunto nodal; el tratamiento sobre los nodos (distribucional o por regularización) es parte del trabajo.
-
-\subsection*{d.4 Marco epistemológico}
-\paragraph{Karen Barad: realismo agencial.} A partir de la filosofía-física de Bohr, Barad (2007) sostiene que las
-propiedades no preexisten a los fenómenos, sino que se constituyen por \emph{intra-acción} entre el objeto y las
-agencias de observación, y llama \emph{corte agencial} a la separación, interna al fenómeno, entre lo que se mide y lo
-que mide. En este problema, el resultado de d.2 da a esa idea un contenido preciso: como $(P,S)$ no determinan $B_z$, la
-frontera entre ``confinamiento escalar'' y ``circulación magnética'' no está dada por los datos; la traza la decisión de
-qué se prescribe ($B_z$ o $V$), junto con el gauge y la regularización. Esa decisión es el corte que separa y une a la
-vez lo dado y lo reconstruido. Se usará además la \emph{difracción} como método de lectura: leer el método real de
-Bhalgamiya y Novotny a través de la hidrodinámica compleja y del código, y registrar dónde aparecen diferencias
-(núcleos de vórtice, anillos nodales, degeneración $F(P)$) en lugar de reducir un marco al otro.
-
-\paragraph{Bruno Latour: teoría del actor-red.} Latour (1987, 2005) describe la estabilización de un resultado como un
-ensamblaje de actores humanos y no humanos, y las herramientas consolidadas como \emph{cajas negras} cuyo
-funcionamiento oculta los supuestos que las sostienen. El método inverso real es una caja negra que oculta su
-dependencia de la invariancia bajo inversión temporal; generalizarlo exige abrirla. El paso del espectro en el espacio
-de Hilbert a los campos $(P,S)$, de ahí a operadores discretos en Python y finalmente a tablas de error es una cadena de
-\emph{traducciones}, y el código funciona como \emph{dispositivo de inscripción} (Latour y Woolgar, 1979): convierte
-relaciones diferenciales en figuras y normas de error discutibles por pares. La práctica del trabajo de declarar criterios
-de éxito antes de ejecutar y verificar numéricamente cada identidad se justifica en este marco: la afirmación previa de
-que el gauge de Coulomb ``cierra'' el sistema en 2D se mostró incorrecta precisamente al verificarla.
-
-\paragraph{Distinción entre ambos marcos.} Barad distingue su noción de aparato de la red de humanos y no humanos de la
-teoría del actor-red. Aquí se usan en dos niveles: Barad para el nivel ontológico-epistemológico (qué es el objeto
-reconstruido), Latour para el nivel de la práctica (cómo se ensambla y se sostiene la afirmación).
+\subsection*{d.6 Desarrollos que propone el trabajo \PRO}
+\begin{enumerate}[leftmargin=1.8em]
+  \item \textbf{Reconstrucción con datos invariantes.} Demostrar que $(P,\jv)$ determinan $B_z$ y $V-E$ fuera de los nodos,
+        y precisar qué ocurre en los nodos.
+  \item \textbf{Degeneración con datos de fase.} En el gauge de Coulomb, $\Av=\gradp\Phi$ con $\gradp\Phi=(\partial_y\Phi,-\partial_x\Phi)$
+        y $B_z=-\grad^2\Phi$, la continuidad se reduce a $q\{P,\Phi\}=\grad\cdot(P\grad S)$, con
+        $\{P,\Phi\}=\partial_xP\,\partial_y\Phi-\partial_yP\,\partial_x\Phi$. Si $\Phi$ es solución, también lo es
+        $\Phi+F(P)$ para toda $F$, mientras $B_z$ cambia en $-\grad^2F(P)$: los datos $(P,S)$ no determinan el campo.
+        La degeneración en simetría axial es el caso particular $F(P(r))$. Esto se verificó numéricamente con una densidad
+        sin simetría; la demostración general y la condición de solubilidad sobre curvas de nivel cerradas son parte del
+        trabajo.
+  \item \textbf{Comportamiento en los nodos.} Analizar la cancelación entre el término centrífugo de $|\uv|^2$ y la parte
+        singular del término de Bohm cerca de los núcleos de vórtice, y el salto de fase $\pi\hbar$ en los nodos radiales.
+\end{enumerate}
 
 % =====================================================================
-\section*{e) Antecedentes}
+\section*{e) Antecedentes: trayectoria del problema}
 \addcontentsline{toc}{section}{e) Antecedentes}
-\paragraph{Bibliográficos.}
-\begin{itemize}[leftmargin=1.6em]
-  \item \textbf{Bhalgamiya y Novotny (2024).} Con $\psi=e^{-f/2}$ obtienen
-        $V-E=-\frac{\hbar^2}{4m}\grad^2f+\frac{\hbar^2}{8m}|\grad f|^2$, y lo aplican a distribuciones en 1D, 2D y 3D
-        (oscilador armónico, estado fundamental del hidrógeno), para estados fundamentales reales y normalizables.
-  \item \textbf{Madelung (1927) y Bohm (1952).} Formulación hidrodinámica: la fase define el momento cinético
-        $\grad S-q\Av$ y la amplitud, el potencial cuántico $Q=-\frac{\hbar^2}{2m}\grad^2R/R$.
-  \item \textbf{Fock (1928) y Darwin (1931).} Oscilador armónico bidimensional en campo magnético uniforme, modelo
-        estándar de puntos cuánticos con espectro que interpola hacia los niveles de Landau.
-  \item \textbf{Barad (2007); Latour y Woolgar (1979); Latour (1987, 1999, 2005).} Marco epistemológico.
-\end{itemize}
-\paragraph{Propios (código versionado en el repositorio del proyecto).}
-\begin{itemize}[leftmargin=1.6em]
-  \item Estado $(n,\ell)=(0,1)$ con $\omega_0=1$, $\omega_c=2$ ($\hbar=m=q=1$): \eqref{eq:maestra} recupera el
-        confinamiento con convergencia de segundo orden en la malla. Con ruido relativo $\varepsilon$ en $P$, el error
-        sigue $\approx1.1\,\varepsilon/\Delta x^2$ y crece al refinar: el problema inverso está mal condicionado. La
-        forma escrita con $\sqrt P$ del término de Bohm es más precisa que la forma con $P$. Cerca del núcleo del vórtice
-        el error puntual no converge.
-  \item Recuperación puntual para $(n,\ell)\in\{(0,0),(0,\pm1),(1,0),(1,1),(2,-2)\}$, fuera de los nodos: error
-        máximo $3\times10^{-6}$ (diferencias centrales).
-  \item Degeneración $\Phi\to\Phi+F(P)$ de la Ec.~\eqref{eq:phi}, verificada con una densidad sin simetría.
-\end{itemize}
+
+\paragraph{1. Problemas inversos espectrales en una dimensión (1929--1955).} Ambarzumian (1929) mostró que un espectro
+particular determina el potencial en un caso especial; Borg (1946) estableció que en general hacen falta dos espectros;
+Gel'fand y Levitan (1951) dieron un procedimiento de reconstrucción a partir de la función espectral, y Marchenko lo
+desarrolló en paralelo. \emph{Aporte:} la reconstrucción es posible y única con datos espectrales suficientes.
+\emph{Límite:} una dimensión, sin campo magnético.
+
+\paragraph{2. Problemas inversos de dispersión (1950--1990).} La teoría se extendió a datos de dispersión; Chadan y
+Sabatier (1977, 2.\textsuperscript{a} ed. 1989) la sistematizaron. \emph{Aporte:} métodos para varias dimensiones y
+energías. \emph{Límite:} aparecen ambigüedades, potenciales distintos con los mismos datos, y los datos son externos al
+sistema.
+
+\paragraph{3. Problemas inversos con campo magnético (1993--1995 en adelante).} Sun (1993) observó que el mapa de
+Dirichlet a Neumann es invariante de gauge y, por tanto, solo puede determinar $\Bv$ y $V$; Nakamura, Sun y Uhlmann (1995)
+probaron la identificabilidad global y Eskin y Ralston (1995) el resultado análogo para dispersión a energía fija.
+\emph{Aporte:} la unicidad salvo gauge es el resultado correcto, no una limitación. \emph{Límite:} datos de frontera o
+de dispersión, y dimensión $\ge3$ en los resultados citados.
+
+\paragraph{4. Construcción a partir del estado fundamental (1980--2024).} En una dimensión, el potencial se obtiene
+directamente de un estado fundamental sin nodos mediante el superpotencial (Cooper, Khare y Sukhatme, 1995). Bhalgamiya
+y Novotny (2024) generalizan la idea a 1D--3D con la densidad como dato, con aplicaciones al diseño de potenciales en
+condensados de Bose--Einstein (trabajo previo: arXiv:2110.12082; tesis doctoral, Mississippi State University, 2023).
+\emph{Aporte:} datos internos y fórmulas explícitas. \emph{Límite:} función de onda real; no incluye potencial vectorial
+ni estados con corriente.
+
+\paragraph{5. Formulación hidrodinámica (1927 en adelante).} Madelung (1927) escribió la ecuación de Schrödinger como un
+fluido; Bohm (1952) y Takabayasi (1952) la desarrollaron, incluido el potencial cuántico; Dirac (1931) estableció la
+cuantización de la circulación en los nodos, y la formulación se ha usado ampliamente en dinámica con trayectorias
+(Holland, 1993; Wyatt, 2005). \emph{Aporte:} las ecuaciones~\eqref{eq:cont}--\eqref{eq:maestra} para estados complejos
+con potencial vectorial. \emph{Límite:} uso casi exclusivo en el problema directo.
+
+\paragraph{6. Estados de Fock--Darwin (1928 en adelante).} Fock (1928) y Darwin (1931) resolvieron el oscilador
+bidimensional en campo magnético, que se volvió el modelo de referencia de los puntos cuánticos (Reimann y Manninen,
+2002). \emph{Aporte:} un caso de solución exacta con vórtices, nodos radiales y un parámetro que interpola hacia el
+régimen de Landau. \emph{Uso aquí:} banco de pruebas.
+
+\paragraph{Comparación.}
+\begin{center}
+\begin{tabular}{@{}p{3.1cm} p{2.6cm} p{1.6cm} p{3.6cm} p{3.2cm}@{}}
+\toprule
+\textbf{Línea} & \textbf{Datos} & \textbf{$\Av$} & \textbf{Qué se determina} & \textbf{Abierto} \\
+\midrule
+1. Espectral 1D & espectros & no & $V$ único (dos espectros) & más dimensiones \\
+2. Dispersión & matriz $S$ & no & $V$, con ambigüedades & unicidad general \\
+3. Magnético & frontera, $S$ & sí & $\Bv$, $V$; $\Av$ salvo gauge & datos internos; 2D \\
+4. Estado fundamental & $\psi$ o $P$ & no & $V-E$ explícito & estados complejos \\
+5. Hidrodinámica & (directo) & sí & ecuaciones & uso inverso \\
+6. Fock--Darwin & (exacto) & sí & solución completa & banco de pruebas \\
+\bottomrule
+\end{tabular}
+\end{center}
+La comparación ubica el vacío: las líneas 3 y 4 resuelven, por separado, el papel del gauge con datos externos y la
+reconstrucción con datos internos, pero no el caso en que ambos aspectos aparecen a la vez. La línea 5 da las ecuaciones
+para estudiarlo y la línea 6, el caso de prueba.
 
 % =====================================================================
 \section*{f) Justificación}
 \addcontentsline{toc}{section}{f) Justificación}
-\emph{Físico-matemática:} la extensión del método inverso a potenciales vectoriales solo es útil si se sabe qué datos la
-determinan; el trabajo establece esas condiciones y corrige la idea de que la fijación de gauge basta. \emph{Computacional
-y pedagógica:} un código abierto y validado sobre la familia de Fock--Darwin sirve para enseñar potencial vector,
-invariancia de gauge, vórtices cuánticos y mal condicionamiento de problemas inversos, y para el diseño inverso de
-confinamientos en puntos cuánticos. \emph{Epistemológica y formativa} (Art.~1 del Acuerdo): el problema muestra, en un caso
-controlado, que la fijación de gauge, la elección de datos y la discretización no son pasos neutrales, y permite articular
-la formación en física con los estudios sociales de la ciencia.
+\emph{Pertinencia física y matemática:} el trabajo precisa qué información sobre un estado cuántico con campo magnético
+permite reconstruir los potenciales, y conecta un método constructivo reciente con los resultados clásicos de unicidad
+salvo gauge. \emph{Relevancia formativa:} el problema integra temas centrales del plan de estudios (potencial vectorial,
+invariancia de gauge, vórtices cuánticos, problemas mal condicionados y métodos numéricos) y produce material útil para
+la docencia. \emph{Relevancia aplicada:} el diseño inverso de confinamientos es de interés en puntos cuánticos y en
+potenciales ópticos para átomos fríos. \emph{Dimensión reflexiva} (complementaria): el caso permite discutir, a partir de
+Barad (2007) y Latour (1987), cómo la elección de los datos, del gauge y de la regularización participa en lo que se
+considera ``el potencial reconstruido''; esta discusión se incluirá como cierre del documento y no constituye un objetivo
+independiente.
 
 % =====================================================================
 \section*{g) Objetivos}
 \addcontentsline{toc}{section}{g) Objetivos}
-\paragraph{h) General.} Formular y validar la generalización del método inverso de Schrödinger independiente del tiempo
-para funciones de onda complejas con potencial vector, estableciendo sus condiciones de unicidad, verificándola
-numéricamente en estados de Fock--Darwin y analizando el proceso de modelado desde Karen Barad y Bruno Latour.
+\paragraph{h) Objetivo general.} Analizar las condiciones de reconstrucción de los potenciales escalar y vectorial en la
+ecuación estacionaria de Schrödinger, mediante la formulación hidrodinámica de Madelung y el estudio teórico-computacional
+de estados de Fock--Darwin.
 
-\paragraph{i) Específicos.}
-\begin{enumerate}[label=\arabic*.,leftmargin=2em]
-  \item Derivar el sistema inverso de Madelung con acoplamiento mínimo y caracterizar su libertad de gauge y su conteo
-        de grados de libertad.
-  \item Demostrar la degeneración $\Phi\to\Phi+F(P)$ de la continuidad en el gauge de Coulomb, establecer las
-        condiciones de solubilidad sobre curvas de nivel cerradas y determinar qué datos adicionales ($B_z$ o $V$) dan
-        unicidad.
-  \item Implementar y documentar un resolvedor numérico que reconstruya $V$ (dado $B_z$) y $B_z$ (dado $V$) a partir de
-        $(P,S)$, con regularización controlada en nodos y núcleos de vórtice.
-  \item Validar el resolvedor sobre la familia de Fock--Darwin, cuantificando convergencia de malla, sensibilidad al ruido
-        y comportamiento cerca de las singularidades.
-  \item Elaborar una lectura difractiva y actor-red del proceso de modelado, mostrando cómo la elección de datos, el gauge,
-        la regularización y el software participan en el resultado.
+\paragraph{i) Objetivos específicos.}
+\begin{enumerate}[label=OE\arabic*.,leftmargin=3em]
+  \item Sistematizar los fundamentos teóricos y los antecedentes bibliográficos del problema inverso de la ecuación de
+        Schrödinger, particularmente en presencia de potenciales vectoriales.
+  \item Derivar y analizar las ecuaciones de la formulación hidrodinámica de Madelung, identificando las condiciones de
+        reconstrucción de los potenciales y el papel de la libertad de gauge.
+  \item Estudiar analítica y numéricamente algunos casos representativos de estados de Fock--Darwin, con el propósito de
+        examinar la reconstrucción de los potenciales y sus limitaciones.
+  \item Contrastar los resultados obtenidos con los reportados en la literatura, identificando las condiciones bajo las
+        cuales resulta aplicable el procedimiento de reconstrucción.
 \end{enumerate}
 
 % =====================================================================
 \section*{j) Metodología}
 \addcontentsline{toc}{section}{j) Metodología}
-Investigación teórica con apoyo computacional. Cada prueba se registra con su criterio de éxito y de refutación
-\emph{antes} de ejecutarla, y los resultados negativos se reportan como tales.
+Investigación teórica con tres componentes: documental, analítico y computacional acotado.
 
-\paragraph{Fases.}
-\begin{enumerate}[leftmargin=2em]
-  \item \textbf{Cierre analítico.} Derivación completa en coordenadas cartesianas y polares; demostración de la
-        degeneración $F(P)$ y de la condición de solubilidad; formulación de los problemas bien planteados.
-  \item \textbf{Resolvedor.} Módulo en Python que acepta $(P,S)$ más $B_z$ o $V$; integración de~\eqref{eq:phi} a lo
-        largo de curvas de nivel en geometría general y reducción radial en simetría axial; regularización
-        ($R=\sqrt{P+\epsilon}$, tratamiento de derivadas logarítmicas cerca de nodos).
-  \item \textbf{Validación.} Matriz de estados $n\in\{0,1,2\}$, $\ell\in\{-2,\dots,2\}$, con barrido de
-        $\omega_c/\omega_0$ desde confinamiento débil hasta el régimen de Landau; error puntual y en norma $L^2$ frente al
-        potencial exacto; sensibilidad a la malla, al ruido y a $\epsilon$.
-  \item \textbf{Análisis epistemológico y redacción.} Registro de las decisiones de modelado (datos prescritos, gauge
-        simétrico frente a Landau, malla, regularización) y de los fallos como material para la lectura desde Barad y
-        Latour; redacción con RAE y anexos de código (Art.~25).
-\end{enumerate}
+\paragraph{Fase 1. Investigación documental (OE1).}
+\begin{itemize}[leftmargin=1.6em]
+  \item \emph{Búsqueda.} Bases: Web of Science, Scopus, arXiv, revistas de APS y AIP (incluida \emph{American Journal of
+        Physics}) y Google Scholar. Cadenas de ejemplo: ``inverse problem'' AND Schrödinger AND (``magnetic potential'' OR
+        ``vector potential''); ``inverse spectral problem''; ``Madelung'' OR ``quantum hydrodynamics''; ``Fock--Darwin''
+        AND (``quantum dot'' OR ``inverse''); ``gauge'' AND ``uniqueness'' AND ``magnetic Schrödinger''.
+  \item \emph{Bola de nieve.} Hacia atrás, desde las referencias de Bhalgamiya y Novotny (2024), Nakamura, Sun y Uhlmann
+        (1995) y Cooper, Khare y Sukhatme (1995); hacia adelante, desde los trabajos que los citan.
+  \item \emph{Selección.} Inclusión: trabajos que formulen un problema inverso para la ecuación de Schrödinger, traten la
+        unicidad o el gauge, o desarrollen la formulación hidrodinámica o los estados de Fock--Darwin. Exclusión:
+        aplicaciones a sistemas no cuánticos y trabajos sin resultados verificables. Se conservan las obras fundacionales
+        sin restricción de fecha.
+  \item \emph{Clasificación y sistematización.} Ficha por fuente en un gestor bibliográfico y matriz con las categorías:
+        tipo de problema inverso, datos, incógnitas, presencia y tratamiento del potencial vectorial, dimensión, resultado
+        de unicidad, método y limitaciones.
+  \item \emph{Comparación.} Tablas comparativas como la de la sección e, a partir de las cuales se formula y se actualiza
+        el vacío de conocimiento.
+\end{itemize}
 
-\paragraph{Batería de pruebas.}
-\begin{center}
-\begin{tabular}{@{}p{0.7cm} p{8.2cm} p{2.3cm}@{}}
-\toprule
-& Prueba & Estado \\
-\midrule
-Q1 & Fock--Darwin $(0,1)$: convergencia de malla, ruido, forma $\sqrt P$ frente a $P$ & hecha \\
-Q2 & Fock--Darwin excitados: recuperación puntual fuera de nodos & hecha \\
-Q3 & Fock--Darwin excitados en malla, con nodos y regularización & pendiente \\
-Q4 & Degeneración $F(P)$ con densidad sin simetría & verificada; demostración pendiente \\
-Q5 & Condición de solubilidad sobre curvas de nivel cerradas & pendiente \\
-Q6 & Reconstrucción de $B_z$ dado $V$ (problema inverso dual) & pendiente \\
-Q7 & Invariancia de gauge: simétrico frente a Landau & pendiente \\
-Q8 & Barrido $\omega_c/\omega_0$ hacia el régimen de Landau & pendiente \\
-\bottomrule
-\end{tabular}
-\end{center}
+\paragraph{Fase 2. Desarrollo analítico (OE2).} Derivación de~\eqref{eq:cont}--\eqref{eq:maestra} con hipótesis
+explícitas; análisis de los casos de datos de la tabla de la sección c; demostración de la degeneración con datos de fase
+y de la reconstrucción con datos invariantes; análisis de las singularidades en los nodos.
+
+\paragraph{Fase 3. Estudio de casos representativos (OE3).} Tres estados de Fock--Darwin con $\omega_c/\omega_0=2$:
+$(n,\ell)=(0,0)$ como control sin vórtice, $(0,1)$ con vórtice y $(1,0)$ con nodo radial. Para cada uno: verificación
+analítica de la reconstrucción, cálculo numérico en malla por diferencias finitas y estudio de convergencia; para el
+estado $(0,1)$, además, sensibilidad al ruido en $P$. Se usa Python con bibliotecas de libre acceso, y cada prueba se
+registra con su criterio de éxito antes de ejecutarla.
+
+\paragraph{Fase 4. Contraste y redacción (OE4).} Comparación de los resultados con los de la literatura (líneas 3 y 4 de
+la sección e) y redacción del informe final según el Art.~25 (RAE, resultados, conclusiones, recomendaciones y anexos).
 
 \paragraph{Cronograma (dos periodos académicos).}
 \begin{center}
-\begin{tabular}{@{}p{3.2cm} p{6.4cm} p{4.6cm}@{}}
+\begin{tabular}{@{}p{3.1cm} p{6.6cm} p{1.4cm} p{3.2cm}@{}}
 \toprule
-Periodo & Actividades & Entregable \\
+\textbf{Periodo} & \textbf{Actividad} & \textbf{Obj.} & \textbf{Entregable} \\
 \midrule
-P1, sem.~1--4 & Radicación; revisión crítica de fuentes & Anteproyecto aprobado; director designado \\
-P1, sem.~5--12 & Cierre analítico (objetivos 1--2) & Capítulo matemático verificado \\
-P1, sem.~13--16 & Resolvedor y pruebas Q1--Q4 & Código documentado \\
-P2, sem.~1--6 & Pruebas Q5--Q8 & Tablas de error y mapas \\
-P2, sem.~7--12 & Lectura desde Barad y Latour & Capítulo epistemológico \\
-P2, sem.~13--16 & Integración, RAE, sustentación & Documento (60\,\%) y sustentación (40\,\%) \\
+P1, sem.~1--6 & Investigación documental: búsqueda, selección y matriz & OE1 & Estado del arte \\
+P1, sem.~5--14 & Desarrollo analítico & OE2 & Capítulo teórico \\
+P1, sem.~13--16 & Casos $(0,0)$ y $(0,1)$ & OE3 & Primeros resultados \\
+P2, sem.~1--6 & Caso $(1,0)$; convergencia y ruido & OE3 & Capítulo de resultados \\
+P2, sem.~7--11 & Contraste con la literatura & OE4 & Capítulo de discusión \\
+P2, sem.~12--16 & Redacción final, RAE y sustentación & todos & Documento y sustentación \\
 \bottomrule
 \end{tabular}
 \end{center}
-Si el plan de estudios contempla un solo espacio de Trabajo de Grado (Art.~9 lit.~a), el cronograma se comprime a un
-periodo dejando Q6--Q8 como trabajo futuro.
+Si el plan de estudios contempla un solo espacio de Trabajo de Grado (Art.~9), se comprime a un periodo reduciendo la
+Fase 3 a los estados $(0,0)$ y $(0,1)$.
 
 % =====================================================================
 \section*{k) Impacto esperado}
 \addcontentsline{toc}{section}{k) Impacto esperado}
-Una formulación del método inverso con potencial vector en la que queda explícito qué datos determinan el campo magnético
-y el potencial; un resolvedor abierto y validado sobre la familia de Fock--Darwin, útil para docencia y para diseño inverso
-de confinamientos; y un caso de estudio concreto para la discusión epistemológica sobre la participación del aparato
-teórico-computacional en el resultado. Como producto derivado posible, el núcleo físico-computacional puede someterse
-como artículo a una revista de física docente o computacional. La correspondencia formal con la ecuación de
-Fokker--Planck (potencial vector imaginario), desarrollada de forma preliminar, queda como perspectiva.
+Una caracterización de qué datos permiten reconstruir los potenciales escalar y vectorial de un estado estacionario
+bidimensional, contrastada con los resultados clásicos de unicidad salvo gauge; un estudio cuidadoso de tres estados de
+Fock--Darwin que ilustra la reconstrucción y sus limitaciones (nodos, ruido, mallas); y un documento con valor
+pedagógico. Como producto derivado posible, un artículo para una revista de física docente o computacional.
 
 % =====================================================================
 \section*{l) Bibliografía}
 \addcontentsline{toc}{section}{l) Bibliografía}
+\small Las entradas marcadas con $\dagger$ se citan de memoria y deben verificarse contra la fuente antes de la entrega.
 \begin{enumerate}[leftmargin=2em,label={[\arabic*]}]
+\item[] \textbf{Problemas inversos}
+  \item V. A. Ambarzumian, ``Über eine Frage der Eigenwerttheorie'', \emph{Z. Phys.} \textbf{53}, 690 (1929).$\dagger$
+  \item G. Borg, ``Eine Umkehrung der Sturm--Liouvilleschen Eigenwertaufgabe'', \emph{Acta Math.} \textbf{78}, 1 (1946).$\dagger$
+  \item I. M. Gel'fand y B. M. Levitan, ``On the determination of a differential equation from its spectral function'',
+        \emph{Izv. Akad. Nauk SSSR Ser. Mat.} \textbf{15}, 309--360 (1951).
+  \item K. Chadan y P. C. Sabatier, \emph{Inverse Problems in Quantum Scattering Theory}, 2.\textsuperscript{a} ed.,
+        Springer (1989).
+  \item Z. Sun, ``An inverse boundary value problem for Schrödinger operators with vector potentials'', \emph{Trans. Amer.
+        Math. Soc.} (1993).$\dagger$ (volumen y páginas)
+  \item G. Nakamura, Z. Sun y G. Uhlmann, ``Global identifiability for an inverse problem for the Schrödinger equation in a
+        magnetic field'', \emph{Math. Ann.} \textbf{303}, 377--388 (1995).
+  \item G. Eskin y J. Ralston, ``Inverse scattering problem for the Schrödinger equation with magnetic potential at a fixed
+        energy'', \emph{Commun. Math. Phys.} \textbf{173}, 199--224 (1995).
+  \item F. Cooper, A. Khare y U. Sukhatme, ``Supersymmetry and quantum mechanics'', \emph{Phys. Rep.} \textbf{251},
+        267--385 (1995).
   \item B. Bhalgamiya y M. A. Novotny, ``Exact solutions for the inverse problem of the time-independent Schrödinger
         equation'', \emph{Am. J. Phys.} \textbf{92}(12), 975--979 (2024).
-  \item E. Madelung, ``Quantentheorie in hydrodynamischer Form'', \emph{Z. Phys.} \textbf{40}, 322 (1927).
+  \item ``Example exact solutions of the time-independent Gross--Pitaevskii and Schrödinger equations'',
+        arXiv:2110.12082.$\dagger$ (autores)
+  \item B. Bhalgamiya, tesis doctoral, Mississippi State University (2023).$\dagger$ (título completo)
+\item[] \textbf{Formulación hidrodinámica y gauge}
+  \item E. Madelung, ``Quantentheorie in hydrodynamischer Form'', \emph{Z. Phys.} \textbf{40}, 322 (1927).$\dagger$
+  \item P. A. M. Dirac, ``Quantised singularities in the electromagnetic field'', \emph{Proc. R. Soc. A} \textbf{133}, 60 (1931).$\dagger$
   \item D. Bohm, ``A suggested interpretation of the quantum theory in terms of hidden variables'', \emph{Phys. Rev.}
-        \textbf{85}, 166 (1952).
-  \item V. Fock, ``Bemerkung zur Quantelung des harmonischen Oszillators im Magnetfeld'', \emph{Z. Phys.} \textbf{47},
-        446 (1928).
-  \item C. G. Darwin, ``The diamagnetism of the free electron'', \emph{Proc. Camb. Phil. Soc.} \textbf{27}, 86 (1931).
-  \item K. Barad, \emph{Meeting the Universe Halfway: Quantum Physics and the Entanglement of Matter and Meaning}, Duke
-        University Press (2007).
-  \item B. Latour y S. Woolgar, \emph{Laboratory Life: The Social Construction of Scientific Facts}, Sage (1979).
+        \textbf{85}, 166 (1952).$\dagger$
+  \item T. Takabayasi, ``On the formulation of quantum mechanics associated with classical pictures'', \emph{Prog. Theor.
+        Phys.} \textbf{8}, 143 (1952).
+  \item Y. Aharonov y D. Bohm, ``Significance of electromagnetic potentials in the quantum theory'', \emph{Phys. Rev.}
+        \textbf{115}, 485 (1959).$\dagger$
+  \item P. R. Holland, \emph{The Quantum Theory of Motion}, Cambridge University Press (1993).$\dagger$
+  \item R. E. Wyatt, \emph{Quantum Dynamics with Trajectories}, Springer (2005).$\dagger$
+\item[] \textbf{Estados de Fock--Darwin}
+  \item V. Fock, ``Bemerkung zur Quantelung des harmonischen Oszillators im Magnetfeld'', \emph{Z. Phys.} \textbf{47}, 446 (1928).$\dagger$
+  \item C. G. Darwin, ``The diamagnetism of the free electron'', \emph{Proc. Camb. Phil. Soc.} \textbf{27}, 86 (1931).$\dagger$
+  \item S. M. Reimann y M. Manninen, ``Electronic structure of quantum dots'', \emph{Rev. Mod. Phys.} \textbf{74}, 1283 (2002).
+\item[] \textbf{Dimensión reflexiva}
+  \item K. Barad, \emph{Meeting the Universe Halfway}, Duke University Press (2007).
   \item B. Latour, \emph{Science in Action}, Harvard University Press (1987).
-  \item B. Latour, \emph{Pandora's Hope: Essays on the Reality of Science Studies}, Harvard University Press (1999).
-  \item B. Latour, \emph{Reassembling the Social: An Introduction to Actor-Network-Theory}, Oxford University Press (2005).
-  \item A. Mazzolo y C. Monthus, \emph{Phys. Rev. E} \textbf{107}, 014101 (2023) (perspectiva Fokker--Planck).
-  \item Universidad Distrital Francisco José de Caldas, Consejo Académico, Acuerdo N.\textsuperscript{o} 004 (18 de agosto
-        de 2026).
-  \item Universidad Distrital Francisco José de Caldas, Consejo Superior Universitario, Acuerdo N.\textsuperscript{o} 04
-        de 2012 (Estatuto de Propiedad Intelectual).
+\item[] \textbf{Normativa}
+  \item Universidad Distrital Francisco José de Caldas, Consejo Académico, Acuerdo N.\textsuperscript{o} 004 (18 de agosto de 2026).
 \end{enumerate}
 
 \vfill
 \noindent\rule{\linewidth}{0.4pt}\\
-\small Las comprobaciones numéricas citadas están en \texttt{NucleoTG/teoria/verificar\_gauge\_fock\_darwin.py} y
-\texttt{NucleoTG/analisis/b1\_validacion.py}. Los datos bibliográficos deben verificarse contra las fuentes.
+\footnotesize Las comprobaciones numéricas preliminares están en el repositorio del proyecto
+(\texttt{NucleoTG/teoria/verificar\_gauge\_fock\_darwin.py} y \texttt{NucleoTG/analisis/b1\_validacion.py}).
 
 \end{document}

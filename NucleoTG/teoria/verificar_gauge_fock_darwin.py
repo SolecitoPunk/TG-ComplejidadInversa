@@ -74,6 +74,20 @@ def prueba_B():
         print(f"   (n,l) = ({n},{l:+d})  E = {E:.4f}  error máximo = {err:.1e}")
 
 
+def prueba_C():
+    """(C) Con datos invariantes de gauge (P, j), el campo queda determinado: u = m j / P y
+    rot(u) = -q B_z donde S es regular. Fock-Darwin (n, l) = (0, 1): u = (l/r - q B r / 2) theta_hat,
+    con q = m = 1 y B = WC = 2, así que rot(u) debe valer -2 fuera del núcleo del vórtice."""
+    print("(C) Datos (P, j): B_z = -(1/q) rot(m j / P) en Fock-Darwin (0, 1); esperado B_z = 2")
+    l, B = 1, WC
+    ux = lambda x, y: (-l * y / (x * x + y * y)) + B * y / 2      # noqa: E731
+    uy = lambda x, y: (l * x / (x * x + y * y)) - B * x / 2       # noqa: E731
+    for x, y in [(0.4, 0.3), (0.9, -0.6), (-1.3, 0.8)]:
+        rot = d(uy, x, y, 0) - d(ux, x, y, 1)
+        print(f"   ({x:+.1f},{y:+.1f})  B_z reconstruido = {-rot:.6f}")
+
+
 if __name__ == "__main__":
     prueba_A()
     prueba_B()
+    prueba_C()
