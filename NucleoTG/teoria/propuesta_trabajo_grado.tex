@@ -29,14 +29,28 @@
 \title{\textbf{Análisis del problema inverso de la ecuación de Schrödinger\\
 estacionaria con potencial vectorial:\\
 formulación hidrodinámica y estudio de estados de Fock--Darwin}}
-\author{Juan Sebastián [apellidos]\\
+\author{Juan Sebastián Sánchez Álvarez\\
 \small Director: John Hernán Díaz Forero\\
-\small Proyecto Curricular de Física --- Universidad Distrital Francisco José de Caldas}
-\date{\small Anteproyecto de Trabajo de Grado --- Modalidad Monografía de investigación teórica\\
-(Acuerdo 004 de 2026, Art.~2 lit.~b; estructura del Art.~24)\\ Versión 3 --- \today}
+\small Programa Académico de Física --- Facultad de Ciencias Matemáticas y Naturales\\
+\small Universidad Distrital Francisco José de Caldas}
+\date{\small Propuesta de Trabajo de Grado --- Modalidad Monografía de investigación teórica\\
+(Acuerdo 004 de 2026, Art.~2 lit.~b; estructura del Art.~24)\\
+Para inscripción de Trabajo de Grado I en el periodo 2027-1 \\ Noviembre de 2026}
 
 \begin{document}
 \maketitle
+
+\begin{center}
+\begin{tabular}{@{}p{4cm} p{10.5cm}@{}}
+\toprule
+\textbf{Modalidad} & Monografía --- investigación teórica (Art.~2, lit.~b). \\
+\textbf{Estudiante} & Juan Sebastián Sánchez Álvarez, Programa Académico de Física. \\
+\textbf{Director} & John Hernán Díaz Forero, quien radica la propuesta ante la Coordinación del Programa (Art.~4, Art.~10). \\
+\textbf{Periodos} & Trabajo de Grado I: 2027-1. Trabajo de Grado II: 2027-3. \\
+\textbf{Evaluación} & Jurado designado: documento escrito 60\,\% y sustentación pública 40\,\% (Art.~26). \\
+\bottomrule
+\end{tabular}
+\end{center}
 
 \paragraph{Nota sobre la estructura.} El trabajo tiene un núcleo físico-matemático (título, pregunta de investigación
 y objetivos OE1--OE4) y una dimensión epistemológica que lo acompaña en todas sus partes: una pregunta complementaria
@@ -321,6 +335,23 @@ para estudiarlo y la línea 6, el caso de prueba. La línea 7 ubica un segundo v
 Barad y Latour no se han usado para examinar una reconstrucción teórico-computacional, donde las decisiones de modelado
 son explícitas y sus consecuencias, demostrables.
 
+\paragraph{Trabajo preliminar del autor.} Antes de esta propuesta se desarrollaron, en un repositorio con control de
+versiones, cuatro piezas que sirven de punto de partida:
+\begin{enumerate}[leftmargin=1.8em]
+  \item \emph{Reproducción del antecedente.} Los casos 1D y 2D (Gumbel por gaussiana) de Bhalgamiya y Novotny se
+        reprodujeron; se comprobó la constante de normalización de su densidad 1D ($A\int P\,dx=1.0000$).
+  \item \emph{Estado complejo sin campo.} Con $\Av=\mathbf 0$, la inversión $V-E=\frac{\hbar^2}{2m}\mathrm{Re}(\grad^2\psi/\psi)$
+        recupera el oscilador bidimensional para un estado con momento angular $\ell=1$ (error $\sim10^{-8}$; la parte
+        imaginaria, que es la continuidad, se anula al mismo orden).
+  \item \emph{Necesidad del potencial vectorial.} Aplicada a un estado de Fock--Darwin ($\omega_0=1$, $\omega_c=2$), esa
+        misma inversión sin $\Av$ devuelve el confinamiento $\frac12m\Omega^2r^2$ con $\Omega^2=\omega_0^2+\omega_c^2/4$, el
+        doble del verdadero: atribuye el confinamiento magnético al potencial escalar. Con el término $\grad S-q\Av$
+        de~\eqref{eq:maestra} se recupera $\frac12m\omega_0^2r^2$ con convergencia de segundo orden en la malla; con ruido
+        relativo $\varepsilon$ en $P$, el error crece como $\varepsilon/\Delta x^2$.
+  \item \emph{Unicidad.} La degeneración $\Phi\to\Phi+F(P)$ con datos de fase (d.6) se verificó con una densidad sin
+        simetría, y la reconstrucción de $B_z$ con datos $(P,\jv)$ se verificó en el estado $(0,1)$.
+\end{enumerate}
+
 % =====================================================================
 \section*{f) Justificación}
 \addcontentsline{toc}{section}{f) Justificación}
@@ -441,25 +472,25 @@ recomendaciones y anexos).
 \end{enumerate}
 Anexos: código, bitácora de decisiones de modelado y matrices de sistematización documental.
 
-\paragraph{Cronograma (dos periodos académicos).}
+\paragraph{Cronograma (Trabajo de Grado I en 2027-1 y Trabajo de Grado II en 2027-3).}
 \begin{center}
-\begin{tabular}{@{}p{3.1cm} p{6.6cm} p{1.4cm} p{3.2cm}@{}}
+\begin{tabular}{@{}p{3.3cm} p{6.4cm} p{1.4cm} p{3.2cm}@{}}
 \toprule
 \textbf{Periodo} & \textbf{Actividad} & \textbf{Obj.} & \textbf{Entregable} \\
 \midrule
-P1, sem.~1--6 & Investigación documental: búsqueda, selección y matrices & OE1, OE5 & Estado del arte \\
-P1, sem.~5--14 & Desarrollo analítico & OE2 & Capítulo 5 \\
-P1, sem.~13--16 & Casos $(0,0)$ y $(0,1)$ & OE3 & Primeros resultados \\
-P2, sem.~1--6 & Caso $(1,0)$; convergencia y ruido & OE3 & Capítulo 6 \\
-P2, sem.~5--9 & Contraste con la literatura & OE4 & Capítulo 7 \\
-P2, sem.~8--12 & Discusión epistemológica sobre la bitácora & OE5 & Capítulo 8 \\
-P2, sem.~12--16 & Redacción final, RAE y sustentación & todos & Documento y sustentación \\
+2027-1, sem.~1--6 & Investigación documental: búsqueda, selección y matrices & OE1, OE5 & Estado del arte \\
+2027-1, sem.~5--14 & Desarrollo analítico & OE2 & Capítulo 5 \\
+2027-1, sem.~13--16 & Casos $(0,0)$ y $(0,1)$ & OE3 & Primeros resultados \\
+2027-3, sem.~1--6 & Caso $(1,0)$; convergencia y ruido & OE3 & Capítulo 6 \\
+2027-3, sem.~5--9 & Contraste con la literatura & OE4 & Capítulo 7 \\
+2027-3, sem.~8--12 & Discusión epistemológica sobre la bitácora & OE5 & Capítulo 8 \\
+2027-3, sem.~12--16 & Redacción final, RAE y sustentación & todos & Documento y sustentación \\
 \bottomrule
 \end{tabular}
 \end{center}
-La bitácora se lleva durante todo el periodo. Si el plan de estudios contempla un solo espacio de Trabajo de Grado
-(Art.~9), se comprime a un periodo reduciendo la Fase 3 a los estados $(0,0)$ y $(0,1)$ y la Fase 5 a las categorías de
-corte agencial, caja negra y traducción.
+La bitácora se lleva durante los dos periodos. La duración se ajusta al Art.~9 (dos periodos para programas con dos
+espacios de Trabajo de Grado); si fuera necesaria una prórroga, se solicitaría al Consejo Curricular según el
+Art.~9, par.~1.
 
 % =====================================================================
 \section*{k) Impacto esperado}
@@ -529,7 +560,8 @@ enseñanza de las ciencias o de estudios de la ciencia, a partir del capítulo 8
 
 \vfill
 \noindent\rule{\linewidth}{0.4pt}\\
-\footnotesize Las comprobaciones numéricas preliminares están en el repositorio del proyecto
-(\texttt{NucleoTG/teoria/verificar\_gauge\_fock\_darwin.py} y \texttt{NucleoTG/analisis/b1\_validacion.py}).
+\footnotesize El trabajo preliminar está en el repositorio del proyecto: \texttt{NucleoTG/codigo/} (notebooks de
+reproducción e inversión), \texttt{NucleoTG/teoria/verificar\_gauge\_fock\_darwin.py} y
+\texttt{NucleoTG/analisis/b1\_validacion.py}.
 
 \end{document}
