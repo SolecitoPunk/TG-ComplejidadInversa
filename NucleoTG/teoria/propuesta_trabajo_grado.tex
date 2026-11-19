@@ -13,7 +13,6 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{booktabs}
 \usepackage{array}
-\usepackage{longtable}
 
 % ----- Notación -----
 \newcommand{\rv}{\mathbf{r}}
@@ -34,20 +33,28 @@ formulación hidrodinámica y estudio de estados de Fock--Darwin}}
 \small Director: John Hernán Díaz Forero\\
 \small Proyecto Curricular de Física --- Universidad Distrital Francisco José de Caldas}
 \date{\small Anteproyecto de Trabajo de Grado --- Modalidad Monografía de investigación teórica\\
-(Acuerdo 004 de 2026, Art.~2 lit.~b; estructura del Art.~24)\\ Versión 2 --- \today}
+(Acuerdo 004 de 2026, Art.~2 lit.~b; estructura del Art.~24)\\ Versión 3 --- \today}
 
 \begin{document}
 \maketitle
+
+\paragraph{Nota sobre la estructura.} El trabajo tiene un núcleo físico-matemático (título, pregunta de investigación
+y objetivos OE1--OE4) y una dimensión epistemológica que lo acompaña en todas sus partes: una pregunta complementaria
+(sección c), un marco conceptual propio (d.7), una etapa del estado del arte (e.7), un objetivo específico (OE5), una fase
+metodológica con categorías de análisis (Fase 5) y un capítulo de discusión en el informe final. La dimensión
+epistemológica no amplía el problema físico: toma como material las decisiones de modelado que el núcleo físico obliga a
+tomar.
 
 % =====================================================================
 \section*{a) Tema o título}
 \addcontentsline{toc}{section}{a) Tema o título}
 El tema es el problema inverso de la ecuación de Schrödinger estacionaria para una partícula cargada en presencia de un
 potencial vectorial: a partir de información sobre un estado estacionario, reconstruir los potenciales escalar y
-vectorial que lo sostienen. Se delimita en contenido a la formulación hidrodinámica de Madelung y a las condiciones de
-reconstrucción que de ella se derivan, incluida la libertad de gauge; en espacio, a sistemas bidimensionales con campo
-magnético perpendicular; y en tiempo, al plazo del Art.~9 del Acuerdo 004 de 2026. Los estados de Fock--Darwin sirven
-como caso de estudio de solución exacta conocida.
+vectorial que lo sostienen. Se delimita en contenido a la formulación hidrodinámica de Madelung, a las condiciones de
+reconstrucción que de ella se derivan, incluida la libertad de gauge, y a la discusión de ese proceso de reconstrucción
+desde el realismo agencial de Karen Barad y la teoría del actor-red de Bruno Latour. Se delimita en espacio a sistemas
+bidimensionales con campo magnético perpendicular, y en tiempo al plazo del Art.~9 del Acuerdo 004 de 2026. Los estados de
+Fock--Darwin sirven como caso de estudio de solución exacta conocida.
 
 % =====================================================================
 \section*{b) Introducción}
@@ -62,9 +69,11 @@ Este trabajo estudia qué ocurre con esa construcción cuando el estado es compl
 magnético. \textbf{Qué:} un análisis de las condiciones bajo las cuales se pueden reconstruir los potenciales escalar y
 vectorial. \textbf{Cómo:} mediante la formulación hidrodinámica de Madelung, una revisión documental sistemática y un
 estudio teórico-computacional de algunos estados de Fock--Darwin. \textbf{Por qué:} al introducir el potencial vectorial
-aparecen la libertad de gauge y un problema de unicidad que no existen en el caso real. \textbf{Cuándo y dónde:} en el
-plazo reglamentario, con herramientas de libre acceso y sin trabajo de campo. \textbf{Para qué:} para establecer qué
-información es necesaria para que la reconstrucción sea posible y cuáles son sus limitaciones.
+aparecen la libertad de gauge y un problema de unicidad que no existen en el caso real; resolverlo exige decidir qué se
+toma como dato, en qué gauge se trabaja y cómo se tratan las singularidades. \textbf{Cuándo y dónde:} en el plazo
+reglamentario, con herramientas de libre acceso y sin trabajo de campo. \textbf{Para qué:} para establecer qué
+información es necesaria para que la reconstrucción sea posible y cuáles son sus limitaciones, y para examinar, con
+Barad y Latour, qué papel tienen esas decisiones en lo que finalmente se llama ``el potencial reconstruido''.
 
 % =====================================================================
 \section*{c) Situación problémica y pregunta de investigación}
@@ -120,7 +129,7 @@ Según qué se tome como dato, el problema cambia de naturaleza:
 $(P,\jv)$ & $V$, $\Av$ & $\uv=m\jv/P$; $B_z=-\frac{1}{q}(\grad\times\uv)_z$ donde $S$ es regular, y $V-E$ por~\eqref{eq:maestra}.
 $\Av$ solo salvo gauge, como en los problemas de frontera. La continuidad es una condición de compatibilidad sobre los datos. \\
 $(P,S)$ en un gauge & $V$, $\Av$ & La continuidad es una sola ecuación para $\Av$ y \emph{no} determina $B_z$: queda libre una
-función arbitraria de $P$ (sección d.3). \\
+función arbitraria de $P$ (sección d.6). \\
 $(P,S,B_z)$ & $V$, $\Av$ & $\Av$ queda fijado salvo $\grad\chi$, y $\chi$ resuelve una ecuación elíptica; luego $V$ por~\eqref{eq:maestra}. \\
 $(P,S,V)$ & $\Av$ & \eqref{eq:maestra} fija $|\uv|$ y la continuidad restringe su dirección; problema no lineal por estudiar. \\
 \bottomrule
@@ -130,16 +139,30 @@ En todos los casos $E$ entra como una constante aditiva en $V$. En los nodos de 
 nodos radiales si $n>0$) el término de Bohm y la fase son singulares, y el rotacional de $\uv$ contiene contribuciones
 concentradas en los vórtices, proporcionales a la circulación cuantizada $2\pi\hbar\ell$.
 
+\paragraph{La dimensión epistemológica del problema.} La tabla anterior muestra que ``el potencial reconstruido'' no está
+fijado solo por el estado: depende de qué se decide tomar como dato, del gauge y del tratamiento de los nodos. Con datos
+de fase, la frontera entre confinamiento escalar y circulación magnética queda indeterminada hasta que se prescribe
+información adicional. Que la elección del instrumento de descripción participe en la constitución del objeto es
+precisamente lo que Barad analiza con la noción de corte agencial, y que el resultado dependa de una cadena de mediadores
+(ecuaciones, gauges, mallas, código) es lo que Latour estudia con la noción de traducción. El trabajo aprovecha esta
+coincidencia: el problema físico ofrece un caso controlado, con resultados demostrables, para examinar esas nociones.
+
 \medskip
 \noindent\textbf{Pregunta de investigación.} ¿Bajo qué condiciones es posible reconstruir los potenciales asociados a una
 partícula cargada descrita por la ecuación estacionaria de Schrödinger en dos dimensiones, a partir de la formulación
 hidrodinámica de Madelung, y cuáles son las limitaciones de dicha reconstrucción en estados de Fock--Darwin?
 
+\medskip
+\noindent\textbf{Pregunta complementaria (dimensión epistemológica).} ¿Qué permiten comprender el realismo agencial de
+Karen Barad y la teoría del actor-red de Bruno Latour sobre el papel que tienen la elección de los datos, del gauge y de
+los procedimientos numéricos en la constitución del potencial reconstruido?
+
 % =====================================================================
 \section*{d) Marco teórico}
 \addcontentsline{toc}{section}{d) Marco teórico}
 Para distinguir el estatus de cada elemento se usan tres etiquetas: \EST{} (fundamento teórico aceptado), \LIT{}
-(resultado reportado en la literatura) y \PRO{} (desarrollo que el trabajo propone realizar o demostrar).
+(resultado reportado en la literatura) y \PRO{} (desarrollo que el trabajo propone realizar o demostrar). Las
+subsecciones d.1--d.6 constituyen el marco físico-matemático y la d.7, el marco epistemológico.
 
 \subsection*{d.1 Acoplamiento mínimo e invariancia de gauge \EST}
 La ecuación de la sección c es invariante bajo $\Av\to\Av+\grad\chi$, $\psi\to e^{iq\chi/\hbar}\psi$, es decir,
@@ -191,6 +214,44 @@ $\omega_c$, con los niveles de Landau (Reimann y Manninen, 2002).
         singular del término de Bohm cerca de los núcleos de vórtice, y el salto de fase $\pi\hbar$ en los nodos radiales.
 \end{enumerate}
 
+\subsection*{d.7 Marco epistemológico}
+\paragraph{Realismo agencial (Karen Barad) \LIT.} Barad (2003, 2007) reelabora la filosofía-física de Bohr. Sostiene que
+las propiedades no preexisten como atributos de objetos independientes, sino que se vuelven determinadas dentro de
+\emph{fenómenos}, entendidos como la inseparabilidad entre el objeto y las agencias de observación; llama
+\emph{intra-acción} a la relación que constituye a ambos (frente a la interacción entre entidades ya dadas) y \emph{corte
+agencial} a la separación, interna al fenómeno, entre lo que se mide y lo que mide. La objetividad no desaparece:
+consiste en la reproducibilidad y la rendición de cuentas de los fenómenos producidos por aparatos especificados. Barad
+propone además la \emph{difracción} como método de lectura: leer un marco a través de otro registrando las diferencias que
+surgen, en lugar de buscar reflejos o equivalencias.
+
+\paragraph{Teoría del actor-red (Bruno Latour) \LIT.} Latour (1987, 1999, 2005) estudia la ciencia ``en acción'': un
+resultado se estabiliza cuando un ensamblaje de actores humanos y no humanos resiste las pruebas a que se lo somete.
+Las herramientas consolidadas se vuelven \emph{cajas negras}, cuyo funcionamiento oculta los supuestos que las sostienen;
+el conocimiento avanza por \emph{traducciones}, transformaciones sucesivas que conservan algo a cada paso
+(\emph{referencia circulante}); y los instrumentos actúan como \emph{dispositivos de inscripción}, que producen las figuras
+y tablas sobre las que se argumenta (Latour y Woolgar, 1979).
+
+\paragraph{Distinción entre ambos marcos.} Barad se separa explícitamente de la teoría del actor-red: su aparato no es una
+red de humanos y no humanos, sino una práctica material que produce fenómenos. Por eso el trabajo los usa en dos niveles
+distintos: Barad en el nivel ontológico-epistemológico (qué es el objeto reconstruido), Latour en el nivel de la práctica
+(cómo se ensambla y se sostiene la afirmación de que se ha reconstruido).
+
+\paragraph{Puntos de contacto con el problema físico \PRO.}
+\begin{itemize}[leftmargin=1.6em]
+  \item \emph{Gauge y objetividad.} Los gauges simétrico, de Landau y de Coulomb son especificaciones distintas del mismo
+        aparato teórico; lo que se conserva entre ellos ($P$, $\uv$, $B_z$, $V-E$) es lo reproducible a través de cortes,
+        en el sentido de Barad.
+  \item \emph{Elección de datos como corte agencial.} Con datos $(P,S)$ la frontera entre confinamiento y circulación
+        magnética no está dada (d.6); la traza la decisión de prescribir $B_z$ o $V$.
+  \item \emph{El método real como caja negra.} El procedimiento de Bhalgamiya y Novotny funciona porque supone una función
+        de onda real; extenderlo exige abrir esa caja negra y hacer visible el supuesto.
+  \item \emph{Cadena de traducciones.} Espectro $\to$ campos $(P,S)$ o $(P,\jv)$ $\to$ operadores discretos $\to$ tablas
+        de error; el código funciona como dispositivo de inscripción.
+  \item \emph{Pruebas de fuerza.} Afirmaciones previas del propio proyecto que no resistieron la verificación (por
+        ejemplo, que el gauge de Coulomb cierra el sistema en 2D) son material para analizar cómo se estabiliza un
+        resultado.
+\end{itemize}
+
 % =====================================================================
 \section*{e) Antecedentes: trayectoria del problema}
 \addcontentsline{toc}{section}{e) Antecedentes}
@@ -230,6 +291,14 @@ bidimensional en campo magnético, que se volvió el modelo de referencia de los
 2002). \emph{Aporte:} un caso de solución exacta con vórtices, nodos radiales y un parámetro que interpola hacia el
 régimen de Landau. \emph{Uso aquí:} banco de pruebas.
 
+\paragraph{7. Estudios de la ciencia sobre la física y el cálculo (1958 en adelante).} Bohr (1958) planteó que la
+descripción de un fenómeno cuántico es inseparable del arreglo experimental; Barad (2003, 2007) desarrolló esa idea como
+una ontología, el realismo agencial. Latour y Woolgar (1979) y Latour (1987, 1999) estudiaron cómo se fabrican y
+estabilizan los hechos científicos a través de instrumentos, inscripciones y traducciones. \emph{Aporte:} categorías para
+analizar la participación del aparato en el resultado. \emph{Límite:} los casos estudiados son, en su mayoría, de
+laboratorio experimental o de física fundamental; en la revisión preliminar no se encontraron trabajos que apliquen estas
+categorías a problemas inversos o a la reconstrucción teórico-computacional de potenciales.
+
 \paragraph{Comparación.}
 \begin{center}
 \begin{tabular}{@{}p{3.1cm} p{2.6cm} p{1.6cm} p{3.6cm} p{3.2cm}@{}}
@@ -242,12 +311,15 @@ régimen de Landau. \emph{Uso aquí:} banco de pruebas.
 4. Estado fundamental & $\psi$ o $P$ & no & $V-E$ explícito & estados complejos \\
 5. Hidrodinámica & (directo) & sí & ecuaciones & uso inverso \\
 6. Fock--Darwin & (exacto) & sí & solución completa & banco de pruebas \\
+7. Estudios de la ciencia & prácticas & --- & categorías de análisis & cálculo teórico \\
 \bottomrule
 \end{tabular}
 \end{center}
-La comparación ubica el vacío: las líneas 3 y 4 resuelven, por separado, el papel del gauge con datos externos y la
+La comparación ubica el vacío físico: las líneas 3 y 4 resuelven, por separado, el papel del gauge con datos externos y la
 reconstrucción con datos internos, pero no el caso en que ambos aspectos aparecen a la vez. La línea 5 da las ecuaciones
-para estudiarlo y la línea 6, el caso de prueba.
+para estudiarlo y la línea 6, el caso de prueba. La línea 7 ubica un segundo vacío, complementario: las categorías de
+Barad y Latour no se han usado para examinar una reconstrucción teórico-computacional, donde las decisiones de modelado
+son explícitas y sus consecuencias, demostrables.
 
 % =====================================================================
 \section*{f) Justificación}
@@ -257,50 +329,62 @@ permite reconstruir los potenciales, y conecta un método constructivo reciente 
 salvo gauge. \emph{Relevancia formativa:} el problema integra temas centrales del plan de estudios (potencial vectorial,
 invariancia de gauge, vórtices cuánticos, problemas mal condicionados y métodos numéricos) y produce material útil para
 la docencia. \emph{Relevancia aplicada:} el diseño inverso de confinamientos es de interés en puntos cuánticos y en
-potenciales ópticos para átomos fríos. \emph{Dimensión reflexiva} (complementaria): el caso permite discutir, a partir de
-Barad (2007) y Latour (1987), cómo la elección de los datos, del gauge y de la regularización participa en lo que se
-considera ``el potencial reconstruido''; esta discusión se incluirá como cierre del documento y no constituye un objetivo
-independiente.
+potenciales ópticos para átomos fríos. \emph{Relevancia epistemológica:} el Art.~1 del Acuerdo 004 de 2026 concibe el
+trabajo de grado como parte de la formación integral; la discusión con Barad y Latour permite que un resultado
+físico-matemático sea también objeto de reflexión sobre cómo se produce el conocimiento. Su valor está en que el caso es
+controlado: a diferencia de los estudios basados en laboratorios, aquí cada decisión de modelado es explícita y su efecto
+sobre el resultado se puede demostrar, lo que permite discutir esas categorías filosóficas con un grado de precisión
+poco habitual.
 
 % =====================================================================
 \section*{g) Objetivos}
 \addcontentsline{toc}{section}{g) Objetivos}
 \paragraph{h) Objetivo general.} Analizar las condiciones de reconstrucción de los potenciales escalar y vectorial en la
 ecuación estacionaria de Schrödinger, mediante la formulación hidrodinámica de Madelung y el estudio teórico-computacional
-de estados de Fock--Darwin.
+de estados de Fock--Darwin, y discutir ese proceso de reconstrucción desde el realismo agencial de Karen Barad y la teoría
+del actor-red de Bruno Latour.
 
 \paragraph{i) Objetivos específicos.}
 \begin{enumerate}[label=OE\arabic*.,leftmargin=3em]
   \item Sistematizar los fundamentos teóricos y los antecedentes bibliográficos del problema inverso de la ecuación de
         Schrödinger, particularmente en presencia de potenciales vectoriales.
-  \item Derivar y analizar las ecuaciones de la formulación hidrodinámica de Madelung, identificando las condiciones de
-        reconstrucción de los potenciales y el papel de la libertad de gauge.
+  \item Derivar y analizar las ecuaciones correspondientes a la formulación hidrodinámica de Madelung, identificando las
+        condiciones de reconstrucción de los potenciales y el papel de la libertad de gauge.
   \item Estudiar analítica y numéricamente algunos casos representativos de estados de Fock--Darwin, con el propósito de
         examinar la reconstrucción de los potenciales y sus limitaciones.
   \item Contrastar los resultados obtenidos con los reportados en la literatura, identificando las condiciones bajo las
         cuales resulta aplicable el procedimiento de reconstrucción.
+  \item Discutir, desde el realismo agencial de Karen Barad y la teoría del actor-red de Bruno Latour, el papel de la
+        elección de los datos, del gauge y de los procedimientos numéricos en la constitución del potencial reconstruido.
 \end{enumerate}
+OE1--OE4 responden la pregunta de investigación; OE5 responde la pregunta complementaria.
 
 % =====================================================================
 \section*{j) Metodología}
 \addcontentsline{toc}{section}{j) Metodología}
-Investigación teórica con tres componentes: documental, analítico y computacional acotado.
+Investigación teórica con cuatro componentes: documental, analítico, computacional acotado y reflexivo. A lo largo de
+todo el trabajo se lleva una \textbf{bitácora de decisiones de modelado}: cada elección (datos prescritos, gauge, malla,
+regularización, criterio de éxito de una prueba) se registra con su justificación, su alternativa y su efecto sobre el
+resultado, incluidos los errores detectados y corregidos. La bitácora es a la vez un instrumento de reproducibilidad y el
+material empírico de la Fase 5.
 
-\paragraph{Fase 1. Investigación documental (OE1).}
+\paragraph{Fase 1. Investigación documental (OE1, y fuentes para OE5).}
 \begin{itemize}[leftmargin=1.6em]
   \item \emph{Búsqueda.} Bases: Web of Science, Scopus, arXiv, revistas de APS y AIP (incluida \emph{American Journal of
-        Physics}) y Google Scholar. Cadenas de ejemplo: ``inverse problem'' AND Schrödinger AND (``magnetic potential'' OR
-        ``vector potential''); ``inverse spectral problem''; ``Madelung'' OR ``quantum hydrodynamics''; ``Fock--Darwin''
-        AND (``quantum dot'' OR ``inverse''); ``gauge'' AND ``uniqueness'' AND ``magnetic Schrödinger''.
+        Physics}), PhilPapers y Google Scholar. Cadenas de ejemplo: ``inverse problem'' AND Schrödinger AND (``magnetic
+        potential'' OR ``vector potential''); ``inverse spectral problem''; ``Madelung'' OR ``quantum hydrodynamics'';
+        ``Fock--Darwin'' AND (``quantum dot'' OR ``inverse''); ``gauge'' AND ``uniqueness'' AND ``magnetic Schrödinger'';
+        (``agential realism'' OR ``actor-network'') AND (physics OR simulation OR modelling).
   \item \emph{Bola de nieve.} Hacia atrás, desde las referencias de Bhalgamiya y Novotny (2024), Nakamura, Sun y Uhlmann
-        (1995) y Cooper, Khare y Sukhatme (1995); hacia adelante, desde los trabajos que los citan.
+        (1995), Cooper, Khare y Sukhatme (1995) y Barad (2007); hacia adelante, desde los trabajos que los citan.
   \item \emph{Selección.} Inclusión: trabajos que formulen un problema inverso para la ecuación de Schrödinger, traten la
-        unicidad o el gauge, o desarrollen la formulación hidrodinámica o los estados de Fock--Darwin. Exclusión:
-        aplicaciones a sistemas no cuánticos y trabajos sin resultados verificables. Se conservan las obras fundacionales
-        sin restricción de fecha.
-  \item \emph{Clasificación y sistematización.} Ficha por fuente en un gestor bibliográfico y matriz con las categorías:
-        tipo de problema inverso, datos, incógnitas, presencia y tratamiento del potencial vectorial, dimensión, resultado
-        de unicidad, método y limitaciones.
+        unicidad o el gauge, desarrollen la formulación hidrodinámica o los estados de Fock--Darwin, o apliquen el
+        realismo agencial o la teoría del actor-red a la física o al modelado. Exclusión: aplicaciones a sistemas no
+        cuánticos y trabajos sin resultados verificables. Se conservan las obras fundacionales sin restricción de fecha.
+  \item \emph{Clasificación y sistematización.} Ficha por fuente en un gestor bibliográfico y dos matrices: una física
+        (tipo de problema inverso, datos, incógnitas, tratamiento del potencial vectorial, dimensión, resultado de
+        unicidad, método, limitaciones) y una epistemológica (concepto, definición en la fuente, caso de estudio original,
+        punto de contacto con el problema).
   \item \emph{Comparación.} Tablas comparativas como la de la sección e, a partir de las cuales se formula y se actualiza
         el vacío de conocimiento.
 \end{itemize}
@@ -315,8 +399,47 @@ analítica de la reconstrucción, cálculo numérico en malla por diferencias fi
 estado $(0,1)$, además, sensibilidad al ruido en $P$. Se usa Python con bibliotecas de libre acceso, y cada prueba se
 registra con su criterio de éxito antes de ejecutarla.
 
-\paragraph{Fase 4. Contraste y redacción (OE4).} Comparación de los resultados con los de la literatura (líneas 3 y 4 de
-la sección e) y redacción del informe final según el Art.~25 (RAE, resultados, conclusiones, recomendaciones y anexos).
+\paragraph{Fase 4. Contraste (OE4).} Comparación de los resultados con los de la literatura (líneas 3 y 4 de la sección
+e).
+
+\paragraph{Fase 5. Discusión epistemológica (OE5).} Análisis de la bitácora y de los resultados de las Fases 2--4 con las
+categorías de la tabla siguiente. Para cada categoría se identifica el episodio del trabajo en que aparece, se describe
+con la categoría y se evalúa qué permite comprender que no estuviera ya dicho en el análisis físico; si una categoría no
+aporta, se reporta así. Siguiendo la distinción de d.7, las categorías de Barad se aplican al objeto reconstruido y las de
+Latour, a la práctica que lo produce.
+\begin{center}
+\begin{tabular}{@{}p{3.6cm} p{1.6cm} p{9.2cm}@{}}
+\toprule
+\textbf{Categoría} & \textbf{Autor} & \textbf{Dónde se examina en el trabajo} \\
+\midrule
+Fenómeno e intra-acción & Barad & El potencial reconstruido como resultado conjunto del estado y del procedimiento (tabla de datos de la sección c). \\
+Corte agencial & Barad & La elección de prescribir $(P,\jv)$, $(P,S,B_z)$ o $(P,S,V)$; la degeneración $F(P)$. \\
+Objetividad como reproducibilidad & Barad & Lo que se conserva entre gauges (simétrico, Landau, Coulomb). \\
+Difracción & Barad & La lectura del método real a través de la hidrodinámica compleja: dónde aparecen las diferencias (vórtices, nodos). \\
+Caja negra & Latour & El supuesto de función de onda real en el método de Bhalgamiya y Novotny. \\
+Traducción y referencia circulante & Latour & La cadena estado $\to$ campos $\to$ operadores discretos $\to$ tablas de error. \\
+Dispositivo de inscripción & Latour & El código y las figuras de error como base de las afirmaciones. \\
+Pruebas de fuerza & Latour & Afirmaciones del propio proyecto que la verificación refutó, registradas en la bitácora. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{Fase 6. Redacción.} Integración del informe final según el Art.~25 (RAE, resultados, conclusiones,
+recomendaciones y anexos).
+
+\paragraph{Estructura prevista del informe final.}
+\begin{enumerate}[label=Cap.~\arabic*.,leftmargin=4em]
+  \item Introducción, planteamiento del problema, justificación y objetivos.
+  \item Estado del arte: trayectoria del problema inverso de Schrödinger y estudios de la ciencia sobre la física.
+  \item Marco teórico: acoplamiento mínimo, formulación hidrodinámica, Fock--Darwin; realismo agencial y actor-red.
+  \item Diseño metodológico.
+  \item Resultados analíticos: condiciones de reconstrucción y papel del gauge.
+  \item Resultados en estados de Fock--Darwin.
+  \item Discusión física: contraste con la literatura.
+  \item Discusión epistemológica: la reconstrucción de potenciales leída desde Barad y Latour.
+  \item Conclusiones y recomendaciones.
+\end{enumerate}
+Anexos: código, bitácora de decisiones de modelado y matrices de sistematización documental.
 
 \paragraph{Cronograma (dos periodos académicos).}
 \begin{center}
@@ -324,25 +447,29 @@ la sección e) y redacción del informe final según el Art.~25 (RAE, resultados
 \toprule
 \textbf{Periodo} & \textbf{Actividad} & \textbf{Obj.} & \textbf{Entregable} \\
 \midrule
-P1, sem.~1--6 & Investigación documental: búsqueda, selección y matriz & OE1 & Estado del arte \\
-P1, sem.~5--14 & Desarrollo analítico & OE2 & Capítulo teórico \\
+P1, sem.~1--6 & Investigación documental: búsqueda, selección y matrices & OE1, OE5 & Estado del arte \\
+P1, sem.~5--14 & Desarrollo analítico & OE2 & Capítulo 5 \\
 P1, sem.~13--16 & Casos $(0,0)$ y $(0,1)$ & OE3 & Primeros resultados \\
-P2, sem.~1--6 & Caso $(1,0)$; convergencia y ruido & OE3 & Capítulo de resultados \\
-P2, sem.~7--11 & Contraste con la literatura & OE4 & Capítulo de discusión \\
+P2, sem.~1--6 & Caso $(1,0)$; convergencia y ruido & OE3 & Capítulo 6 \\
+P2, sem.~5--9 & Contraste con la literatura & OE4 & Capítulo 7 \\
+P2, sem.~8--12 & Discusión epistemológica sobre la bitácora & OE5 & Capítulo 8 \\
 P2, sem.~12--16 & Redacción final, RAE y sustentación & todos & Documento y sustentación \\
 \bottomrule
 \end{tabular}
 \end{center}
-Si el plan de estudios contempla un solo espacio de Trabajo de Grado (Art.~9), se comprime a un periodo reduciendo la
-Fase 3 a los estados $(0,0)$ y $(0,1)$.
+La bitácora se lleva durante todo el periodo. Si el plan de estudios contempla un solo espacio de Trabajo de Grado
+(Art.~9), se comprime a un periodo reduciendo la Fase 3 a los estados $(0,0)$ y $(0,1)$ y la Fase 5 a las categorías de
+corte agencial, caja negra y traducción.
 
 % =====================================================================
 \section*{k) Impacto esperado}
 \addcontentsline{toc}{section}{k) Impacto esperado}
 Una caracterización de qué datos permiten reconstruir los potenciales escalar y vectorial de un estado estacionario
 bidimensional, contrastada con los resultados clásicos de unicidad salvo gauge; un estudio cuidadoso de tres estados de
-Fock--Darwin que ilustra la reconstrucción y sus limitaciones (nodos, ruido, mallas); y un documento con valor
-pedagógico. Como producto derivado posible, un artículo para una revista de física docente o computacional.
+Fock--Darwin que ilustra la reconstrucción y sus limitaciones (nodos, ruido, mallas); y una discusión que usa un problema
+físico controlado para examinar las categorías de Barad y Latour. Como productos derivados posibles, un artículo para una
+revista de física docente o computacional, a partir de los capítulos 5--7, y un artículo de reflexión para una revista de
+enseñanza de las ciencias o de estudios de la ciencia, a partir del capítulo 8.
 
 % =====================================================================
 \section*{l) Bibliografía}
@@ -384,9 +511,18 @@ pedagógico. Como producto derivado posible, un artículo para una revista de f�
   \item V. Fock, ``Bemerkung zur Quantelung des harmonischen Oszillators im Magnetfeld'', \emph{Z. Phys.} \textbf{47}, 446 (1928).$\dagger$
   \item C. G. Darwin, ``The diamagnetism of the free electron'', \emph{Proc. Camb. Phil. Soc.} \textbf{27}, 86 (1931).$\dagger$
   \item S. M. Reimann y M. Manninen, ``Electronic structure of quantum dots'', \emph{Rev. Mod. Phys.} \textbf{74}, 1283 (2002).
-\item[] \textbf{Dimensión reflexiva}
-  \item K. Barad, \emph{Meeting the Universe Halfway}, Duke University Press (2007).
-  \item B. Latour, \emph{Science in Action}, Harvard University Press (1987).
+\item[] \textbf{Marco epistemológico}
+  \item N. Bohr, \emph{Atomic Physics and Human Knowledge}, Wiley (1958).$\dagger$
+  \item K. Barad, ``Posthumanist performativity: Toward an understanding of how matter comes to matter'', \emph{Signs}
+        \textbf{28}(3), 801--831 (2003).$\dagger$ (páginas)
+  \item K. Barad, \emph{Meeting the Universe Halfway: Quantum Physics and the Entanglement of Matter and Meaning}, Duke
+        University Press (2007).
+  \item B. Latour y S. Woolgar, \emph{Laboratory Life: The Social Construction of Scientific Facts}, Sage (1979).$\dagger$
+  \item B. Latour, \emph{Science in Action: How to Follow Scientists and Engineers through Society}, Harvard University
+        Press (1987).
+  \item B. Latour, ``Circulating reference: Sampling the soil in the Amazon forest'', en \emph{Pandora's Hope: Essays on the
+        Reality of Science Studies}, Harvard University Press (1999), pp.~24--79.
+  \item B. Latour, \emph{Reassembling the Social: An Introduction to Actor-Network-Theory}, Oxford University Press (2005).
 \item[] \textbf{Normativa}
   \item Universidad Distrital Francisco José de Caldas, Consejo Académico, Acuerdo N.\textsuperscript{o} 004 (18 de agosto de 2026).
 \end{enumerate}
