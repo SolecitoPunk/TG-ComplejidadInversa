@@ -12,7 +12,7 @@ Según la respuesta de la Coordinación (PAF_2463, 19 de noviembre de 2026):
 ## Documentos
 - `propuesta_trabajo_grado.tex` → PDF de la propuesta (estructura del Art. 24).
 - `presentacion_consejo_curricular.tex` → PDF de la presentación: 11 diapositivas, unos 10 minutos, con los siete puntos pedidos.
-- Aval del director (Art. 4 lit. b). Hay que confirmar con la Coordinación si va como carta aparte o con un formato propio.
+- `carta_aval_director.tex` → carta de aval y radicación (Art. 4 lit. b y Art. 10 lit. a y c), firmada por el director y por el estudiante.
 - Formato de propuesta del programa, si existe (Art. 4 lit. a). La Coordinación no lo menciona; vale la pena preguntar.
 
 ## Antes de enviar al director (miércoles o jueves)
