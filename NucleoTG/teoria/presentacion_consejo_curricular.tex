@@ -1,0 +1,188 @@
+% Presentación ante el Consejo Curricular (máximo 10 minutos).
+% Puntos exigidos por la Coordinación: modalidad, título, objetivos, referentes teóricos,
+% metodología, cronograma y bibliografía. Tiempo sugerido por diapositiva en los comentarios.
+\documentclass[aspectratio=169,10pt]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usetheme{default}
+\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}[frame number]
+\setbeamerfont{frametitle}{size=\large}
+
+\newcommand{\uv}{\mathbf{u}}
+\newcommand{\jv}{\mathbf{j}}
+\newcommand{\Av}{\mathbf{A}}
+\newcommand{\grad}{\nabla}
+
+\title{Análisis del problema inverso de la ecuación de Schrödinger estacionaria con potencial vectorial}
+\subtitle{Formulación hidrodinámica y estudio de estados de Fock--Darwin}
+\author{Juan Sebastián Sánchez Álvarez\\[2pt] \small Director: John Hernán Díaz Forero}
+\institute{Programa Académico de Física --- Universidad Distrital Francisco José de Caldas}
+\date{Consejo Curricular, 24 de noviembre de 2026}
+
+\begin{document}
+
+% ---------------------------------------------------------------- 0:30
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% ---------------------------------------------------------------- 1:00
+\begin{frame}{Modalidad}
+  \begin{itemize}
+    \item \textbf{Monografía de investigación teórica} (Acuerdo 004 de 2026, Art.~2, lit.~b).
+    \item Trabajo de Grado I en 2027-1 y Trabajo de Grado II en 2027-3.
+    \item Evaluación por jurado: documento escrito 60\,\% y sustentación pública 40\,\% (Art.~26).
+  \end{itemize}
+  \vspace{0.6em}
+  \textbf{Por qué esta modalidad}
+  \begin{itemize}
+    \item El aporte es analítico y conceptual, apoyado en cálculo; no requiere estancia ni convocatoria de semillero.
+    \item Permite integrar en un documento la física, el estudio computacional acotado y la discusión epistemológica.
+  \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------------- 1:30
+\begin{frame}{Título y problema}
+  \textbf{El problema inverso:} dado un estado estacionario, ¿qué potenciales lo producen?
+  \begin{itemize}
+    \item Bhalgamiya y Novotny (2024): fórmula explícita para $V$ a partir de $P$, pero solo para $\psi$ real.
+    \item Con campo magnético, $\psi$ es compleja y aparece el potencial vectorial $\Av$.
+  \end{itemize}
+  \vspace{0.4em}
+  Con $\psi=\sqrt P\,e^{iS/\hbar}$ y $\uv=\grad S-q\Av$:
+  \[
+    \grad\cdot(P\uv)=0,\qquad
+    V-E=-\frac{|\uv|^2}{2m}+\frac{\hbar^2}{4m}\Big[\frac{\grad^2P}{P}-\frac12\frac{|\grad P|^2}{P^2}\Big]
+  \]
+  \textbf{Sistema:} partícula cargada, no relativista, en 2D, con campo magnético perpendicular.
+
+  \vspace{0.4em}
+  \textbf{Pregunta:} ¿Bajo qué condiciones es posible reconstruir los potenciales a partir de la formulación de Madelung,
+  y cuáles son las limitaciones en estados de Fock--Darwin?
+\end{frame}
+
+% ---------------------------------------------------------------- 1:00
+\begin{frame}{Objetivos}
+  \textbf{General.} Analizar las condiciones de reconstrucción de los potenciales escalar y vectorial en la ecuación
+  estacionaria de Schrödinger, mediante la formulación de Madelung y el estudio teórico-computacional de estados de
+  Fock--Darwin, y discutir ese proceso desde Barad y Latour.
+  \vspace{0.4em}
+
+  \textbf{Específicos.}
+  \begin{enumerate}
+    \item[OE1] Sistematizar fundamentos y antecedentes del problema inverso con potenciales vectoriales.
+    \item[OE2] Derivar y analizar las ecuaciones de Madelung: condiciones de reconstrucción y papel del gauge.
+    \item[OE3] Estudiar casos representativos de Fock--Darwin y sus limitaciones.
+    \item[OE4] Contrastar los resultados con la literatura.
+    \item[OE5] Discutir, con Barad y Latour, el papel de los datos, el gauge y lo numérico en el potencial reconstruido.
+  \end{enumerate}
+\end{frame}
+
+% ---------------------------------------------------------------- 1:30
+\begin{frame}{Referentes teóricos: trayectoria del problema}
+  \small
+  \begin{tabular}{@{}p{3.4cm} p{3.6cm} p{5.6cm}@{}}
+    \toprule
+    \textbf{Línea} & \textbf{Datos} & \textbf{Qué determina / límite} \\
+    \midrule
+    Espectral 1D (Gel'fand--Levitan) & espectros & $V$ único; 1D, sin campo \\
+    Dispersión (Chadan--Sabatier) & matriz $S$ & $V$ con ambigüedades \\
+    Magnético (Sun; Nakamura--Sun--Uhlmann) & frontera & $\mathbf B$ y $V$; $\Av$ solo salvo gauge \\
+    Estado fundamental (SUSY; Bhalgamiya--Novotny) & $P$ & $V$ explícito; solo $\psi$ real \\
+    Hidrodinámica (Madelung, Bohm) & --- & ecuaciones; uso directo \\
+    Fock--Darwin & --- & caso exacto con vórtices \\
+    \bottomrule
+  \end{tabular}
+
+  \vspace{0.6em}
+  \normalsize
+  \textbf{Vacío:} la reconstrucción con datos \emph{internos} de un estado \emph{complejo} con potencial vectorial no está
+  estudiada.
+\end{frame}
+
+% ---------------------------------------------------------------- 1:00
+\begin{frame}{Referentes teóricos: dimensión epistemológica}
+  \begin{itemize}
+    \item \textbf{Barad (realismo agencial).} El fenómeno incluye al aparato; el \emph{corte agencial} separa lo medido de
+          lo que mide.
+          \\ \emph{Aquí:} qué se toma como dato decide qué es ``el potencial reconstruido''.
+    \item \textbf{Latour (actor-red).} Cajas negras, traducciones, dispositivos de inscripción.
+          \\ \emph{Aquí:} el supuesto de $\psi$ real como caja negra; la cadena ecuación $\to$ código $\to$ tabla.
+    \item Se usan en dos niveles: Barad para el objeto, Latour para la práctica.
+  \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------------- 1:30
+\begin{frame}{Resultados preliminares}
+  \begin{itemize}
+    \item \textbf{Sin $\Av$ falla:} la inversión sin potencial vectorial, aplicada a Fock--Darwin
+          ($\omega_0=1$, $\omega_c=2$), devuelve $\tfrac12\Omega^2r^2$ con $\Omega^2=2$: el doble del confinamiento real.
+    \item \textbf{Con $\Av$ funciona:} se recupera $\tfrac12\omega_0^2r^2$ con convergencia de segundo orden; el ruido en
+          $P$ se amplifica como $\varepsilon/\Delta x^2$.
+    \item \textbf{Unicidad depende de los datos:}
+      \begin{itemize}
+        \item con $(P,\jv)$, invariantes de gauge, se determinan $B_z$ y $V$;
+        \item con $(P,S)$ no: $\Phi\to\Phi+F(P)$ deja el campo indeterminado.
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------------- 1:00
+\begin{frame}{Metodología}
+  \begin{enumerate}
+    \item \textbf{Documental:} bases WoS, Scopus, arXiv, APS/AIP, PhilPapers; criterios de inclusión; matrices de
+          clasificación.
+    \item \textbf{Analítica:} derivación con hipótesis explícitas; casos de datos $(P,\jv)$, $(P,S)$, $(P,S,B_z)$.
+    \item \textbf{Computacional acotada:} tres estados de Fock--Darwin:
+          $(0,0)$ control, $(0,1)$ vórtice, $(1,0)$ nodo radial.
+    \item \textbf{Contraste} con la literatura.
+    \item \textbf{Epistemológica:} lectura de la \emph{bitácora de decisiones de modelado} con categorías de Barad y Latour.
+  \end{enumerate}
+  \vspace{0.3em}
+  Criterios de éxito declarados antes de cada prueba; los resultados negativos se reportan.
+\end{frame}
+
+% ---------------------------------------------------------------- 0:45
+\begin{frame}{Cronograma}
+  \small
+  \begin{tabular}{@{}llll@{}}
+    \toprule
+    \textbf{Periodo} & \textbf{Actividad} & \textbf{Obj.} & \textbf{Producto} \\
+    \midrule
+    2027-1, sem.~1--6 & Investigación documental & OE1, OE5 & Estado del arte \\
+    2027-1, sem.~5--14 & Desarrollo analítico & OE2 & Cap.~5 \\
+    2027-1, sem.~13--16 & Casos $(0,0)$ y $(0,1)$ & OE3 & Primeros resultados \\
+    2027-3, sem.~1--6 & Caso $(1,0)$; convergencia y ruido & OE3 & Cap.~6 \\
+    2027-3, sem.~5--9 & Contraste con la literatura & OE4 & Cap.~7 \\
+    2027-3, sem.~8--12 & Discusión epistemológica & OE5 & Cap.~8 \\
+    2027-3, sem.~12--16 & Redacción y sustentación & todos & Documento final \\
+    \bottomrule
+  \end{tabular}
+\end{frame}
+
+% ---------------------------------------------------------------- 0:45
+\begin{frame}{Bibliografía principal}
+  \footnotesize
+  \begin{itemize}
+    \item B. Bhalgamiya y M. A. Novotny, \emph{Am. J. Phys.} \textbf{92}, 975 (2024).
+    \item I. M. Gel'fand y B. M. Levitan, \emph{Izv. Akad. Nauk SSSR} \textbf{15}, 309 (1951).
+    \item K. Chadan y P. C. Sabatier, \emph{Inverse Problems in Quantum Scattering Theory}, Springer (1989).
+    \item G. Nakamura, Z. Sun y G. Uhlmann, \emph{Math. Ann.} \textbf{303}, 377 (1995).
+    \item G. Eskin y J. Ralston, \emph{Commun. Math. Phys.} \textbf{173}, 199 (1995).
+    \item F. Cooper, A. Khare y U. Sukhatme, \emph{Phys. Rep.} \textbf{251}, 267 (1995).
+    \item E. Madelung, \emph{Z. Phys.} \textbf{40}, 322 (1927); D. Bohm, \emph{Phys. Rev.} \textbf{85}, 166 (1952).
+    \item V. Fock (1928); C. G. Darwin (1931); S. M. Reimann y M. Manninen, \emph{Rev. Mod. Phys.} \textbf{74}, 1283 (2002).
+    \item K. Barad, \emph{Meeting the Universe Halfway}, Duke University Press (2007).
+    \item B. Latour, \emph{Science in Action} (1987); \emph{Pandora's Hope} (1999).
+  \end{itemize}
+  \normalsize
+  \vspace{0.3em}
+  \centering Lista completa (29 referencias) en el documento de la propuesta.
+\end{frame}
+
+\end{document}
