@@ -15,11 +15,11 @@ Las fórmulas van en la diapositiva y se nombran en palabras, sin leerlas símbo
 
 | Sección | Guía | Acumulado | Palabras | Estimado a 130 ppm |
 |---|---|---|---|---|
-| 1. Presentación | 15 s | 0:15 | 47 | 22 s |
+| 1. Presentación | 15 s | 0:15 | 41 | 19 s |
 | 2. Modalidad | 20 s | 0:35 | 41 | 19 s |
 | 3. Laboratorio conceptual | 55 s | 1:30 | 117 | 54 s |
 | 4. Modelo ideal | 55 s | 2:25 | 125 | 58 s |
-| 5. Modelo físico-matemático | 55 s | 3:20 | 123 | 57 s |
+| 5. Modelo físico-matemático | 55 s | 3:20 | 113 | 52 s |
 | 6. Problema inverso | 50 s | 4:10 | 114 | 53 s |
 | 7. Estado del arte | 55 s | 5:05 | 120 | 55 s |
 | 8. Pregunta científica | 50 s | 5:55 | 91 | 42 s |
@@ -28,18 +28,18 @@ Las fórmulas van en la diapositiva y se nombran en palabras, sin leerlas símbo
 | 11. Metodología | 70 s | 8:30 | 152 | 70 s |
 | 12. Cronograma | 35 s | 9:05 | 65 | 30 s |
 | 13. Bibliografía | 15 s | 9:20 | 33 | 15 s |
-| **Total** | **560 s** | **9:20** | **1227** | **566 s** |
+| **Total** | **560 s** | **9:20** | **1211** | **559 s** |
 
-A 130 palabras por minuto (ritmo pausado), el guion completo dura unos 9.4 min, dentro de los 10 min. Las secciones 1 y 10 se pasan de su tiempo porque el título y los objetivos se leen literales; las secciones 8 y 12 compensan.
+A 130 palabras por minuto, un ritmo pausado, el guion dura unos 9.3 min. Las secciones 1 y 10 se pasan de su tiempo porque el título y los objetivos se leen literales; las secciones 8, 9 y 12 compensan.
 
 ---
 
 ## 1. Presentación · 15 s
 **Diapositiva:** título completo, nombre, programa, facultad, universidad y director.
 
-> Buenos días. Soy Juan Sebastián Sánchez Álvarez, del Programa de Física de la Facultad de Ciencias Matemáticas y Naturales de la Universidad Distrital. Presento la propuesta «Análisis del problema inverso de la ecuación de Schrödinger estacionaria con potencial vectorial», dirigida por el profesor John Hernán Díaz Forero.
+> Buenos días. Soy Juan Sebastián Sánchez Álvarez, del Programa de Física, Facultad de Ciencias Matemáticas y Naturales, Universidad Distrital. Presento «Análisis del problema inverso de la ecuación de Schrödinger estacionaria con potencial vectorial», dirigido por el profesor John Hernán Díaz Forero.
 
-**Nota:** el subtítulo («formulación hidrodinámica y estudio de estados de Fock–Darwin») queda en la diapositiva. Leerlo agrega unos 4 s.
+**Nota:** el subtítulo («formulación hidrodinámica y estudio de estados de Fock–Darwin») queda en la diapositiva. Leerlo agrega unos 4 s. Aun sin él, esta sección toma unos 18 s: el título es largo y no conviene recortarlo.
 
 ---
 
@@ -67,7 +67,7 @@ A 130 palabras por minuto (ritmo pausado), el guion completo dura unos 9.4 min, 
 ## 5. Modelo físico-matemático · 55 s
 **Diapositiva:** la ecuación de Schrödinger con acoplamiento mínimo; tabla de parámetros (*m*, *q*, ω₀, ω_c = qB/m, Ω, ℓ_Ω); condiciones de validez.
 
-> El modelo es la ecuación de Schrödinger estacionaria con acoplamiento mínimo: el momento se reemplaza por el momento menos la carga por el potencial vectorial. Los parámetros son la masa efectiva, la carga, la frecuencia de confinamiento omega cero y la frecuencia ciclotrón omega c, que es la carga por el campo sobre la masa. Juntas dan una frecuencia efectiva, Omega, y una longitud característica. El problema es bidimensional y en los cálculos uso unidades en que hache barra, la masa y la carga valen uno. El modelo es válido si la energía es mucho menor que la de los modos perpendiculares al plano y que la energía en reposo, y si se desprecian la interacción entre electrones y el desorden del material.
+> El modelo es la ecuación de Schrödinger estacionaria con acoplamiento mínimo: el momento se reemplaza por el momento menos la carga por el potencial vectorial. Los parámetros son la masa efectiva, la carga, la frecuencia de confinamiento omega cero y la frecuencia ciclotrón omega c, que es la carga por el campo sobre la masa. Juntas dan una frecuencia efectiva, Omega, y una longitud característica. El problema es bidimensional y en los cálculos uso unidades naturales. El modelo es válido si la energía es mucho menor que la de los modos perpendiculares al plano y que la energía en reposo, y si se desprecian la interacción entre electrones y el desorden del material.
 
 ---
 
@@ -136,7 +136,7 @@ A 130 palabras por minuto (ritmo pausado), el guion completo dura unos 9.4 min, 
 ---
 
 ## Consejos para el ensayo
-- **Cronometra por bloques**, no solo el total: 1–2 (35 s), 3–6 (3 min 35 s), 7–8 (1 min 45 s), 9–10 (1 min 25 s) y 11–13 (2 min). Si a los 5 min 15 s no has terminado la sección 7, vas atrasado.
+- **Cronometra por bloques**, no solo el total: 1–2 (35 s), 3–6 (3 min 35 s), 7–8 (1 min 45 s), 9–10 (1 min 25 s) y 11–13 (2 min). Según la guía, la sección 7 termina a los 5 min 05 s; si a los 5 min 20 s no la has terminado, vas atrasado.
 - **Dónde recortar** si te falta tiempo: la nota de la sección 1, la última frase de la 4 («el observador no perturba…») y, en la 6, «mientras que con la corriente sí se determina».
 - **Dónde no recortar:** las lecturas literales de la 8, la 9 y la 10, porque la guía las pide literales.
 - **Preguntas probables** (respuestas cortas en `lista_radicacion.md`): por qué monografía, si no es demasiado amplio, qué es lo nuevo y por qué Barad y Latour.
