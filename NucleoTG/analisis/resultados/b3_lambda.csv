@@ -1,0 +1,13 @@
+clustering,campo,frac_en_top_V_B,frac_en_top_U
+barrat,V(l=1),1.0,0.6
+barrat,V(l=0.1),1.0,0.6
+barrat,V(l=0.01),0.8,0.6
+barrat,V(l=0.003),0.8,0.6
+barrat,V(l=0.001),0.6,0.4
+barrat,V_B,1.0,0.6
+onnela,V(l=1),1.0,0.8
+onnela,V(l=0.1),1.0,0.8
+onnela,V(l=0.01),1.0,0.8
+onnela,V(l=0.003),1.0,0.8
+onnela,V(l=0.001),1.0,0.8
+onnela,V_B,1.0,0.8

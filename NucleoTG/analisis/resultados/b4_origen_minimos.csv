@@ -1,0 +1,15 @@
+clustering,campo,frac_en_estaticos,frac_en_moviles
+barrat,U,0.5,0.25
+barrat,V_B,0.6,0.4
+barrat,V(l=1),,0.4
+barrat,V(l=0.1),,0.4
+barrat,V(l=0.01),,0.4
+barrat,V(l=0.003),,0.4
+barrat,V(l=0.001),,0.4
+onnela,U,0.6,0.2
+onnela,V_B,0.6,0.4
+onnela,V(l=1),,0.4
+onnela,V(l=0.1),,0.4
+onnela,V(l=0.01),,0.4
+onnela,V(l=0.003),,0.4
+onnela,V(l=0.001),,0.4

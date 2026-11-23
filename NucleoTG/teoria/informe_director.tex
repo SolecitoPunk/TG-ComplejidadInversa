@@ -1,0 +1,167 @@
+\documentclass[11pt,a4paper]{article}
+
+% ----- Paquetes -----
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+% ----- Notación -----
+\newcommand{\rv}{\mathbf{r}}
+\newcommand{\uv}{\mathbf{u}}
+\newcommand{\vv}{\mathbf{v}}
+\newcommand{\fv}{\mathbf{f}}
+\newcommand{\Av}{\mathbf{A}}
+\newcommand{\grad}{\nabla}
+\newcommand{\Ps}{P_{\mathrm{s}}}
+\newcommand{\Vfp}{V_{\mathrm{FP}}}
+\newcommand{\Vs}{V_{\mathrm{s}}}
+\newcommand{\Hop}{\hat{H}}
+
+\title{\textbf{Problema inverso de Schr\"odinger con potencial vector\\
+y correspondencia con Fokker--Planck:\\ estado del trabajo y decisiones pendientes}}
+\author{[Estudiante] \\ \small Director: [Nombre]}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent
+Este informe resume el estado del trabajo de grado y el alcance que propongo fijar. El trabajo queda
+centrado en tres piezas: (i)~la generalizaci\'on del m\'etodo inverso de la ecuaci\'on de Schr\"odinger de
+Bhalgamiya y Novotny a funciones de onda complejas con potencial vector, validada en estados de Fock--Darwin;
+(ii)~el desarrollo anal\'itico de su correspondencia con la ecuaci\'on de Fokker--Planck con corriente, que da un
+operador no herm\'itico con potencial vector imaginario; y (iii)~una bater\'ia de pruebas num\'ericas con
+soluci\'on conocida. Un resultado nuevo del per\'iodo une las dos primeras piezas: el proceso de
+Ornstein--Uhlenbeck con rotaci\'on es un oscilador de Fock--Darwin con frecuencia cicl\'otron imaginaria. El
+marco filos\'ofico es el realismo agencial de Barad y la teor\'ia del actor-red de Latour. Las aplicaciones a
+datos de sistemas no f\'isicos quedan fuera del alcance; la secci\'on~1 explica por qu\'e.
+\end{abstract}
+
+\section{Decisi\'on de alcance}
+Durante el per\'iodo se explor\'o el uso de la ecuaci\'on maestra como analog\'ia formal en sistemas no
+f\'isicos: una red de prote\'inas del ciclo celular de levadura (Phasik) y un modelo de bicicletas compartidas.
+Los resultados delimitaron el alcance de esa analog\'ia, pero no dieron un caso positivo:
+\begin{itemize}[leftmargin=1.6em]
+  \item En la red de levadura, la extensi\'on con flujo no aport\'o informaci\'on medible frente a una l\'inea
+        base est\'andar, y la \'unica se\~nal frente a modelos nulos no sobrevivi\'o a un nulo que respeta la
+        estructura de los datos.
+  \item Los sistemas sociales marcados por el calendario (bicicletas y similares) son osciladores forzados por
+        un reloj externo, mientras que la correspondencia de Fokker--Planck supone una din\'amica estacionaria
+        aut\'onoma.
+  \item Los datos neuronales p\'ublicos revisados no tienen registro simult\'aneo ni ensayos individuales, que
+        son necesarios para estimar la difusi\'on.
+\end{itemize}
+Propongo por ello dejar esas aplicaciones fuera del trabajo y concentrarlo en el desarrollo anal\'itico y su
+verificaci\'on, donde los resultados son s\'olidos. Las aplicaciones quedan como trabajo futuro, con los
+criterios de viabilidad ya identificados.
+
+\section{L\'inea 1: problema inverso cu\'antico}
+Con $\psi=\sqrt{P}\,e^{iS/\hbar}$ y $\uv=\grad S-q\Av$, la parte real de la ecuaci\'on de Schr\"odinger da
+\begin{equation}
+  V(\rv)=E-\tfrac{1}{2m}(\grad S-q\Av)^2
+        +\frac{\hbar^2}{4m}\!\left[\frac{\grad^2 P}{P}-\tfrac12\frac{|\grad P|^2}{P^2}\right].
+  \label{eq:maestra}
+\end{equation}
+En Fock--Darwin ($n=0$, $\ell=1$, $\omega_0=1$, $\omega_c=2$; $E=2\sqrt2-1$ con $\hbar=m=q=1$),
+\eqref{eq:maestra} recupera $V=\tfrac12 m\omega_0^2r^2$:
+\begin{itemize}[leftmargin=1.6em]
+  \item Convergencia de segundo orden en la malla (\'ordenes 1.98 y 2.19).
+  \item Con ruido relativo $\varepsilon$ en $P$, el error sigue $\approx 1.1\,\varepsilon/\Delta x^2$ y crece al
+        refinar: el problema inverso est\'a mal condicionado y requiere regularizaci\'on.
+  \item La forma escrita con $\sqrt P$ del t\'ermino de Bohm es m\'as precisa que la forma con $P$ (yo
+        hab\'ia predicho lo contrario).
+  \item Cerca del nodo $r=0$, donde se cancelan dos t\'erminos $\pm1/(2r^2)$, el error puntual no converge.
+\end{itemize}
+
+\section{Correspondencia con Fokker--Planck}
+Para $d\rv=\fv\,dt+\sqrt{2D}\,d\mathbf W$ con estado estacionario $\Ps=e^{-U}$, la deriva se descompone como
+$\fv=-D\grad U+\vv$, con $\vv$ la velocidad de corriente. Con $P=\sqrt{\Ps}\,\psi$,
+\begin{equation}
+  \Hop=D(-i\grad-q\Av)^2+\Vfp,\qquad q\Av=-\tfrac{i}{2D}\vv,\qquad \Vfp=\Vs+\frac{|\vv|^2}{4D},
+  \qquad \Vs=D\!\left(\tfrac14|\grad U|^2-\tfrac12\grad^2U\right).
+\end{equation}
+Frente a~\eqref{eq:maestra}: la constante queda fijada ($\hbar^2/m=2D$), el potencial vector es imaginario y el
+t\'ermino de flujo cambia de signo. El rotacional $\grad\times\vv=\grad\times\fv$ es invariante de gauge, como
+$\grad\times\uv$ en el caso cu\'antico. Cada paso est\'a verificado num\'ericamente en un caso sin simetr\'ias
+(error $\sim10^{-6}$).
+
+\paragraph{Literatura.} Mazzolo y Monthus (\emph{Phys. Rev. E} \textbf{107}, 014101, 2023) estudian esta
+correspondencia y varios gauges. Su ``gauge de la fuerza irreversible'' probablemente coincide con el gauge
+estacionario usado aqu\'i. Hay que confirmarlo leyendo el art\'iculo antes de afirmar novedad en la teor\'ia
+directa.
+
+\section{Resultado nuevo: Fock--Darwin con campo imaginario}
+El proceso de Ornstein--Uhlenbeck con rotaci\'on, $\fv=-(\gamma I+\Omega\mathcal J)\rv$, corresponde a un oscilador
+de Fock--Darwin con $\omega_0^2=\gamma^2+\Omega^2$, $\omega_c=2i\Omega$ y $m=1/(2D)$. La frecuencia h\'ibrida queda
+en $\Omega_h=\gamma$ y el espectro de Fock--Darwin continuado,
+\[
+  (2n+|\ell|+1)\Omega_h-\tfrac{\ell\omega_c}{2}-\gamma=\gamma(2n+|\ell|)-i\Omega\ell,
+\]
+coincide con el espectro conocido del proceso (verificado: error $9\times10^{-16}$ para $n<3$, $|\ell|\le3$). Es
+una comprobaci\'on de la f\'ormula de los autovalores; la comprobaci\'on del operador en malla est\'a pendiente.
+Este caso puente une las dos l\'ineas del trabajo y no lo he encontrado en las fuentes revisadas, aunque no
+descarto que est\'e en la literatura.
+
+\section{Pruebas num\'ericas}
+\begin{center}
+\begin{tabular}{@{}p{0.6cm} p{7.2cm} p{5.2cm}@{}}
+\toprule
+& Prueba & Resultado \\
+\midrule
+P1 & Fock--Darwin: malla y ruido & orden 2; error $\propto\varepsilon/\Delta x^2$ \\
+P2 & Fock--Darwin excitado (nodos en $P$) & pendiente \\
+P3 & Pasos de la correspondencia FP & error $\sim10^{-6}$ \\
+P4 & Fock--Darwin con $\omega_c=2i\Omega$ frente a OU & espectro: $10^{-15}$; operador: pendiente \\
+P5 & Invariancia de gauge num\'erica & pendiente \\
+P6 & OU con rotaci\'on desde trayectorias & tasa $-3\%$ y frecuencia $-5\%$ con $h=0.15$; el sesgo crece con $h$ \\
+P7 & Stuart--Landau con ruido & tasa: ley $h^2$, extrapolada a $+0.9\%$; $\gtrsim250$ ciclos \\
+P8 & Robustez y chequeo de consistencia & falsos positivos 1/20; detecta deriva y proyecci\'on 10/10; ruido de medici\'on tolerable hasta $\sim0.13$ del ancho del ciclo \\
+\bottomrule
+\end{tabular}
+\end{center}
+Los criterios de \'exito de P6--P8 se declararon antes de ejecutar. Dos criterios no se cumplieron y se
+reportan como tales: un control del c\'odigo fall\'o por 0.009 en la frecuencia (atribuible al suavizado,
+descartado como error de ensamblado por una prueba con campos exactos), y la correcci\'on por ruido de
+medici\'on solo funciona para ruido peque\~no.
+
+\section{Marco filos\'ofico}
+\begin{itemize}[leftmargin=1.6em]
+  \item \textbf{Barad (realismo agencial).} Desde la filosof\'ia-f\'isica de Bohr, los fen\'omenos emergen de la
+        intra-acci\'on entre lo observado y el aparato. Aqu\'i: el gauge como especificaci\'on del aparato (lo
+        que se conserva entre gauges, rotacional y espectro, es lo reproducible a trav\'es de cortes); el ancho
+        de suavizado como parte del fen\'omeno medido (ley $h^2$); y la diferencia material entre un campo
+        magn\'etico real y uno imaginario que comparten forma matem\'atica.
+  \item \textbf{Latour (actor-red, referencia circulante).} La cadena ecuaci\'on $\to$ c\'odigo $\to$ tabla
+        $\to$ afirmaci\'on, con mediadores no humanos (esquema de corriente, estimador de $D$, script de
+        verificaci\'on). Fundamenta declarar criterios antes de ejecutar y registrar correcciones.
+  \item Se mantiene la distinci\'on de la propia Barad entre su aparato y la red de Latour: niveles
+        ontol\'ogico y pr\'actico, respectivamente.
+\end{itemize}
+
+\section{Preguntas para decidir}
+\begin{enumerate}[leftmargin=1.8em]
+  \item \textbf{Alcance.} ¿Est\'a de acuerdo con concentrar el trabajo en el desarrollo anal\'itico y las
+        pruebas, dejando las aplicaciones a datos como trabajo futuro?
+  \item \textbf{Modalidad.} Propongo Monograf\'ia de investigaci\'on te\'orica (Acuerdo 004 de 2026, cap. V).
+        ¿Prefiere Investigaci\'on-Creaci\'on, si hay un semillero al que vincular el trabajo?
+  \item \textbf{Literatura.} ¿Tiene acceso al art\'iculo de Mazzolo y Monthus para confirmar la coincidencia de
+        gauges y si el caso puente Fock--Darwin $\leftrightarrow$ OU ya aparece?
+  \item \textbf{Pruebas pendientes.} ¿Cu\'al prioriza entre Fock--Darwin excitado (P2), el operador de la
+        continuaci\'on (P4) y la invariancia de gauge num\'erica (P5)?
+  \item \textbf{Marco filos\'ofico.} ¿Qu\'e peso debe tener en el documento final (cap\'itulo propio o
+        discusi\'on al cierre)? ¿Hay un codirector o lector del \'area de estudios de la ciencia?
+\end{enumerate}
+
+\paragraph{Reproducibilidad.} C\'odigo, criterios declarados y resultados en el repositorio (rama
+\texttt{analisis/bloque1-validacion}); la derivaci\'on se comprueba con
+\texttt{NucleoTG/teoria/verificar\_derivacion.py}.
+
+\end{document}
