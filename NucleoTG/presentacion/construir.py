@@ -289,9 +289,10 @@ L("Planteamiento físico · 2 de 4", "Del laboratorio al modelo ideal", f"""
   "tridimensional, el plano del modelo y el espacio de Hilbert de los estados, que no es un lugar físico. ¿Por qué "
   "cuántico? Con la masa efectiva del arseniuro de galio, 0,067 veces la del electrón, y niveles separados 2 "
   "milielectronvoltios, la trampa mide unos 24 nanómetros y la acción característica es del orden de hache barra. "
-  "¿Por qué no relativista? Esas energías están muy por debajo de la brecha del semiconductor, y el electrón se "
-  "mueve como una partícula libre de masa efectiva. Queda una partícula, sin espín, en estado estacionario.",
-  "Las escalas son ejemplos de orden de magnitud, no mediciones propias. P4–P7: el espín se excluye para aislar el problema orbital (Zeeman y espín-órbita quedan fuera).")
+  "¿Por qué no relativista? Esas energías son milésimas de la brecha del semiconductor, y por eso la banda es "
+  "parabólica: el electrón responde como una partícula de masa efectiva, que ya resume el efecto de la red. Queda una "
+  "partícula, sin espín, en estado estacionario.",
+  "Masa efectiva no es partícula libre: el electrón sigue sujeto a V y a A; m* resume el efecto de la red (banda parabólica, E = ħ²k²/2m*). Brecha del GaAs ≈ 1,5 eV frente a ≈ 2 meV; velocidad típica a₀ω₀ ≈ 7·10⁴ m/s ≈ c/4000. Las escalas son ejemplos de orden de magnitud, no mediciones propias. P4–P7: el espín se excluye para aislar el problema orbital (Zeeman y espín-órbita quedan fuera).")
 
 L("Planteamiento físico · 3 de 4", "Modelo físico-matemático", f"""
 <div class="two w52">
