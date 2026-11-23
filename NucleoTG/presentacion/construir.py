@@ -225,10 +225,10 @@ def L(seccion, titulo, html, seg, guion, notas=""):
     LAMINAS.append(dict(seccion=seccion, titulo=titulo, html=html, seg=seg, guion=guion, notas=notas))
 
 
-L("", "Presentación", "", 15,
-  "Buenos días. Soy Juan Sebastián Sánchez Álvarez, del Programa de Física de la Universidad Distrital. Presento la "
-  "propuesta «Análisis del problema inverso de la ecuación de Schrödinger estacionaria con potencial vectorial», "
-  "dirigida por el profesor John Hernán Díaz Forero.",
+L("", "Presentación", "", 22,
+  "Buenos días. Soy Juan Sebastián Sánchez Álvarez y presento la propuesta «Análisis del problema inverso de la "
+  "ecuación de Schrödinger estacionaria con potencial vectorial», dirigida por el profesor John Hernán Díaz Forero. "
+  "La pregunta de fondo: si conozco el estado de un electrón, ¿puedo deducir qué lo mantiene atrapado?",
   "El subtítulo queda en la lámina; no hace falta leerlo.")
 
 L("Modalidad", "Monografía de investigación teórica", """
@@ -248,9 +248,9 @@ L("Modalidad", "Monografía de investigación teórica", """
   </ul>
  </div>
 </div>""", 20,
-  "La modalidad es monografía de investigación teórica, del artículo dos, literal b, del Acuerdo 004 de 2026: un "
-  "trabajo original y argumentativo que responde una pregunta de investigación mediante la revisión crítica de "
-  "fuentes, aquí apoyada en desarrollo analítico y en cálculo.",
+  "La modalidad es monografía de investigación teórica, artículo dos, literal b, del Acuerdo 004 de 2026. Encaja "
+  "con el trabajo: el aporte es analítico y documental, apoyado en cálculo, y no depende de un laboratorio, de una "
+  "convocatoria ni de los tiempos de una revista.",
   "Si preguntan por qué no la modalidad de investigación: esa exige vínculo a un grupo o semillero y convocatoria (Art. 20).")
 
 L("Planteamiento físico · 1 de 4", "Laboratorio conceptual: un experimento pensado", f"""
@@ -262,13 +262,13 @@ L("Planteamiento físico · 1 de 4", "Laboratorio conceptual: un experimento pen
  <div class="tag"><b>Observador</b>teórico-computacional: prescribe datos ideales y calcula</div>
 </div>
 <div class="warn">Dato teórico ≠ magnitud medible: usar {P_} y {J} no implica que un laboratorio los mida localmente y sin error.</div>""", 55,
-  "Empiezo por un laboratorio conceptual: un experimento pensado, que no se construye. Imagino un punto cuántico "
-  "semiconductor, del tipo que se fabrica con electrodos sobre un chip. Un electrón queda confinado lateralmente en "
-  "unas decenas de nanómetros, dentro de un criostato, y un campo magnético atraviesa el plano perpendicularmente. "
-  "Ese es el sistema. La red cristalina, los contactos y la electrónica no se modelan. En un laboratorio, el "
-  "observador ajustaría voltajes y campo y obtendría información indirecta. En esta monografía el observador es "
-  "teórico-computacional: elige un estado conocido, prescribe los datos, fija el gauge y la malla, y calcula. Hay "
-  "que ser claro: que el método use la densidad y la corriente no significa que un laboratorio las mida directamente.",
+  "Empecemos con un experimento pensado, que no vamos a construir. Imaginen un chip semiconductor enfriado casi al "
+  "cero absoluto. Unos electrodos sobre su superficie crean una trampa de unas decenas de nanómetros, y dentro "
+  "queda un solo electrón: un punto cuántico. Ahora atravesamos el chip con un campo magnético perpendicular. La "
+  "lámina reparte los papeles. El sistema es el electrón. El entorno, la trampa y el campo; la red cristalina, los "
+  "contactos y la electrónica quedan fuera del modelo. El aparato, aquí, es el procedimiento de reconstrucción, no "
+  "un instrumento. Y el observador soy yo, con un computador: elijo un estado, prescribo sus datos y calculo. Eso "
+  "sí: usar la densidad y la corriente como datos no significa que un laboratorio pueda medirlas punto a punto.",
   "P1–P3 del documento del director. Una simulación no es una medición experimental. Si preguntan por qué «conceptual»: el trabajo nunca trata con un dispositivo real; los puntos cuánticos de GaAs solo inspiran el modelo y los órdenes de magnitud.")
 
 L("Planteamiento físico · 2 de 4", "Del laboratorio al modelo ideal", f"""
@@ -290,14 +290,14 @@ L("Planteamiento físico · 2 de 4", "Del laboratorio al modelo ideal", f"""
    <tr><td>Energía ciclotrónica ℏω<sub>c</sub></td><td>1,73 meV</td></tr>
    <tr><td>Longitud magnética ℓ<sub><i>B</i></sub></td><td>25,7 nm</td></tr></table>
  </div>
-</div>""", 55,
-  "Del laboratorio se pasa a un modelo ideal. Si la excitación en la dirección perpendicular es mucho mayor que las "
-  "energías orbitales, ese grado de libertad se congela y queda un movimiento en dos coordenadas, x e y. Distingo "
-  "tres espacios: el laboratorio tridimensional, el dominio plano del modelo y el espacio de Hilbert de estados, que "
-  "no es un espacio físico. ¿Por qué cuántico? Con valores típicos, masa efectiva de 0,067 la del electrón y una "
-  "separación de 2 milielectronvoltios, la longitud de confinamiento es de unos 24 nanómetros y la acción "
-  "característica es del orden de hache barra. ¿Por qué no relativista? Porque se describe una banda parabólica de "
-  "masa efectiva. Además: una sola partícula, sin espín y en estado estacionario.",
+</div>""", 57,
+  "¿Por qué basta un plano? La trampa vertical es mucho más estrecha que la lateral: subir un nivel en z cuesta "
+  "tanta energía que el electrón no lo hace, y se mueve solo en x e y. Distingo tres espacios: el laboratorio "
+  "tridimensional, el plano del modelo y el espacio de Hilbert de los estados, que no es un lugar físico. ¿Por qué "
+  "cuántico? Con la masa efectiva del arseniuro de galio, 0,067 veces la del electrón, y niveles separados 2 "
+  "milielectronvoltios, la trampa mide unos 24 nanómetros y la acción característica es del orden de hache barra. "
+  "¿Por qué no relativista? Esas energías están muy por debajo de la brecha del semiconductor, y el electrón se "
+  "mueve como una partícula libre de masa efectiva. Queda una partícula, sin espín, en estado estacionario.",
   "Las escalas son ejemplos de orden de magnitud, no mediciones propias. P4–P7: el espín se excluye para aislar el problema orbital (Zeeman y espín-órbita quedan fuera).")
 
 L("Planteamiento físico · 3 de 4", "Modelo físico-matemático", f"""
@@ -316,13 +316,13 @@ L("Planteamiento físico · 3 de 4", "Modelo físico-matemático", f"""
   <span class="ok">Invariantes:</span> {P_}, {J}, {BZ}, {V_} − {E_} y {U} = {NAB}{S_} − {q_}{A}.&nbsp; <span class="no">Dependen del gauge:</span> {A} y {S_}.</div>
  </div>
 </div>""", 60,
-  "El modelo es el hamiltoniano de una partícula de masa m y carga q con acoplamiento mínimo: el momento canónico "
-  "menos q por el potencial vectorial, más un potencial escalar, que es una energía. El campo magnético es el "
-  "rotacional de A. Un mismo campo admite varias representaciones: el gauge simétrico y el de Landau difieren en un "
-  "gradiente. Al cambiar de gauge cambia la fase de la función de onda, pero la densidad, la corriente, el campo y V "
-  "menos E no cambian: esas son las magnitudes físicas. El modelo exige además condiciones de frontera: en el plano, "
-  "normalizabilidad y decaimiento; en el cálculo, un dominio finito con la función de onda prácticamente nula en el "
-  "borde. Sin estas hipótesis no hay unicidad, aunque se cuenten las ecuaciones.",
+  "Este es el modelo. El hamiltoniano usa acoplamiento mínimo: el momento menos q por el potencial vectorial A, al "
+  "cuadrado, sobre dos m, más un potencial escalar V, que es una energía, no un voltaje. El campo magnético es el "
+  "rotacional de A. Y aquí hay una sutileza: muchos A distintos dan el mismo campo; basta sumarles un gradiente. Es "
+  "como describir el mismo terreno con dos mapas diferentes: eso es elegir un gauge. Al cambiarlo, la fase de la "
+  "función de onda cambia, pero la densidad, la corriente, el campo y V menos E no. Esas son las cantidades "
+  "físicas, y solo ellas tiene sentido reconstruir. Falta la frontera: en el plano, la función de onda debe ser "
+  "normalizable; en el computador, nula en el borde. Sin eso, contar ecuaciones no garantiza unicidad.",
   "P8: hay potencial vectorial aunque se conozca el campo porque el acoplamiento mínimo usa A. Momento canónico p = −iℏ∇ (depende del gauge) frente a momento cinético π = p − qA.")
 
 L("Planteamiento físico · 4 de 4", "Del problema directo al inverso", f"""
@@ -346,14 +346,16 @@ L("Planteamiento físico · 4 de 4", "Del problema directo al inverso", f"""
    <tr><td>({P_}, {S_}, {V_})</td><td>problema no lineal por estudiar</td></tr></table>
   <p class="muted">Nodos y vórtices: los cocientes por {P_} no se evalúan directamente; circulación ∮{NAB}{S_}·d<b>ℓ</b> = 2πℏℓ.</p>
  </div>
-</div>""", 65,
-  "En el problema directo se conocen los potenciales y se buscan los estados; en el inverso se conoce información del "
-  "estado y se buscan los potenciales. Con la descomposición de Madelung, la función de onda es la raíz de la "
-  "densidad por una fase, y la ecuación de Schrödinger se separa en la continuidad y en una ecuación que da V menos E "
-  "en términos de la densidad y del momento cinético u. Lo que se reconstruye depende de los datos: con densidad y "
-  "corriente se obtienen localmente V menos E y el campo, fuera de los nodos; con densidad y fase en un gauge, el "
-  "campo queda indeterminado. Un control con Fock–Darwin lo muestra: si se ignora el potencial vectorial, la "
-  "inversión atribuye el confinamiento magnético a V y obtiene el doble del real.",
+</div>""", 72,
+  "Ahora le damos la vuelta al problema: conocemos el estado y buscamos los potenciales. La clave es Madelung: "
+  "escribir la función de onda como la raíz de una densidad por una fase. Así Schrödinger se lee como un fluido: la "
+  "densidad dice cuánto hay en cada punto, y el momento u, cómo se mueve. Sin campo, los estados pueden elegirse "
+  "reales, el fluido está quieto y la densidad basta; eso hacen Bhalgamiya y Novotny. Con campo, el fluido circula, "
+  "y el campo magnético aparece como su remolino, su vorticidad. Por eso, con densidad y corriente se recuperan V "
+  "menos E y el campo, fuera de los nodos. Con densidad y fase, no: caben corrientes que circulan por las curvas de "
+  "igual densidad sin cambiarla, cada una con otro campo. El ejemplo: en el estado fundamental de Fock–Darwin, si "
+  "ignoro el potencial vectorial, la trampa me sale dos veces más rígida. El campo también aprieta al electrón, y "
+  "la densidad no distingue quién aprieta.",
   "Derivación del control (estado fundamental): ∇²√P/√P = −2/a² + r²/a⁴ da V − E = −ℏΩ + (m/2)(Ω² − ω_c²/4) r² = −ℏΩ + ½mω₀²r². Sin el término |qA|² queda Ω², y con ω_c/ω₀ = 2, Ω² = 2ω₀². "
   "Distinguir cambio de gauge (no cambia observables) de indeterminación física por datos incompletos (caso (P, S)).")
 
@@ -365,13 +367,14 @@ L("Estado del arte", "Trayectoria de los antecedentes", f"""
  <div class="card"><div class="k">1995–2024 · Desde el estado</div>Cooper, Khare y Sukhatme; Bhalgamiya y Novotny<div class="lim">Aporte: {V_} explícito desde {P_} · Límite: ψ real, sin {A} ni corriente</div></div>
  <div class="card"><div class="k">1927–1952 · Hidrodinámica</div>Madelung; Bohm; Takabayasi<div class="lim">Aporte: ecuaciones para ψ complejo con {A} · Límite: uso en el problema directo</div></div>
  <div class="card"><div class="k">1928–2002 · Fock–Darwin</div>Fock; Darwin; Reimann y Manninen<div class="lim">Aporte: solución exacta con vórtices y nodos · Uso: banco de pruebas</div></div>
-</div>""", 50,
-  "Los antecedentes forman una trayectoria. Los problemas espectrales en una dimensión, de Ambarzumian, Borg y "
-  "Gel'fand y Levitan, mostraron unicidad con espectros suficientes. La teoría de dispersión, sistematizada por "
-  "Chadan y Sabatier, trajo ambigüedades. Con campo magnético, Sun, Nakamura y Uhlmann, y Eskin y Ralston probaron "
-  "que los datos de frontera determinan el campo y V, pero el potencial vectorial solo salvo gauge. Bhalgamiya y "
-  "Novotny, en 2024, reconstruyen V a partir de la densidad, pero solo para funciones de onda reales, sin campo y sin corriente. La formulación "
-  "de Madelung y Bohm da las ecuaciones, y Fock–Darwin un caso exacto.",
+</div>""", 48,
+  "¿Qué se sabe? La historia se puede leer según qué datos se usan. En una dimensión, Ambarzumian, Borg, y Gel'fand "
+  "y Levitan mostraron que espectros suficientes determinan el potencial. En dispersión, Chadan y Sabatier "
+  "mostraron que los datos externos dejan ambigüedades. Con campo magnético, Sun, Nakamura y Uhlmann, y Eskin y "
+  "Ralston probaron que los datos de frontera determinan el campo y V, con el potencial vectorial salvo gauge, pero "
+  "en tres dimensiones o más. Desde el propio estado, Bhalgamiya y Novotny, en 2024, reconstruyen V con la "
+  "densidad, solo para funciones de onda reales. Madelung y Bohm dan las ecuaciones del fluido, y Fock–Darwin, una "
+  "solución exacta.",
   "No trasladar sin prueba los teoremas magnéticos (datos de frontera, dimensión ≥ 3) al caso 2D con datos internos.")
 
 L("Pregunta científica", "Vacío de conocimiento y pregunta", """
@@ -380,12 +383,13 @@ L("Pregunta científica", "Vacío de conocimiento y pregunta", """
 <div class="q"><div class="k">Pregunta de investigación</div>¿Bajo qué condiciones es posible reconstruir los potenciales asociados a una
 partícula cargada descrita por la ecuación estacionaria de Schrödinger en dos dimensiones, a partir de la formulación
 hidrodinámica de Madelung, y cuáles son las limitaciones de dicha reconstrucción en estados de Fock–Darwin?</div>
-<p class="muted">Pregunta complementaria: ¿qué permiten comprender Barad y Latour sobre el papel de los datos, el gauge y los procedimientos numéricos en el potencial reconstruido?</p>""", 40,
-  "En las fuentes revisadas hasta ahora no se identificó una reconstrucción con datos internos de un estado con "
-  "corriente, en el que el campo magnético rompe la simetría temporal, con tratamiento de los nodos; esa afirmación se pondrá a prueba en la revisión documental. De "
-  "ahí la pregunta: ¿Bajo qué condiciones es posible reconstruir los potenciales asociados a una partícula cargada "
-  "descrita por la ecuación estacionaria de Schrödinger en dos dimensiones, a partir de la formulación hidrodinámica "
-  "de Madelung, y cuáles son las limitaciones de dicha reconstrucción en estados de Fock–Darwin?",
+<p class="muted">Pregunta complementaria: ¿qué permiten comprender Barad y Latour sobre el papel de los datos, el gauge y los procedimientos numéricos en el potencial reconstruido?</p>""", 42,
+  "Y aquí está el hueco. En las fuentes revisadas no identifiqué una reconstrucción con datos internos de un estado "
+  "con corriente, donde el campo rompe la simetría temporal, y que trate los nodos. Esa afirmación se pondrá a "
+  "prueba en la revisión documental. De ahí la pregunta: ¿Bajo qué condiciones es posible reconstruir los "
+  "potenciales asociados a una partícula cargada descrita por la ecuación estacionaria de Schrödinger en dos "
+  "dimensiones, a partir de la formulación hidrodinámica de Madelung, y cuáles son las limitaciones de dicha "
+  "reconstrucción en estados de Fock–Darwin?",
   "No decir «nadie lo ha estudiado»: decir «en las fuentes revisadas no se identificó». Aun si aparecen trabajos parcialmente equivalentes, compararlos con precisión es una contribución.")
 
 L("Metodología", "Cinco fases, con alcance computacional acotado", f"""
@@ -404,14 +408,14 @@ L("Metodología", "Cinco fases, con alcance computacional acotado", f"""
   <div class="chain"><span>solución exacta</span>{ARR}<span>datos</span>{ARR}<span>discretización</span>{ARR}<span>inversión</span>{ARR}<span>error, orden, ruido</span></div>
   <p class="muted c">Riesgo esperado: error de truncamiento ∼ <i>h</i>² y amplificación del ruido ∼ ε/<i>h</i>².</p>
  </div>
-</div>""", 60,
-  "La metodología tiene cinco fases. Primero, investigación documental en Web of Science, Scopus, arXiv y PhilPapers, "
-  "con criterios de inclusión y matrices de comparación. Segundo, desarrollo analítico: derivar las ecuaciones con "
-  "hipótesis explícitas y establecer qué determina cada conjunto de datos. Tercero, un estudio computacional acotado "
-  "a tres estados de Fock–Darwin con omega c sobre omega cero igual a dos: el fundamental como control, uno con "
-  "vórtice y uno con nodo radial. Cada prueba va de la solución exacta a los datos, la discretización, la inversión y "
-  "la validación. Cuarto, contraste con la literatura. Quinto, una discusión epistemológica con Barad y Latour sobre "
-  "una bitácora de decisiones de modelado. Los criterios de éxito se fijan antes de ejecutar.",
+</div>""", 56,
+  "Para responderla, cinco fases. Documental, en Web of Science, Scopus, arXiv y PhilPapers, con matrices de "
+  "comparación. Analítica: qué determina cada conjunto de datos. Computacional, con tres estados de Fock–Darwin, "
+  "cada uno con una dificultad: el fundamental, como control; uno con un vórtice, donde la fase da una vuelta "
+  "completa alrededor de un punto vacío; y uno con un nodo radial, un anillo sin densidad. Como conozco la "
+  "respuesta exacta, puedo medir cada error. Y hay una tensión: al refinar la malla, el error de truncamiento baja "
+  "como h al cuadrado, pero el ruido crece como épsilon sobre h al cuadrado, porque derivo dos veces. Después, el "
+  "contraste con la literatura y la fase epistemológica, con criterios de éxito fijados antes de calcular.",
   "P13–P15: Fock–Darwin tiene solución exacta y tres tipos de estructura nodal. La solución analítica sirve de patrón: separa error de discretización, ruido, errores de implementación y efectos de los nodos. Exactitud, convergencia y estabilidad frente al ruido son propiedades distintas.")
 
 L("Objetivos", "Objetivo general y objetivos específicos", """
@@ -425,23 +429,21 @@ del actor-red de Bruno Latour.</div>
  <li><b>OE3.</b> Estudiar analítica y numéricamente algunos casos representativos de estados de Fock–Darwin, con el propósito de examinar la reconstrucción de los potenciales y sus limitaciones.</li>
  <li><b>OE4.</b> Contrastar los resultados obtenidos con los reportados en la literatura, identificando las condiciones bajo las cuales resulta aplicable el procedimiento de reconstrucción.</li>
  <li><b>OE5.</b> Discutir, desde el realismo agencial de Karen Barad y la teoría del actor-red de Bruno Latour, el papel de la elección de los datos, del gauge y de los procedimientos numéricos en la constitución del potencial reconstruido.</li>
-</ol>""", 65,
+</ol>""", 58,
   "El objetivo general es: Analizar las condiciones de reconstrucción de los potenciales escalar y vectorial en la "
   "ecuación estacionaria de Schrödinger, mediante la formulación hidrodinámica de Madelung y el estudio "
   "teórico-computacional de estados de Fock–Darwin, y discutir ese proceso de reconstrucción desde el realismo "
-  "agencial de Karen Barad y la teoría del actor-red de Bruno Latour. Los específicos son: uno, sistematizar los "
-  "fundamentos y antecedentes del problema inverso con potenciales vectoriales; dos, derivar y analizar las ecuaciones "
-  "de Madelung, identificando las condiciones de reconstrucción y el papel del gauge; tres, estudiar analítica y "
-  "numéricamente casos representativos de Fock–Darwin y sus limitaciones; cuatro, contrastar los resultados con la "
-  "literatura; y cinco, discutir con Barad y Latour el papel de los datos, el gauge y lo numérico en el potencial reconstruido.",
+  "agencial de Karen Barad y la teoría del actor-red de Bruno Latour. Los específicos siguen las fases: "
+  "sistematizar los antecedentes; derivar las ecuaciones de Madelung y el papel del gauge; estudiar los estados de "
+  "Fock–Darwin y sus límites; contrastar con la literatura; y discutir con Barad y Latour. Esa última parte nace "
+  "del problema: el potencial reconstruido depende de los datos, del gauge y de la malla.",
   "La lámina muestra los objetivos literales; el guion lee el general completo y resume los específicos. Si el Consejo pide la lectura literal, léelos de la lámina (+25 s).")
 
-L("Cronograma", "Actividades en el periodo 2027-1", f"""{fig_gantt()}<p class="muted">Documento completo al jurado en la semana 11. Semanas orientativas, según el calendario oficial.</p>""", 30,
-  "El trabajo se desarrolla en un solo periodo, 2027-1, y parte de un avance inicial del desarrollo analítico. Las "
-  "primeras ocho semanas cubren la revisión documental, el análisis y los tres estados con su estudio de convergencia "
-  "y ruido. Entre las semanas siete y diez hago el contraste y la discusión epistemológica, y en la semana once entrego "
-  "el documento completo al jurado, que dispone de quince días hábiles para leerlo. Las dos últimas semanas son para "
-  "las correcciones y la sustentación. La bitácora se lleva durante todo el proceso.",
+L("Cronograma", "Actividades en el periodo 2027-1", f"""{fig_gantt()}<p class="muted">Documento completo al jurado en la semana 11. Semanas orientativas, según el calendario oficial.</p>""", 27,
+  "Todo cabe en un periodo, 2027-1, partiendo de un avance analítico previo. En las primeras ocho semanas, "
+  "revisión, análisis y los tres estados. Entre la siete y la diez, contraste y discusión epistemológica. En la "
+  "semana once entrego el documento al jurado, que tiene quince días hábiles para leerlo, y las dos últimas semanas "
+  "son para correcciones y sustentación.",
   "Si preguntan por el plazo: el Art. 9 fija un máximo (un periodo si el plan tiene un espacio de Trabajo de Grado, dos si tiene dos), no un mínimo; terminar en un periodo queda dentro del máximo. Con dos espacios, la nota de TG I queda pendiente hasta la sustentación (Art. 5, par. 2). Prórroga de un periodo por el Consejo Curricular (Art. 9, par. 1).")
 
 L("Cierre", "Conclusiones", f"""
@@ -449,12 +451,12 @@ L("Cierre", "Conclusiones", f"""
  <li><b>Problema físico delimitado:</b> una partícula cargada, no relativista y sin espín, en 2D, con campo perpendicular y estado estacionario.</li>
  <li><b>Lo reconstruible depende de los datos:</b> con ({P_}, {J}) se obtienen localmente {V_} − {E_} y {BZ}; con ({P_}, {S_}) el campo queda indeterminado. El gauge y los nodos no son detalles técnicos.</li>
  <li><b>Fock–Darwin es el control exacto:</b> sin el potencial vectorial, la inversión atribuye el confinamiento magnético a {V_}.</li>
- <li><b>Propuesta viable</b> en dos periodos, con alcance computacional acotado y una discusión epistemológica subordinada a la física.</li>
-</ol>""", 35,
-  "Para cerrar, cuatro ideas. El problema está delimitado físicamente: una partícula cargada, sin espín, en dos "
-  "dimensiones y con campo perpendicular. Lo que se puede reconstruir depende de los datos, y el gauge y los nodos no "
-  "son detalles técnicos. Fock–Darwin ofrece un control exacto: muestra que sin potencial vectorial la reconstrucción "
-  "falla. Y la propuesta es viable en dos periodos, con un alcance computacional deliberadamente acotado.",
+ <li><b>Propuesta viable</b> en un periodo (2027-1), con alcance computacional acotado y una discusión epistemológica subordinada a la física.</li>
+</ol>""", 33,
+  "Vuelvo a la pregunta del inicio: si conozco el estado, ¿puedo deducir qué atrapa al electrón? Depende de qué "
+  "parte del estado conozca. Con densidad y corriente, sí, fuera de los nodos; con densidad y fase, el campo queda "
+  "indeterminado. El gauge y los nodos no son detalles técnicos, y Fock–Darwin muestra el costo de ignorar el "
+  "potencial vectorial. La propuesta está delimitada y es viable en un periodo.",
   "P16: el aporte es organizar críticamente los antecedentes, precisar hipótesis y datos, verificar reconstrucciones controladas y caracterizar sus límites, sin prometer resolver todo el problema inverso magnético.")
 
 L("Cierre", "Bibliografía principal", """
@@ -652,15 +654,18 @@ def html_guion():
 <h1>Guion de la sustentación de la propuesta</h1>
 <div class="meta">Juan Sebastián Sánchez Álvarez · Director: Prof. John Hernán Díaz Forero · Consejo Curricular, 24 de noviembre de 2026 · Máximo 10 minutos</div>
 <div class="box">La estructura sigue la guía del director: presentación, modalidad, cuatro láminas de planteamiento físico, estado del
-arte, pregunta, metodología, objetivos, cronograma y cierre. El texto está escrito para decirse en voz alta; las fórmulas
-están en las láminas y se nombran en palabras. El documento orientador del director (formulación física, 24 páginas) es la
+arte, pregunta, metodología, objetivos, cronograma y cierre. El texto está escrito para decirse en voz alta y sigue un hilo:
+la pregunta de la lámina 1 (si conozco el estado, ¿puedo deducir qué atrapa al electrón?) se responde en la lámina 12. Las
+imágenes (dos mapas del mismo terreno para el gauge, un fluido para Madelung, el remolino para el campo) acompañan a las
+ecuaciones de las láminas, no las reemplazan. El documento orientador del director (formulación física, 24 páginas) es la
 base de las respuestas del anexo A.</div>
 <h2>Tiempos</h2>
 <table><tr><th>#</th><th>Lámina</th><th>Asignado</th><th>Acumulado</th><th>Palabras</th><th>A 130 ppm</th></tr>{''.join(filas)}
 <tr><td></td><td><b>Total</b></td><td><b>{sum(s['seg'] for s in LAMINAS)} s</b></td><td></td><td><b>{tot_w}</b></td><td><b>{est:.0f} s</b></td></tr></table>
 <p>A un ritmo pausado (130 palabras por minuto) el guion dura unos <b>{est/60:.1f} minutos</b>. Puntos de control: terminar la
-lámina 6 antes de los <b>4:30</b> y la lámina 9 antes de los <b>7:15</b>. Si vas atrasado, recorta en la lámina 4 la frase sobre la
-acción característica y en la lámina 6 la frase del control con Fock–Darwin (dila solo si preguntan).</p>
+lámina 6 antes de los <b>4:50</b> y la lámina 9 antes de los <b>7:15</b>. Si vas atrasado, recorta en la lámina 7 la frase de
+dispersión (Chadan y Sabatier) y en la lámina 9 la frase de la malla (h² frente a ε/h²); dilas solo si preguntan. No recortes el
+ejemplo de Fock–Darwin de la lámina 6: es el momento central de la exposición.</p>
 <h2>Texto por lámina</h2>{''.join(bloques)}
 <h2>Anexo A. Preguntas probables y respuestas cortas</h2>
 <p>Basadas en la sección 12 del documento orientador del director y en la propuesta. Responde en dos o tres frases y ofrece el detalle si lo piden.</p>
