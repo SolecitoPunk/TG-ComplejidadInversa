@@ -7,7 +7,7 @@ Según la respuesta de la Coordinación (PAF_2463, 19 de noviembre de 2026):
 | Antes del **lunes 23 de noviembre, 3:00 p. m.** | Radicar la propuesta y sus soportes, y pedir que se incluya en el orden del día | **El director** (John Hernán Díaz Forero) |
 | **Martes 24 de noviembre** | Sesión del Consejo Curricular: presentación de hasta **10 minutos** | Estudiante con el director |
 | 28 de noviembre | Fin de clases de 2026-3 | — |
-| 2027-1 | Inscripción de Trabajo de Grado I | Estudiante |
+| 2027-1 | Inscripción de Trabajo de Grado (periodo único; confirmar con la Coordinación que el plan lo permite, Art. 9) | Estudiante |
 
 ## Documentos
 - `propuesta_trabajo_grado.tex` → PDF de la propuesta (estructura del Art. 24).

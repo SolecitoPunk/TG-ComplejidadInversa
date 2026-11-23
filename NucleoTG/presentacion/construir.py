@@ -183,38 +183,32 @@ def fig_perfiles():
 
 
 def fig_gantt():
-    filas = [("Investigación documental", "OE1, OE5", 0, 1, 6), ("Desarrollo analítico", "OE2", 0, 5, 14),
-             ("Estados (0,0) y (0,1)", "OE3", 0, 13, 16), ("Estado (1,0); convergencia y ruido", "OE3", 1, 1, 6),
-             ("Contraste con la literatura", "OE4", 1, 5, 9), ("Discusión epistemológica", "OE5", 1, 8, 12),
-             ("Redacción, RAE y sustentación", "todos", 1, 12, 16)]
-    X0, W, top, rh = 330, 912, 46, 38
-    wk = (W - 12 - X0) / 32
+    filas = [("Investigación documental", "OE1, OE5", 1, 5), ("Desarrollo analítico (con avance previo)", "OE2", 1, 7),
+             ("Estados (0,0) y (0,1)", "OE3", 4, 8), ("Estado (1,0); convergencia y ruido", "OE3", 7, 11),
+             ("Contraste con la literatura", "OE4", 10, 12), ("Discusión epistemológica", "OE5", 10, 13),
+             ("Redacción, RAE y sustentación", "todos", 12, 16)]
+    X0, W, top, rh = 380, 912, 46, 38
+    wk = (W - 12 - X0) / 16
     out = [f'<rect x="{X0}" y="8" width="{16*wk:.1f}" height="28" fill="{NAVY}"/>',
-           f'<text x="{X0+8*wk:.1f}" y="27" class="ft" style="fill:#fff" text-anchor="middle">Trabajo de Grado I · 2027-1</text>',
-           f'<rect x="{X0+16*wk:.1f}" y="8" width="{16*wk:.1f}" height="28" fill="{TEAL}"/>',
-           f'<text x="{X0+24*wk:.1f}" y="27" class="ft" style="fill:#fff" text-anchor="middle">Trabajo de Grado II · 2027-3</text>']
-    for i, (nom, obj, per, a, b) in enumerate(filas):
+           f'<text x="{X0+8*wk:.1f}" y="27" class="ft" style="fill:#fff" text-anchor="middle">Trabajo de Grado · 2027-1 (16 semanas)</text>']
+    for i, (nom, obj, a, b) in enumerate(filas):
         y = top + i * rh
         if i % 2 == 0:
             out.append(f'<rect x="0" y="{y}" width="{W}" height="{rh}" fill="#f4f7f9"/>')
         out.append(f'<text x="8" y="{y+24}" class="ft">{nom}</text><text x="{X0-10}" y="{y+24}" class="fs" text-anchor="end" fill="{GRIS}">{obj}</text>')
-        x = X0 + (per * 16 + a - 1) * wk
-        out.append(f'<rect x="{x:.1f}" y="{y+8}" width="{(b-a+1)*wk:.1f}" height="{rh-16}" rx="5" fill="{NAVY if per==0 else TEAL}"/>')
+        x = X0 + (a - 1) * wk
+        out.append(f'<rect x="{x:.1f}" y="{y+8}" width="{(b-a+1)*wk:.1f}" height="{rh-16}" rx="5" fill="{NAVY}"/>')
     y = top + len(filas) * rh
     out.append(f'<text x="8" y="{y+24}" class="ft" style="fill:{OCHRE}">Bitácora de decisiones de modelado</text>'
-               f'<rect x="{X0}" y="{y+12}" width="{32*wk:.1f}" height="10" rx="5" fill="{OCHRE}" opacity=".8"/>')
-    for per in (0, 1):
-        base = X0 + per * 16 * wk
-        for s in (1, 4, 8, 12, 16):
-            if s == 1:
-                xx, anc = base + 3, "start"
-            elif s == 16:
-                xx, anc = base + 16 * wk - 3, "end"
-            else:
-                xx, anc = base + (s - 0.5) * wk, "middle"
-            out.append(f'<text x="{xx:.1f}" y="{y+52}" class="fs" text-anchor="{anc}">s{s}</text>')
-    xm = X0 + 16 * wk
-    out.append(f'<line x1="{xm:.1f}" y1="{y+36}" x2="{xm:.1f}" y2="{y+58}" stroke="#9aa5b1" stroke-width="1"/>')
+               f'<rect x="{X0}" y="{y+12}" width="{16*wk:.1f}" height="10" rx="5" fill="{OCHRE}" opacity=".8"/>')
+    for s in (1, 4, 8, 12, 16):
+        if s == 1:
+            xx, anc = X0 + 3, "start"
+        elif s == 16:
+            xx, anc = X0 + 16 * wk - 3, "end"
+        else:
+            xx, anc = X0 + (s - 0.5) * wk, "middle"
+        out.append(f'<text x="{xx:.1f}" y="{y+52}" class="fs" text-anchor="{anc}">s{s}</text>')
     return f'<svg viewBox="0 0 {W} {y+60}" class="fig">{"".join(out)}</svg>'
 
 
@@ -246,7 +240,7 @@ L("Modalidad", "Monografía de investigación teórica", """
  </div>
  <div>
   <ul class="lst">
-   <li><b>Trabajo de Grado I:</b> 2027-1 · <b>Trabajo de Grado II:</b> 2027-3 (Art. 9)</li>
+   <li><b>Duración:</b> un periodo, 2027-1 (Art. 9); cierre previsto entre finales de mayo y mediados de junio de 2027</li>
    <li><b>Evaluación:</b> jurado; documento escrito 60 % y sustentación pública 40 % (Art. 26)</li>
    <li><b>Por qué esta modalidad:</b> el aporte es analítico y documental, apoyado en cálculo; no requiere estancia ni convocatoria de semillero</li>
   </ul>
@@ -440,12 +434,12 @@ del actor-red de Bruno Latour.</div>
   "literatura; y cinco, discutir con Barad y Latour el papel de los datos, el gauge y lo numérico en el potencial reconstruido.",
   "La lámina muestra los objetivos literales; el guion lee el general completo y resume los específicos. Si el Consejo pide la lectura literal, léelos de la lámina (+25 s).")
 
-L("Cronograma", "Actividades por periodo", f"""{fig_gantt()}""", 30,
-  "El trabajo se desarrolla en dos periodos. En Trabajo de Grado I, en 2027-1: la revisión documental, el desarrollo "
-  "analítico y los dos primeros estados. En Trabajo de Grado II, en 2027-3: el estado con nodo radial, el estudio de "
-  "convergencia y ruido, el contraste, la discusión epistemológica, la redacción y la sustentación. La bitácora se "
-  "lleva durante todo el proceso.",
-  "Prórroga, si hiciera falta: Art. 9, parágrafo 1 (un periodo, por el Consejo Curricular).")
+L("Cronograma", "Actividades en el periodo 2027-1", f"""{fig_gantt()}<p class="muted">El desarrollo analítico ya tiene un avance inicial. Semanas orientativas; las fechas se ajustan al calendario académico oficial de 2027-1.</p>""", 30,
+  "El trabajo se desarrolla en un solo periodo, 2027-1, y cierra entre finales de mayo y mediados de junio. Parto de un "
+  "avance inicial del desarrollo analítico. En las primeras semanas completo la revisión documental y consolido el "
+  "análisis; luego trabajo los dos primeros estados, después el estado con nodo radial con convergencia y ruido, y "
+  "cierro con el contraste, la discusión epistemológica y la redacción. La bitácora se lleva durante todo el proceso.",
+  "Si preguntan por el plazo: el Art. 9 fija la duración según los espacios de Trabajo de Grado del plan; hay prórroga de un periodo por el Consejo Curricular (par. 1). Confirmar con la coordinación que el plan de Física permite un periodo.")
 
 L("Cierre", "Conclusiones", f"""
 <ol class="concl">
