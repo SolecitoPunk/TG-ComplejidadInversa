@@ -253,7 +253,7 @@ L("Modalidad", "Monografía de investigación teórica", """
   "fuentes, aquí apoyada en desarrollo analítico y en cálculo.",
   "Si preguntan por qué no la modalidad de investigación: esa exige vínculo a un grupo o semillero y convocatoria (Art. 20).")
 
-L("Planteamiento físico · 1 de 4", "Laboratorio conceptual: el objeto real de referencia", f"""
+L("Planteamiento físico · 1 de 4", "Laboratorio conceptual: un experimento pensado", f"""
 {fig_laboratorio()}
 <div class="row4">
  <div class="tag"><b>Sistema</b>un electrón confinado lateralmente en un punto cuántico semiconductor</div>
@@ -262,14 +262,14 @@ L("Planteamiento físico · 1 de 4", "Laboratorio conceptual: el objeto real de 
  <div class="tag"><b>Observador</b>teórico-computacional: prescribe datos ideales y calcula</div>
 </div>
 <div class="warn">Dato teórico ≠ magnitud medible: usar {P_} y {J} no implica que un laboratorio los mida localmente y sin error.</div>""", 55,
-  "Empiezo por el objeto real de referencia: un punto cuántico semiconductor definido por compuertas. Un electrón "
-  "queda confinado lateralmente en una región de unas decenas de nanómetros, dentro de un criostato, y un campo "
-  "magnético atraviesa el plano perpendicularmente. Ese es el sistema físico. El entorno incluye la red cristalina, "
-  "los contactos y la electrónica, que no se modelan. En un laboratorio, el observador ajusta voltajes y campo y "
-  "obtiene información indirecta, espectroscópica o de transporte. En esta monografía el observador es "
+  "Empiezo por un laboratorio conceptual: un experimento pensado, que no se construye. Imagino un punto cuántico "
+  "semiconductor, del tipo que se fabrica con electrodos sobre un chip. Un electrón queda confinado lateralmente en "
+  "unas decenas de nanómetros, dentro de un criostato, y un campo magnético atraviesa el plano perpendicularmente. "
+  "Ese es el sistema. La red cristalina, los contactos y la electrónica no se modelan. En un laboratorio, el "
+  "observador ajustaría voltajes y campo y obtendría información indirecta. En esta monografía el observador es "
   "teórico-computacional: elige un estado conocido, prescribe los datos, fija el gauge y la malla, y calcula. Hay "
   "que ser claro: que el método use la densidad y la corriente no significa que un laboratorio las mida directamente.",
-  "P1–P3 del documento del director. Una simulación no es una medición experimental.")
+  "P1–P3 del documento del director. Una simulación no es una medición experimental. Si preguntan por qué «conceptual»: el trabajo nunca trata con un dispositivo real; los puntos cuánticos de GaAs solo inspiran el modelo y los órdenes de magnitud.")
 
 L("Planteamiento físico · 2 de 4", "Del laboratorio al modelo ideal", f"""
 <div class="two w55">
@@ -566,7 +566,7 @@ def html_presentacion():
 
 # ------------------------------------------------------------------ guion
 PREGUNTAS = [
-    ("¿Cuál es el objeto físico real de referencia?", "Un punto cuántico semiconductor con confinamiento lateral y campo perpendicular. Es un referente para interpretar el modelo de un solo portador; no se construye."),
+    ("¿Cuál es el sistema de referencia?", "Un laboratorio conceptual: un punto cuántico semiconductor idealizado, con confinamiento lateral y campo perpendicular. No es un dispositivo que se construya ni se mida; los puntos cuánticos de GaAs inspiran el modelo y los órdenes de magnitud."),
     ("¿Cuál es el objeto de estudio?", "No es la muestra: es la reconstrucción de los potenciales escalar y vectorial (o del campo) y las condiciones que la hacen posible o la limitan."),
     ("¿Quién observa y qué mide?", "En el laboratorio habría preparación, control y lectura indirecta. En el trabajo, un observador teórico-computacional prescribe datos ideales. Una simulación no es una medición."),
     ("¿Por qué 2D?", "Se congela el grado transversal cuando la separación en z es grande frente a las energías orbitales; queda la dinámica en x e y."),
