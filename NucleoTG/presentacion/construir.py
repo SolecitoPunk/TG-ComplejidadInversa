@@ -272,23 +272,16 @@ L("Planteamiento físico · 1 de 4", "Laboratorio conceptual: un experimento pen
   "P1–P3 del documento del director. Una simulación no es una medición experimental. Si preguntan por qué «conceptual»: el trabajo nunca trata con un dispositivo real; los puntos cuánticos de GaAs solo inspiran el modelo y los órdenes de magnitud.")
 
 L("Planteamiento físico · 2 de 4", "Del laboratorio al modelo ideal", f"""
-<div class="two w55">
- <div>{fig_seccion()}
-  <div class="levels"><span>Laboratorio 3D</span>{ARR}<span>Dominio plano <i>D</i></span>{ARR}<span>Estados <i>L</i>²(<i>D</i>)</span></div>
-  <p class="muted c">El espacio de Hilbert no es un espacio físico ni un sistema de referencia.</p>
- </div>
+<div class="two w55" style="align-items:center; min-height:4.9in">
+ <div>{fig_seccion()}</div>
  <div>
-  <ul class="lst sm">
+  <ul class="lst l4" style="font-size:19pt; line-height:1.35">
    <li><b>2D:</b> excitación transversal Δ<sub><i>z</i></sub> {LL} energías orbitales</li>
    <li><b>Una partícula</b>, sin espín, sin segunda cuantización</li>
    <li><b>Estacionario:</b> Ψ = ψ(<b>r</b>) e<sup>−<i>iEt</i>/ℏ</sup>; el tiempo solo es una fase</li>
    <li><b>Cuántico:</b> acción característica <i>m</i>ω<sub>0</sub><i>a</i><sub>0</sub>² ∼ ℏ</li>
    <li><b>No relativista:</b> banda parabólica de masa efectiva <i>m</i>*</li>
   </ul>
-  <table class="tb"><tr><th colspan="2">Escalas ilustrativas (<i>m</i>* = 0,067 <i>m</i><sub>e</sub>, ℏω<sub>0</sub> = 2 meV, |{BZ}| = 1 T)</th></tr>
-   <tr><td>Longitud de confinamiento <i>a</i><sub>0</sub></td><td>23,9 nm</td></tr>
-   <tr><td>Energía ciclotrónica ℏω<sub>c</sub></td><td>1,73 meV</td></tr>
-   <tr><td>Longitud magnética ℓ<sub><i>B</i></sub></td><td>25,7 nm</td></tr></table>
  </div>
 </div>""", 57,
   "¿Por qué basta un plano? La trampa vertical es mucho más estrecha que la lateral: subir un nivel en z cuesta "
@@ -498,7 +491,7 @@ h1:after {{ content: ""; display: block; width: 1.1in; height: 4px; background: 
 .lim {{ font-size: 12pt; color: #3b4757; margin-top: .06in }}
 .grid3 {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: .18in }}
 .grid3 .card {{ min-height: 1.95in; font-size: 15pt }}
-.lst {{ margin: .05in 0; padding-left: .28in }} .lst li {{ margin: .06in 0 }} .lst.sm {{ font-size: 15pt }}
+.lst {{ margin: .05in 0; padding-left: .28in }} .lst li {{ margin: .06in 0 }} .lst.l4 li {{ margin: .2in 0 }} .lst.sm {{ font-size: 15pt }}
 .muted {{ color: {GRIS}; font-size: 13pt }} .c {{ text-align: center }}
 .row4 {{ display: grid; grid-template-columns: repeat(4, 1fr); gap: .14in; margin-top: .06in }}
 .tag {{ background: #f1f5f7; border-top: 4px solid {TEAL}; border-radius: 8px; padding: .06in .12in; font-size: 11.5pt; line-height: 1.22 }}

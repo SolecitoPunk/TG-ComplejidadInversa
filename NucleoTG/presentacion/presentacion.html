@@ -20,7 +20,7 @@ h1:after { content: ""; display: block; width: 1.1in; height: 4px; background: #
 .lim { font-size: 12pt; color: #3b4757; margin-top: .06in }
 .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: .18in }
 .grid3 .card { min-height: 1.95in; font-size: 15pt }
-.lst { margin: .05in 0; padding-left: .28in } .lst li { margin: .06in 0 } .lst.sm { font-size: 15pt }
+.lst { margin: .05in 0; padding-left: .28in } .lst li { margin: .06in 0 } .lst.l4 li { margin: .2in 0 } .lst.sm { font-size: 15pt }
 .muted { color: #5b6676; font-size: 13pt } .c { text-align: center }
 .row4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: .14in; margin-top: .06in }
 .tag { background: #f1f5f7; border-top: 4px solid #0f8a80; border-radius: 8px; padding: .06in .12in; font-size: 11.5pt; line-height: 1.22 }
@@ -131,7 +131,7 @@ sub, sup { font-size: .68em; line-height: 0 }
 </div>
 <div class="warn">Dato teórico <svg class="s" viewBox="0 0 10 10" style="width:0.62em;height:0.62em;vertical-align:-0.08em"><path d="M1.5 3.6H8.5M1.5 6.6H8.5M7 1L3 9.4" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"/></svg> magnitud medible: usar <i>P</i> y <b>j</b> no implica que un laboratorio los mida localmente y sin error.</div>
 <div class="foot"><span>J. S. Sánchez Álvarez · Problema inverso de Schrödinger con potencial vectorial</span><span>3 / 13</span></div></section><section class="slide" id="s4"><div class="sec">Planteamiento físico · 2 de 4</div><h1>Del laboratorio al modelo ideal</h1>
-<div class="two w55">
+<div class="two w55" style="align-items:center; min-height:4.9in">
  <div>
 <svg viewBox="0 0 520 180" class="fig">
  <defs><marker id="ah2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#0f8a80"/></marker></defs>
@@ -145,22 +145,15 @@ sub, sup { font-size: .68em; line-height: 0 }
  <text x="490" y="122" class="fs" fill="#0f8a80" text-anchor="end">gas electrónico cuasibidimensional</text>
  <text x="30" y="142" class="fs" fill="#5b6676">semiconductor</text>
  <text x="260" y="174" class="fs" fill="#5b6676" text-anchor="middle">Si la excitación en z es grande, solo queda el modo más bajo: ψ<tspan baseline-shift="sub" font-size="70%">3D</tspan> ~ ψ(x, y) φ<tspan baseline-shift="sub" font-size="70%">0</tspan>(z)</text>
-</svg>
-  <div class="levels"><span>Laboratorio 3D</span><svg class="s" viewBox="0 0 18 10" style="width:1.15em;height:0.62em;vertical-align:0.02em"><path d="M1 5H15.6M11.6 1.6L16 5 11.6 8.4" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Dominio plano <i>D</i></span><svg class="s" viewBox="0 0 18 10" style="width:1.15em;height:0.62em;vertical-align:0.02em"><path d="M1 5H15.6M11.6 1.6L16 5 11.6 8.4" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Estados <i>L</i>²(<i>D</i>)</span></div>
-  <p class="muted c">El espacio de Hilbert no es un espacio físico ni un sistema de referencia.</p>
- </div>
+</svg></div>
  <div>
-  <ul class="lst sm">
+  <ul class="lst l4" style="font-size:19pt; line-height:1.35">
    <li><b>2D:</b> excitación transversal Δ<sub><i>z</i></sub> <svg class="s" viewBox="0 0 16 10" style="width:0.95em;height:0.62em;vertical-align:-0.08em"><path d="M8 1.6L2 5 8 8.4M14 1.6L8 5 14 8.4" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"/></svg> energías orbitales</li>
    <li><b>Una partícula</b>, sin espín, sin segunda cuantización</li>
    <li><b>Estacionario:</b> Ψ = ψ(<b>r</b>) e<sup>−<i>iEt</i>/ℏ</sup>; el tiempo solo es una fase</li>
    <li><b>Cuántico:</b> acción característica <i>m</i>ω<sub>0</sub><i>a</i><sub>0</sub>² <svg class="s" viewBox="0 0 14 10" style="width:0.8em;height:0.62em;vertical-align:-0.08em"><path d="M1 5.6C3 2.6 5 2.6 7 5S11 7.6 13 4.6" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"/></svg> ℏ</li>
    <li><b>No relativista:</b> banda parabólica de masa efectiva <i>m</i>*</li>
   </ul>
-  <table class="tb"><tr><th colspan="2">Escalas ilustrativas (<i>m</i>* = 0,067 <i>m</i><sub>e</sub>, ℏω<sub>0</sub> = 2 meV, |<i>B</i><sub><i>z</i></sub>| = 1 T)</th></tr>
-   <tr><td>Longitud de confinamiento <i>a</i><sub>0</sub></td><td>23,9 nm</td></tr>
-   <tr><td>Energía ciclotrónica ℏω<sub>c</sub></td><td>1,73 meV</td></tr>
-   <tr><td>Longitud magnética ℓ<sub><i>B</i></sub></td><td>25,7 nm</td></tr></table>
  </div>
 </div>
 <div class="foot"><span>J. S. Sánchez Álvarez · Problema inverso de Schrödinger con potencial vectorial</span><span>4 / 13</span></div></section><section class="slide" id="s5"><div class="sec">Planteamiento físico · 3 de 4</div><h1>Modelo físico-matemático</h1>
