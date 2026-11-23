@@ -183,24 +183,26 @@ def fig_perfiles():
 
 
 def fig_gantt():
-    filas = [("Investigación documental", "OE1, OE5", 1, 5), ("Desarrollo analítico (con avance previo)", "OE2", 1, 7),
-             ("Estados (0,0) y (0,1)", "OE3", 4, 8), ("Estado (1,0); convergencia y ruido", "OE3", 7, 11),
-             ("Contraste con la literatura", "OE4", 10, 12), ("Discusión epistemológica", "OE5", 10, 13),
-             ("Redacción, RAE y sustentación", "todos", 12, 16)]
-    X0, W, top, rh = 380, 912, 46, 38
+    filas = [("Investigación documental", "OE1, OE5", 1, 4, NAVY), ("Desarrollo analítico (con avance previo)", "OE2", 1, 5, NAVY),
+             ("Estados (0,0) y (0,1)", "OE3", 3, 6, NAVY), ("Estado (1,0); convergencia y ruido", "OE3", 5, 8, NAVY),
+             ("Contraste con la literatura", "OE4", 7, 9, NAVY), ("Discusión epistemológica", "OE5", 8, 10, NAVY),
+             ("Redacción, RAE y entrega al jurado", "todos", 6, 11, NAVY),
+             ("Lectura del jurado (15 días hábiles)", "Art. 12", 12, 14, TEAL),
+             ("Correcciones, aval final y sustentación", "Art. 10", 15, 16, OCHRE)]
+    X0, W, top, rh = 380, 912, 44, 31
     wk = (W - 12 - X0) / 16
-    out = [f'<rect x="{X0}" y="8" width="{16*wk:.1f}" height="28" fill="{NAVY}"/>',
-           f'<text x="{X0+8*wk:.1f}" y="27" class="ft" style="fill:#fff" text-anchor="middle">Trabajo de Grado · 2027-1 (16 semanas)</text>']
-    for i, (nom, obj, a, b) in enumerate(filas):
+    out = [f'<rect x="{X0}" y="6" width="{16*wk:.1f}" height="28" fill="{NAVY}"/>',
+           f'<text x="{X0+8*wk:.1f}" y="25" class="ft" style="fill:#fff" text-anchor="middle">Trabajo de Grado · 2027-1 (16 semanas)</text>']
+    for i, (nom, obj, a, b, col) in enumerate(filas):
         y = top + i * rh
         if i % 2 == 0:
             out.append(f'<rect x="0" y="{y}" width="{W}" height="{rh}" fill="#f4f7f9"/>')
-        out.append(f'<text x="8" y="{y+24}" class="ft">{nom}</text><text x="{X0-10}" y="{y+24}" class="fs" text-anchor="end" fill="{GRIS}">{obj}</text>')
+        out.append(f'<text x="8" y="{y+21}" class="ft">{nom}</text><text x="{X0-10}" y="{y+21}" class="fs" text-anchor="end" fill="{GRIS}">{obj}</text>')
         x = X0 + (a - 1) * wk
-        out.append(f'<rect x="{x:.1f}" y="{y+8}" width="{(b-a+1)*wk:.1f}" height="{rh-16}" rx="5" fill="{NAVY}"/>')
+        out.append(f'<rect x="{x:.1f}" y="{y+6}" width="{(b-a+1)*wk:.1f}" height="{rh-12}" rx="5" fill="{col}"/>')
     y = top + len(filas) * rh
-    out.append(f'<text x="8" y="{y+24}" class="ft" style="fill:{OCHRE}">Bitácora de decisiones de modelado</text>'
-               f'<rect x="{X0}" y="{y+12}" width="{16*wk:.1f}" height="10" rx="5" fill="{OCHRE}" opacity=".8"/>')
+    out.append(f'<text x="8" y="{y+21}" class="ft" style="fill:{OCHRE}">Bitácora de decisiones de modelado</text>'
+               f'<rect x="{X0}" y="{y+10}" width="{16*wk:.1f}" height="10" rx="5" fill="{OCHRE}" opacity=".8"/>')
     for s in (1, 4, 8, 12, 16):
         if s == 1:
             xx, anc = X0 + 3, "start"
@@ -208,8 +210,8 @@ def fig_gantt():
             xx, anc = X0 + 16 * wk - 3, "end"
         else:
             xx, anc = X0 + (s - 0.5) * wk, "middle"
-        out.append(f'<text x="{xx:.1f}" y="{y+52}" class="fs" text-anchor="{anc}">s{s}</text>')
-    return f'<svg viewBox="0 0 {W} {y+60}" class="fig">{"".join(out)}</svg>'
+        out.append(f'<text x="{xx:.1f}" y="{y+46}" class="fs" text-anchor="{anc}">s{s}</text>')
+    return f'<svg viewBox="0 0 {W} {y+54}" class="fig">{"".join(out)}</svg>'
 
 
 # ------------------------------------------------------------------ contenido de las láminas
@@ -434,11 +436,12 @@ del actor-red de Bruno Latour.</div>
   "literatura; y cinco, discutir con Barad y Latour el papel de los datos, el gauge y lo numérico en el potencial reconstruido.",
   "La lámina muestra los objetivos literales; el guion lee el general completo y resume los específicos. Si el Consejo pide la lectura literal, léelos de la lámina (+25 s).")
 
-L("Cronograma", "Actividades en el periodo 2027-1", f"""{fig_gantt()}<p class="muted">El desarrollo analítico ya tiene un avance inicial. Semanas orientativas; las fechas se ajustan al calendario académico oficial de 2027-1.</p>""", 30,
-  "El trabajo se desarrolla en un solo periodo, 2027-1, y cierra entre finales de mayo y mediados de junio. Parto de un "
-  "avance inicial del desarrollo analítico. En las primeras semanas completo la revisión documental y consolido el "
-  "análisis; luego trabajo los dos primeros estados, después el estado con nodo radial con convergencia y ruido, y "
-  "cierro con el contraste, la discusión epistemológica y la redacción. La bitácora se lleva durante todo el proceso.",
+L("Cronograma", "Actividades en el periodo 2027-1", f"""{fig_gantt()}<p class="muted">Documento completo al jurado en la semana 11. Semanas orientativas, según el calendario oficial.</p>""", 30,
+  "El trabajo se desarrolla en un solo periodo, 2027-1, y parte de un avance inicial del desarrollo analítico. Las "
+  "primeras ocho semanas cubren la revisión documental, el análisis y los tres estados con su estudio de convergencia "
+  "y ruido. Entre las semanas siete y diez hago el contraste y la discusión epistemológica, y en la semana once entrego "
+  "el documento completo al jurado, que dispone de quince días hábiles para leerlo. Las dos últimas semanas son para "
+  "las correcciones y la sustentación. La bitácora se lleva durante todo el proceso.",
   "Si preguntan por el plazo: el Art. 9 fija un máximo (un periodo si el plan tiene un espacio de Trabajo de Grado, dos si tiene dos), no un mínimo; terminar en un periodo queda dentro del máximo. Con dos espacios, la nota de TG I queda pendiente hasta la sustentación (Art. 5, par. 2). Prórroga de un periodo por el Consejo Curricular (Art. 9, par. 1).")
 
 L("Cierre", "Conclusiones", f"""
