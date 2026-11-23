@@ -362,7 +362,7 @@ L("Estado del arte", "Trayectoria de los antecedentes", f"""
  <div class="card"><div class="k">1929–1955 · Espectral 1D</div>Ambarzumian, Borg, Gel'fand–Levitan<div class="lim">Aporte: unicidad con espectros suficientes · Límite: 1D, sin campo</div></div>
  <div class="card"><div class="k">1950–1989 · Dispersión</div>Chadan y Sabatier<div class="lim">Aporte: métodos en varias dimensiones · Límite: ambigüedades; datos externos</div></div>
  <div class="card"><div class="k">1993–1995 · Con campo magnético</div>Sun; Nakamura, Sun y Uhlmann; Eskin y Ralston<div class="lim">Aporte: determinan {B} y {V_}; {A} solo salvo gauge · Límite: datos de frontera; dimensión ≥ 3</div></div>
- <div class="card"><div class="k">1995–2024 · Desde el estado</div>Cooper, Khare y Sukhatme; Bhalgamiya y Novotny<div class="lim">Aporte: {V_} explícito desde {P_} · Límite: solo ψ real, sin {A}</div></div>
+ <div class="card"><div class="k">1995–2024 · Desde el estado</div>Cooper, Khare y Sukhatme; Bhalgamiya y Novotny<div class="lim">Aporte: {V_} explícito desde {P_} · Límite: ψ real, sin {A} ni corriente</div></div>
  <div class="card"><div class="k">1927–1952 · Hidrodinámica</div>Madelung; Bohm; Takabayasi<div class="lim">Aporte: ecuaciones para ψ complejo con {A} · Límite: uso en el problema directo</div></div>
  <div class="card"><div class="k">1928–2002 · Fock–Darwin</div>Fock; Darwin; Reimann y Manninen<div class="lim">Aporte: solución exacta con vórtices y nodos · Uso: banco de pruebas</div></div>
 </div>""", 50,
@@ -370,19 +370,19 @@ L("Estado del arte", "Trayectoria de los antecedentes", f"""
   "Gel'fand y Levitan, mostraron unicidad con espectros suficientes. La teoría de dispersión, sistematizada por "
   "Chadan y Sabatier, trajo ambigüedades. Con campo magnético, Sun, Nakamura y Uhlmann, y Eskin y Ralston probaron "
   "que los datos de frontera determinan el campo y V, pero el potencial vectorial solo salvo gauge. Bhalgamiya y "
-  "Novotny, en 2024, reconstruyen V a partir de la densidad, pero solo para funciones de onda reales. La formulación "
+  "Novotny, en 2024, reconstruyen V a partir de la densidad, pero solo para funciones de onda reales, sin campo y sin corriente. La formulación "
   "de Madelung y Bohm da las ecuaciones, y Fock–Darwin un caso exacto.",
   "No trasladar sin prueba los teoremas magnéticos (datos de frontera, dimensión ≥ 3) al caso 2D con datos internos.")
 
 L("Pregunta científica", "Vacío de conocimiento y pregunta", """
 <div class="card big">En las fuentes revisadas hasta ahora <b>no se identificó</b> una reconstrucción con <b>datos internos</b> de un
-<b>estado complejo</b>, con campo magnético y tratamiento de los nodos. Esta afirmación se someterá a la revisión documental.</div>
+<b>estado con corriente</b>, en el que el campo magnético <b>rompe la simetría temporal</b>, con tratamiento de los nodos. Esta afirmación se someterá a la revisión documental.</div>
 <div class="q"><div class="k">Pregunta de investigación</div>¿Bajo qué condiciones es posible reconstruir los potenciales asociados a una
 partícula cargada descrita por la ecuación estacionaria de Schrödinger en dos dimensiones, a partir de la formulación
 hidrodinámica de Madelung, y cuáles son las limitaciones de dicha reconstrucción en estados de Fock–Darwin?</div>
 <p class="muted">Pregunta complementaria: ¿qué permiten comprender Barad y Latour sobre el papel de los datos, el gauge y los procedimientos numéricos en el potencial reconstruido?</p>""", 40,
-  "En las fuentes revisadas hasta ahora no se identificó una reconstrucción con datos internos de un estado complejo, "
-  "con campo magnético y tratamiento de los nodos; esa afirmación se pondrá a prueba en la revisión documental. De "
+  "En las fuentes revisadas hasta ahora no se identificó una reconstrucción con datos internos de un estado con "
+  "corriente, en el que el campo magnético rompe la simetría temporal, con tratamiento de los nodos; esa afirmación se pondrá a prueba en la revisión documental. De "
   "ahí la pregunta: ¿Bajo qué condiciones es posible reconstruir los potenciales asociados a una partícula cargada "
   "descrita por la ecuación estacionaria de Schrödinger en dos dimensiones, a partir de la formulación hidrodinámica "
   "de Madelung, y cuáles son las limitaciones de dicha reconstrucción en estados de Fock–Darwin?",
@@ -575,6 +575,8 @@ PREGUNTAS = [
     ("¿Por qué sin espín?", "Para aislar la reconstrucción orbital. El electrón tiene espín, pero Zeeman y espín-órbita quedan fuera del modelo mínimo y se declaran."),
     ("¿Por qué un potencial vectorial si se conoce B_z?", "El acoplamiento mínimo usa A; varias representaciones de gauge dan el mismo B_z = rot A."),
     ("¿Qué se reconstruye exactamente?", "Según los datos: V − E, B_z y una clase de gauge de A. No un vector A único en términos absolutos."),
+    ("¿Por qué el artículo de referencia puede usar solo la densidad?", "Sin campo magnético el hamiltoniano es real (simetría de inversión temporal) y los estados ligados pueden elegirse reales: la corriente es nula, u = 0, y V − E = (ℏ²/2m)∇²√P/√P. Con B ≠ 0 se rompe la simetría temporal, aparece corriente y la densidad ya no basta."),
+    ("¿El criterio es que ψ sea complejo?", "No exactamente: con A ≠ 0, que ψ sea real depende del gauge. El estado (0,0) de Fock–Darwin es real en el gauge simétrico y aun así tiene corriente diamagnética (u = −qA ≠ 0); por eso ignorar A da el doble. El criterio invariante es la corriente: la fórmula con la densidad sola es exacta si y solo si u = 0. Sin campo, un estado degenerado escrito como e^{iℓφ} también tiene corriente, y esa fórmula omite ℏ²ℓ²/(2mr²)."),
     ("¿Por qué la densidad sola no basta?", "La ecuación inversa contiene el momento cinético u, ligado a la fase y a A; dos configuraciones pueden tener la misma densidad y campos distintos. El ejemplo: ignorar A en Fock–Darwin da Ω² en lugar de ω₀²."),
     ("¿Qué aporta Madelung?", "Separa continuidad y balance de energía, y hace explícitas las variables invariantes de gauge y los datos necesarios. No añade física nueva: reorganiza la de Schrödinger."),
     ("¿Diferencia entre cambio de gauge e indeterminación física?", "Un cambio de gauge (A → A + ∇χ, S → S + qχ) no cambia ningún observable. La degeneración Φ → Φ + F(P) con datos (P, S) sí cambia B_z: son campos físicamente distintos compatibles con los mismos datos incompletos."),
