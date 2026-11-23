@@ -439,7 +439,7 @@ L("Cronograma", "Actividades en el periodo 2027-1", f"""{fig_gantt()}<p class="m
   "avance inicial del desarrollo analítico. En las primeras semanas completo la revisión documental y consolido el "
   "análisis; luego trabajo los dos primeros estados, después el estado con nodo radial con convergencia y ruido, y "
   "cierro con el contraste, la discusión epistemológica y la redacción. La bitácora se lleva durante todo el proceso.",
-  "Si preguntan por el plazo: el Art. 9 fija la duración según los espacios de Trabajo de Grado del plan; hay prórroga de un periodo por el Consejo Curricular (par. 1). Confirmar con la coordinación que el plan de Física permite un periodo.")
+  "Si preguntan por el plazo: el Art. 9 fija un máximo (un periodo si el plan tiene un espacio de Trabajo de Grado, dos si tiene dos), no un mínimo; terminar en un periodo queda dentro del máximo. Con dos espacios, la nota de TG I queda pendiente hasta la sustentación (Art. 5, par. 2). Prórroga de un periodo por el Consejo Curricular (Art. 9, par. 1).")
 
 L("Cierre", "Conclusiones", f"""
 <ol class="concl">
